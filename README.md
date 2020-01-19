@@ -2,16 +2,6 @@
 
 ## Setting up ParanoidDoze ##
 
-### Syncing ParanoidDoze ###
-You can sync ParanoidDoze by adding it to your pa.dependencies
-```bash
-    {
-        "remote":       "aospa",
-        "repository":   "AOSPA/android_packages_apps_paranoiddoze",
-        "target_path":  "packages/apps/ParanoidDoze",
-        "revision":     "quartz"
-    }
-```
 ### Adding ParanoidDoze to your device tree ###
 To build ParanoidDoze you have to add the following lines to your device.mk
 ```bash

@@ -62,4 +62,8 @@
     <string name="doze_settings_help_title">Ayuda</string>
     <string name="doze_settings_help_text">Estas funciones usan eventos de sensores para lanzar una notificación. El sensor elegido solo se activa cuando el dispositivo recibe una notificación, esto ayuda a reducir el uso de la batería. Hay también una opción para activar el sensor correspondiente tan pronto como la pantalla se apague, pero esto causará un consumo de batería mayor.</string>
 
+    <!-- Pick-up to wake gesture-->
+    <string name="wake_gesture_title">Despertar</string>
+    <string name="wake_gesture_summary">Despertar el dispositivo en vez de las notificaciones pulsantes</string>
+
 </resources>

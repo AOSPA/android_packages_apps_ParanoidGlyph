@@ -49,7 +49,7 @@
 
     <!-- Pick-up gesture -->
     <string name="pick_up_gesture_title">Levantar</string>
-    <string name="pick_up_gesture_summary">Mostar notificaciones al levantar el dispositivo</string>
+    <string name="pick_up_gesture_summary">Mostrar notificaciones al levantar el dispositivo</string>
 
     <!-- Pocket gesture -->
     <string name="pocket_gesture_title">Bolsillo</string>

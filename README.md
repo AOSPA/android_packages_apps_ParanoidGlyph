@@ -1,29 +1,29 @@
-# Paranoid Android Doze #
-
-## Setting up ParanoidDoze ##
-
-### Adding ParanoidDoze to your device tree ###
-To build ParanoidDoze you have to add the following lines to your device.mk
+# Setting up Paranoid Doze
+To build Paranoid Doze you have to build the package in your device tree.
 ```bash
-    # ParanoidDoze
-    PRODUCT_PACKAGES += ParanoidDoze
+    # Paranoid Doze
+    PRODUCT_PACKAGES += \
+        ParanoidDoze
 ```
 In order to have the proper options showing up you have to define the device related sensors in your build properties
+
+- Set this to "true" if the device uses the proximity sensor to check for pocket & handwave gestures.
 ```bash
-    ro.sensor.proximity # Can be "true" if the device uses the proximity sensor to check for pocket & handwave gestures
-    ro.sensor.pocket    # Can be the device specific pocket sensor to enable pocket gesture
-    ro.sensor.pickup    # Can be the device specific pickup sensor to enable pickup gesture
+    ro.sensor.proximity
+```
+- The device specific pickup sensor to enable pickup gesture.
+```bash
+    ro.sensor.pickup
 ```
 
-#### Examples ####
-Xiaomi devices usually use the following sensors (please verify on your own if these work or not)
+### OEM Examples
+These properties are not representative of all OnePlus/Xiaomi devices and serve as an example, you'll need to reconfirm which ones your device uses.
+- `OnePlus`
+```bash
+    ro.sensor.pickup=oneplus.sensor.pickup
+```
+- `Xiaomi`
 ```bash
     ro.sensor.proximity=true
     ro.sensor.pickup=xiaomi.sensor.pickup
-```
-
-Oneplus devices usually use the following sensors (please verify on your own if these work or not)
-```bash
-    ro.sensor.pocket=oneplus.sensor.pocket
-    ro.sensor.pickup=oneplus.sensor.pickup
 ```

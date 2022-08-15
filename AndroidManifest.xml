@@ -49,6 +49,7 @@
         <activity
             android:name=".DozeSettingsActivity"
             android:label="@string/glyph_settings_title"
+            android:icon="@drawable/ic_glyphs_logo"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />

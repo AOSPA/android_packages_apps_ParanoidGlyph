@@ -13,7 +13,7 @@
 // limitations under the License.
 
 android_app {
-    name: "ParanoidDoze",
+    name: "ParanoidGlyph",
     certificate: "platform",
     srcs: ["src/**/*.java"],
     platform_apis: true,

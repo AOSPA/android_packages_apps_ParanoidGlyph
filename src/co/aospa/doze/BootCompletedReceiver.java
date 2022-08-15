@@ -28,7 +28,7 @@ import co.aospa.doze.DozeUtils;
 public class BootCompletedReceiver extends BroadcastReceiver {
 
     private static final boolean DEBUG = false;
-    private static final String TAG = "ParanoidDoze";
+    private static final String TAG = "ParanoidGlyph";
 
     @Override
     public void onReceive(final Context context, Intent intent) {

@@ -3,7 +3,7 @@ To build Paranoid Doze you have to build the package in your device tree.
 ```bash
     # Paranoid Doze
     PRODUCT_PACKAGES += \
-        ParanoidDoze
+        ParanoidGlyph
 ```
 In order to have the proper options showing up you have to define the device related sensors in your build properties
 

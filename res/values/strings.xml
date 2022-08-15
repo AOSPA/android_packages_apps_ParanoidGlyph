@@ -21,12 +21,12 @@
     <string name="summary_empty" translatable="false"></string>
 
     <!-- App Name -->
-    <string name="glyph_settings_app_name">Glyph settings</string>
+    <string name="glyph_settings_app_name">Glyph interface</string>
 
     <!-- Ambient Display -->
-    <string name="glyph_settings_enable">Use glyphs</string>
-    <string name="glyph_settings_title">Glyph Lights</string>
-    <string name="glyph_settings_summary">Additional options for glyph lights</string>
+    <string name="glyph_settings_enable">Glyph lights</string>
+    <string name="glyph_settings_title">Glyph interface</string>
+    <string name="glyph_settings_summary">Options for glyph lights</string>
 
     <!-- Always on -->
     <string name="glyph_settings_always_on_title">Always on</string>

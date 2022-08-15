@@ -49,20 +49,22 @@
         <activity
             android:name=".DozeSettingsActivity"
             android:label="@string/glyph_settings_title"
-            android:icon="@drawable/ic_glyphs_logo"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
             </intent-filter>
             <meta-data
                 android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.lockscreen" />
+                android:value="com.android.settings.category.ia.system" />
+            <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_glyphs_logo" />
             <meta-data
                 android:name="com.android.settings.summary"
                 android:value="@string/glyph_settings_summary" />
              <meta-data
                 android:name="com.android.settings.order"
-                android:value="1001" />
+                android:value="-255" />
         </activity>
 
     </application>

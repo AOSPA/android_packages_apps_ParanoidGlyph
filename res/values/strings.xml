@@ -21,16 +21,16 @@
     <string name="summary_empty" translatable="false"></string>
 
     <!-- App Name -->
-    <string name="doze_settings_app_name">Doze settings</string>
+    <string name="glyph_settings_app_name">Glyph settings</string>
 
     <!-- Ambient Display -->
-    <string name="ambient_display_enable">Use ambient display</string>
-    <string name="ambient_display_title">Ambient display</string>
-    <string name="ambient_display_summary">Additional gestures to wake the screen</string>
+    <string name="glyph_settings_enable">Use glyphs</string>
+    <string name="glyph_settings_title">Glyph Lights</string>
+    <string name="glyph_settings_summary">Additional options for glyph lights</string>
 
     <!-- Always on -->
-    <string name="ambient_display_always_on_title">Always on</string>
-    <string name="ambient_display_always_on_summary">Show time, notification icons, and other info. Increased battery usage.</string>
+    <string name="glyph_settings_always_on_title">Always on</string>
+    <string name="glyph_settings_always_on_summary">Show time, notification icons, and other info. Increased battery usage.</string>
 
     <!-- Pickup sensor -->
     <string name="pickup_sensor_title">Pickup sensor</string>
@@ -58,8 +58,8 @@
     <string name="dialog_ok">OK</string>
 
     <!-- Help texts -->
-    <string name="doze_settings_help_title">Help</string>
-    <string name="doze_settings_help_text">These features use sensor events to launch a doze notification pulse. The chosen sensor is only enabled when the device receives a notification, this helps to reduce battery usage. There is also an option to enable the chosen sensor as soon as the screen turns off, this will cause higher battery usage.</string>
+    <string name="glyph_settings_help_title">Help</string>
+    <string name="glyph_settings_help_text">These features use sensor events to launch a doze notification pulse. The chosen sensor is only enabled when the device receives a notification, this helps to reduce battery usage. There is also an option to enable the chosen sensor as soon as the screen turns off, this will cause higher battery usage.</string>
 
-    
+
 </resources>

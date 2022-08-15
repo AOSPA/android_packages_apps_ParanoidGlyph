@@ -18,19 +18,19 @@
 -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/ambient_display_title">
+    android:title="@string/glyph_settings_title">
 
     <com.android.settingslib.widget.MainSwitchPreference
         android:defaultValue="false"
-        android:key="doze_enable"
-        android:title="@string/ambient_display_enable" />
+        android:key="glyph_enable"
+        android:title="@string/glyph_settings_enable" />
 
     <SwitchPreference
         android:key="always_on_display"
         android:disableDependentsState="true"
         android:icon="@drawable/ic_doze_aod"
-        android:title="@string/ambient_display_always_on_title"
-        android:summary="@string/ambient_display_always_on_summary"
+        android:title="@string/glyph_settings_always_on_title"
+        android:summary="@string/glyph_settings_always_on_summary"
         android:persistent="false" />
 
     <SwitchPreference

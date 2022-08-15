@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package co.aospa.doze;
+package co.aospa.glyph;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +39,7 @@ public final class DozeUtils {
 
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
 
-    protected static final String DOZE_ENABLE = "doze_enable";
+    protected static final String DOZE_ENABLE = "glyph_enable";
 
     protected static final String ALWAYS_ON_DISPLAY = "always_on_display";
 

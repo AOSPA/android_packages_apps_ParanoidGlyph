@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package co.aospa.doze;
+package co.aospa.glyph;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,7 +39,7 @@ import androidx.preference.SwitchPreference;
 import com.android.settingslib.widget.MainSwitchPreference;
 import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
-import co.aospa.doze.R;
+import co.aospa.glyph.R;
 
 public class DozeSettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
         OnMainSwitchChangeListener {
@@ -157,8 +157,8 @@ public class DozeSettingsFragment extends PreferenceFragment implements OnPrefer
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.doze_settings_help_title)
-                    .setMessage(R.string.doze_settings_help_text)
+                    .setTitle(R.string.glyph_settings_help_title)
+                    .setMessage(R.string.glyph_settings_help_text)
                     .setNegativeButton(R.string.dialog_ok, (dialog, which) -> dialog.cancel())
                     .create();
         }

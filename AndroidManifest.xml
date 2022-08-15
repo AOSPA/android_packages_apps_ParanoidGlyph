@@ -17,7 +17,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.aospa.doze"
+    package="co.aospa.glyph"
     android:versionCode="1"
     android:versionName="1.0"
     android:sharedUserId="android.uid.system">
@@ -32,7 +32,7 @@
         android:targetSdkVersion="24"/>
 
     <application
-        android:label="@string/doze_settings_app_name"
+        android:label="@string/glyph_settings_app_name"
         android:persistent="true">
 
         <receiver android:name=".BootCompletedReceiver">
@@ -48,7 +48,7 @@
 
         <activity
             android:name=".DozeSettingsActivity"
-            android:label="@string/ambient_display_title"
+            android:label="@string/glyph_settings_title"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -58,7 +58,7 @@
                 android:value="com.android.settings.category.ia.lockscreen" />
             <meta-data
                 android:name="com.android.settings.summary"
-                android:value="@string/ambient_display_summary" />
+                android:value="@string/glyph_settings_summary" />
              <meta-data
                 android:name="com.android.settings.order"
                 android:value="1001" />

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package co.aospa.doze;
+package co.aospa.glyph;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;

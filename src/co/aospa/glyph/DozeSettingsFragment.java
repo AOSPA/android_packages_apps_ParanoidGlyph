@@ -46,17 +46,7 @@ public class DozeSettingsFragment extends PreferenceFragment implements OnPrefer
 
     private MainSwitchPreference mSwitchBar;
 
-    private SwitchPreference mAlwaysOnDisplayPreference;
-
-    private SwitchPreference mPickUpPreference;
-    private SwitchPreference mRaiseToWakePreference;
-    private SwitchPreference mHandwavePreference;
-    private SwitchPreference mPocketPreference;
-
     private Handler mHandler = new Handler();
-
-    private boolean mHasPickupSensor;
-    private boolean mHasProximitySensor;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -73,62 +63,10 @@ public class DozeSettingsFragment extends PreferenceFragment implements OnPrefer
         mSwitchBar = (MainSwitchPreference) findPreference(DozeUtils.DOZE_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(dozeEnabled);
-
-        mHasPickupSensor = !(SystemProperties.get("ro.sensor.pickup").isEmpty());
-        mHasProximitySensor = !(SystemProperties.get("ro.sensor.proximity").isEmpty());
-
-        mAlwaysOnDisplayPreference = (SwitchPreference) findPreference(DozeUtils.ALWAYS_ON_DISPLAY);
-        mAlwaysOnDisplayPreference.setEnabled(dozeEnabled);
-        mAlwaysOnDisplayPreference.setChecked(DozeUtils.isAlwaysOnEnabled(getActivity()));
-        mAlwaysOnDisplayPreference.setOnPreferenceChangeListener(this);
-
-        PreferenceCategory pickupSensorCategory = (PreferenceCategory) getPreferenceScreen().
-                findPreference(DozeUtils.CATEG_PICKUP_SENSOR);
-        PreferenceCategory proximitySensorCategory = (PreferenceCategory) getPreferenceScreen().
-                findPreference(DozeUtils.CATEG_PROX_SENSOR);
-
-        mPickUpPreference = (SwitchPreference) findPreference(DozeUtils.GESTURE_PICK_UP_KEY);
-        mPickUpPreference.setEnabled(dozeEnabled);
-        mPickUpPreference.setOnPreferenceChangeListener(this);
-
-        mRaiseToWakePreference = (SwitchPreference) findPreference(DozeUtils.GESTURE_RAISE_TO_WAKE_KEY);
-        mRaiseToWakePreference.setEnabled(dozeEnabled);
-        mRaiseToWakePreference.setOnPreferenceChangeListener(this);
-
-        mHandwavePreference = (SwitchPreference) findPreference(DozeUtils.GESTURE_HAND_WAVE_KEY);
-        mHandwavePreference.setEnabled(dozeEnabled);
-        mHandwavePreference.setOnPreferenceChangeListener(this);
-
-        mPocketPreference = (SwitchPreference) findPreference(DozeUtils.GESTURE_POCKET_KEY);
-        mPocketPreference.setEnabled(dozeEnabled);
-        mPocketPreference.setOnPreferenceChangeListener(this);
-
-        // Hide pickup sensor related features if the device doesn't provide the props
-        if (!mHasPickupSensor) {
-            getPreferenceScreen().removePreference(pickupSensorCategory);
-        }
-
-        // Hide proximity sensor related features if the device doesn't support them
-        if (!mHasProximitySensor || !DozeUtils.getProxCheckBeforePulse(getActivity())) {
-            getPreferenceScreen().removePreference(proximitySensorCategory);
-        }
-
-        // Hide AOD if not supported and set all its dependents otherwise
-        if (!DozeUtils.alwaysOnDisplayAvailable(getActivity())) {
-            getPreferenceScreen().removePreference(mAlwaysOnDisplayPreference);
-        } else {
-            mRaiseToWakePreference.setDependency(DozeUtils.ALWAYS_ON_DISPLAY);
-            pickupSensorCategory.setDependency(DozeUtils.ALWAYS_ON_DISPLAY);
-            proximitySensorCategory.setDependency(DozeUtils.ALWAYS_ON_DISPLAY);
-        }
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (DozeUtils.ALWAYS_ON_DISPLAY.equals(preference.getKey())) {
-            DozeUtils.enableAlwaysOn(getActivity(), (Boolean) newValue);
-        }
-
         mHandler.post(() -> DozeUtils.checkDozeService(getActivity()));
 
         return true;
@@ -140,17 +78,6 @@ public class DozeSettingsFragment extends PreferenceFragment implements OnPrefer
         DozeUtils.checkDozeService(getActivity());
 
         mSwitchBar.setChecked(isChecked);
-
-        if (!isChecked) {
-            DozeUtils.enableAlwaysOn(getActivity(), false);
-            mAlwaysOnDisplayPreference.setChecked(false);
-        }
-        mAlwaysOnDisplayPreference.setEnabled(isChecked);
-
-        mPickUpPreference.setEnabled(isChecked);
-        mRaiseToWakePreference.setEnabled(isChecked);
-        mHandwavePreference.setEnabled(isChecked);
-        mPocketPreference.setEnabled(isChecked);
     }
 
     private static class HelpDialogFragment extends DialogFragment {

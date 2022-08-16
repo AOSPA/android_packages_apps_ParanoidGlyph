@@ -17,6 +17,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
     <string name="summary_empty" translatable="false"></string>
 
@@ -28,38 +29,11 @@
     <string name="glyph_settings_title">Glyph interface</string>
     <string name="glyph_settings_summary">Options for glyph lights</string>
 
-    <!-- Always on -->
-    <string name="glyph_settings_always_on_title">Always on</string>
-    <string name="glyph_settings_always_on_summary">Show time, notification icons, and other info. Increased battery usage.</string>
-
-    <!-- Pickup sensor -->
-    <string name="pickup_sensor_title">Pickup sensor</string>
-
-    <!-- Proximity sensor -->
-    <string name="proximity_sensor_title">Proximity sensor</string>
-
-    <!-- Hand wave gesture -->
-    <string name="hand_wave_gesture_title">Hand wave</string>
-    <string name="hand_wave_gesture_summary">Pulse notifications on hand wave</string>
-
-    <!-- Pick-up gesture -->
-    <string name="pick_up_gesture_title">Pick-up</string>
-    <string name="pick_up_gesture_summary">Pulse notifications on pick-up</string>
-
-    <!-- Pick-up to wake gesture-->
-    <string name="wake_gesture_title">Wake up</string>
-    <string name="wake_gesture_summary">Wake up the device instead of pulsing notifications</string>
-
-    <!-- Pocket gesture -->
-    <string name="pocket_gesture_title">Pocket</string>
-    <string name="pocket_gesture_summary">Pulse notifications on removal from pocket</string>
-
     <!-- Dialog texts -->
     <string name="dialog_ok">OK</string>
 
     <!-- Help texts -->
     <string name="glyph_settings_help_title">Help</string>
     <string name="glyph_settings_help_text">These features use sensor events to launch a doze notification pulse. The chosen sensor is only enabled when the device receives a notification, this helps to reduce battery usage. There is also an option to enable the chosen sensor as soon as the screen turns off, this will cause higher battery usage.</string>
-
 
 </resources>

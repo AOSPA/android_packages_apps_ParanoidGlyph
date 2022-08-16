@@ -41,7 +41,7 @@ import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
 import co.aospa.glyph.R;
 
-public class DozeSettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
+public class GlyphSettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
         OnMainSwitchChangeListener {
 
     private MainSwitchPreference mSwitchBar;
@@ -58,24 +58,24 @@ public class DozeSettingsFragment extends PreferenceFragment implements OnPrefer
             showHelp();
         }
 
-        boolean dozeEnabled = DozeUtils.isDozeEnabled(getActivity());
+        boolean dozeEnabled = GlyphUtils.isDozeEnabled(getActivity());
 
-        mSwitchBar = (MainSwitchPreference) findPreference(DozeUtils.DOZE_ENABLE);
+        mSwitchBar = (MainSwitchPreference) findPreference(GlyphUtils.DOZE_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(dozeEnabled);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        mHandler.post(() -> DozeUtils.checkDozeService(getActivity()));
+        mHandler.post(() -> GlyphUtils.checkGlyphService(getActivity()));
 
         return true;
     }
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        DozeUtils.enableDoze(getActivity(), isChecked);
-        DozeUtils.checkDozeService(getActivity());
+        GlyphUtils.enableDoze(getActivity(), isChecked);
+        GlyphUtils.checkGlyphService(getActivity());
 
         mSwitchBar.setChecked(isChecked);
     }

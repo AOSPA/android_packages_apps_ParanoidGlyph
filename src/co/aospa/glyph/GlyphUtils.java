@@ -31,26 +31,26 @@ import androidx.preference.PreferenceManager;
 
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 
-public final class DozeUtils {
+public final class GlyphUtils {
 
-    private static final String TAG = "DozeUtils";
+    private static final String TAG = "GlyphUtils";
     private static final boolean DEBUG = false;
 
     protected static final String DOZE_ENABLE = "glyph_enable";
 
     public static void startService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
-        context.startServiceAsUser(new Intent(context, DozeService.class),
+        context.startServiceAsUser(new Intent(context, GlyphService.class),
                 UserHandle.CURRENT);
     }
 
     protected static void stopService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping service");
-        context.stopServiceAsUser(new Intent(context, DozeService.class),
+        context.stopServiceAsUser(new Intent(context, GlyphService.class),
                 UserHandle.CURRENT);
     }
 
-    public static void checkDozeService(Context context) {
+    public static void checkGlyphService(Context context) {
         if (isDozeEnabled(context)) {
             startService(context);
         } else {

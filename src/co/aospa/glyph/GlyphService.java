@@ -26,8 +26,8 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
-public class DozeService extends Service {
-    private static final String TAG = "DozeService";
+public class GlyphService extends Service {
+    private static final String TAG = "GlyphService";
     private static final boolean DEBUG = false;
 
     @Override

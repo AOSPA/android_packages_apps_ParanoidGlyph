@@ -29,47 +29,40 @@ import android.provider.Settings;
 import android.util.Log;
 import androidx.preference.PreferenceManager;
 
-import static android.provider.Settings.Secure.DOZE_ENABLED;
-
 public final class GlyphUtils {
 
     private static final String TAG = "GlyphUtils";
     private static final boolean DEBUG = false;
 
-    protected static final String DOZE_ENABLE = "glyph_enable";
+    protected static final String GLYPH_ENABLE = "glyph_enable";
 
-    public static void startService(Context context) {
+    public static void startGlyphService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
         context.startServiceAsUser(new Intent(context, GlyphService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopService(Context context) {
+    protected static void stopGlyphService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping service");
         context.stopServiceAsUser(new Intent(context, GlyphService.class),
                 UserHandle.CURRENT);
     }
 
     public static void checkGlyphService(Context context) {
-        if (isDozeEnabled(context)) {
-            startService(context);
+        if (isGlyphEnabled(context)) {
+            startGlyphService(context);
         } else {
-            stopService(context);
+            stopGlyphService(context);
         }
     }
 
-    protected static boolean enableDoze(Context context, boolean enable) {
+    protected static boolean enableGlyph(Context context, boolean enable) {
         return Settings.Secure.putInt(context.getContentResolver(),
-                DOZE_ENABLED, enable ? 1 : 0);
+                GLYPH_ENABLE, enable ? 1 : 0);
     }
 
-    public static boolean isDozeEnabled(Context context) {
+    public static boolean isGlyphEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
-                DOZE_ENABLED, 1) != 0;
-    }
-
-    protected static boolean isGestureEnabled(Context context, String gesture) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(gesture, false);
+                GLYPH_ENABLE, 1) != 0;
     }
 }

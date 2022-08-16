@@ -25,13 +25,13 @@ import com.android.settingslib.collapsingtoolbar.R;
 
 public class GlyphSettingsActivity extends CollapsingToolbarBaseActivity {
 
-    private static final String TAG_DOZE = "doze";
+    private static final String TAG_GLYPH = "glyph";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         getFragmentManager().beginTransaction().replace(R.id.content_frame,
-                new GlyphSettingsFragment(), TAG_DOZE).commit();
+                new GlyphSettingsFragment(), TAG_GLYPH).commit();
     }
 }

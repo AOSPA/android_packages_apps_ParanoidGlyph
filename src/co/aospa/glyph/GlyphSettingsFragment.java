@@ -50,19 +50,19 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.doze_settings);
+        addPreferencesFromResource(R.xml.glyph_settings);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("doze_settings",
+        SharedPreferences prefs = getActivity().getSharedPreferences("glyph_settings",
                 Activity.MODE_PRIVATE);
         if (savedInstanceState == null && !prefs.getBoolean("first_help_shown", false)) {
             showHelp();
         }
 
-        boolean dozeEnabled = GlyphUtils.isDozeEnabled(getActivity());
+        boolean glyphEnabled = GlyphUtils.isGlyphEnabled(getActivity());
 
-        mSwitchBar = (MainSwitchPreference) findPreference(GlyphUtils.DOZE_ENABLE);
+        mSwitchBar = (MainSwitchPreference) findPreference(GlyphUtils.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
-        mSwitchBar.setChecked(dozeEnabled);
+        mSwitchBar.setChecked(glyphEnabled);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        GlyphUtils.enableDoze(getActivity(), isChecked);
+        GlyphUtils.enableGlyph(getActivity(), isChecked);
         GlyphUtils.checkGlyphService(getActivity());
 
         mSwitchBar.setChecked(isChecked);
@@ -86,13 +86,13 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
             return new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.glyph_settings_help_title)
                     .setMessage(R.string.glyph_settings_help_text)
-                    .setNegativeButton(R.string.dialog_ok, (dialog, which) -> dialog.cancel())
+                    .setNegativeButton(R.string.glyph_settings_dialog_ok, (dialog, which) -> dialog.cancel())
                     .create();
         }
 
         @Override
         public void onCancel(DialogInterface dialog) {
-            getActivity().getSharedPreferences("doze_settings", Activity.MODE_PRIVATE)
+            getActivity().getSharedPreferences("glyph_settings", Activity.MODE_PRIVATE)
                     .edit()
                     .putBoolean("first_help_shown", true)
                     .commit();

@@ -17,7 +17,7 @@
      limitations under the License.
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  
+
     <!-- DO NOT TRANSLATE Empty summary for dynamic preferences -->
     <string name="summary_empty" translatable="false"></string>
 
@@ -30,7 +30,7 @@
     <string name="glyph_settings_summary">Options for glyph lights</string>
 
     <!-- Dialog texts -->
-    <string name="dialog_ok">OK</string>
+    <string name="glyph_settings_dialog_ok">OK</string>
 
     <!-- Help texts -->
     <string name="glyph_settings_help_title">Help</string>

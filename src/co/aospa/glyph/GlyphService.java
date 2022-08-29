@@ -66,6 +66,14 @@ public class GlyphService extends Service {
         if (DEBUG) Log.d(TAG, "Display off");
     }
 
+    private void onPowerConnected() {
+        if (DEBUG) Log.d(TAG, "Power connected");
+    }
+
+    private void onPowerDisconnected() {
+        if (DEBUG) Log.d(TAG, "Power disconnected");
+    }
+
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -73,6 +81,18 @@ public class GlyphService extends Service {
                 onDisplayOn();
             } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 onDisplayOff();
+            }
+
+        }
+    };
+
+    public BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {
+                onPowerConnected();
+            } else if (intent.getAction().equals(Intent.ACTION_POWER_DISCONNECTED)) {
+                onPowerDisconnected();
             }
         }
     };

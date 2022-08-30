@@ -28,7 +28,7 @@ import android.util.Log;
 
 public class GlyphService extends Service {
     private static final String TAG = "GlyphService";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     @Override
     public void onCreate() {

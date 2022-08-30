@@ -32,7 +32,7 @@ import androidx.preference.PreferenceManager;
 public final class GlyphUtils {
 
     private static final String TAG = "GlyphUtils";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     protected static final String GLYPH_ENABLE = "glyph_enable";
 

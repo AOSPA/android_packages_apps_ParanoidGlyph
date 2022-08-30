@@ -25,4 +25,10 @@
         android:key="glyph_enable"
         android:title="@string/glyph_settings_enable" />
 
+    <SwitchPreference
+        android:key="glyph_settings_charger"
+        android:defaultValue="true"
+        android:title="@string/glyph_settings_charging_title"
+        android:summary="@string/glyph_settings_charging_summary" />
+
 </PreferenceScreen>

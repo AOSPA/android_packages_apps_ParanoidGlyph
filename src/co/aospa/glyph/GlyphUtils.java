@@ -35,6 +35,7 @@ public final class GlyphUtils {
     private static final boolean DEBUG = true;
 
     protected static final String GLYPH_ENABLE = "glyph_enable";
+    protected static final String GLYPH_CHARGING_ENABLE = "glyph_settings_charger";
 
     public static void startGlyphService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
@@ -64,5 +65,15 @@ public final class GlyphUtils {
     public static boolean isGlyphEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 GLYPH_ENABLE, 1) != 0;
+    }
+
+    protected static boolean enableGlyphCharging(Context context, boolean enable) {
+        return Settings.Secure.putInt(context.getContentResolver(),
+                GLYPH_CHARGING_ENABLE, enable ? 1 : 0);
+    }
+
+    public static boolean isGlyphChargingEnabled(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(),
+                GLYPH_CHARGING_ENABLE, 1) != 0;
     }
 }

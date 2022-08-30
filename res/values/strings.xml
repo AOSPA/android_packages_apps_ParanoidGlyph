@@ -29,6 +29,9 @@
     <string name="glyph_settings_title">Glyph interface</string>
     <string name="glyph_settings_summary">Options for glyph lights</string>
 
+    <string name="glyph_settings_charging_title">Charging animation</string>
+    <string name="glyph_settings_charging_summary">Enable glyph charging animation on the back</string>
+
     <!-- Dialog texts -->
     <string name="glyph_settings_dialog_ok">OK</string>
 

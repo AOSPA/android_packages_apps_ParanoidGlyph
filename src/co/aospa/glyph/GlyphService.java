@@ -38,6 +38,11 @@ public class GlyphService extends Service {
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
         screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(mScreenStateReceiver, screenStateFilter);
+
+        IntentFilter powerMonitor = new IntentFilter();
+        powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
+        powerMonitor.addAction(Intent.ACTION_POWER_DISCONNECTED);
+        registerReceiver(mPowerMonitor, powerMonitor);
     }
 
     @Override
@@ -51,6 +56,7 @@ public class GlyphService extends Service {
         if (DEBUG) Log.d(TAG, "Destroying service");
         super.onDestroy();
         this.unregisterReceiver(mScreenStateReceiver);
+        this.unregisterReceiver(mPowerMonitor);
     }
 
     @Override

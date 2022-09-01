@@ -41,7 +41,7 @@
         </receiver>
 
         <service android:name=".GlyphService"
-                 android:permission="XiaomiGlyphService">
+                 android:permission="ParanoidGlyphService">
         </service>
 
         <activity

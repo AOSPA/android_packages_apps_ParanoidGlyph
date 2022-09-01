@@ -53,11 +53,11 @@ public final class GlyphUtils {
         if (isGlyphEnabled(context)) {
             if (isGlyphChargingEnabled(context)) {
                 startGlyphChargingService(context);
+            } else {
+                stopGlyphChargingService(context);
             }
         } else {
-          if (!isGlyphChargingEnabled(context)) {
-                stopGlyphChargingService(context);
-          }
+            stopGlyphChargingService(context);
         }
     }
 

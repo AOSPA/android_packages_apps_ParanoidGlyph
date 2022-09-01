@@ -61,7 +61,6 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
         }
 
         boolean glyphEnabled = GlyphUtils.isGlyphEnabled(getActivity());
-        boolean glyphChargingEnabled = GlyphUtils.isGlyphChargingEnabled(getActivity());
 
         mSwitchBar = (MainSwitchPreference) findPreference(GlyphUtils.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
@@ -69,8 +68,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
         mChargingAnimationPreference = (SwitchPreference) findPreference(GlyphUtils.GLYPH_CHARGING_ENABLE);
         mChargingAnimationPreference.setEnabled(glyphEnabled);
-        mChargingAnimationPreference.setChecked(glyphChargingEnabled);
-        //mChargingAnimationPreference.setOnPreferenceChangeListener(this);
+        mChargingAnimationPreference.setOnPreferenceChangeListener(this);
 
     }
 

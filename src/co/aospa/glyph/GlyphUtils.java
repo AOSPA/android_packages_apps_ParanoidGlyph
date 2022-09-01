@@ -71,13 +71,8 @@ public final class GlyphUtils {
                 GLYPH_ENABLE, 1) != 0;
     }
 
-    protected static boolean enableGlyphCharging(Context context, boolean enable) {
-        return Settings.Secure.putInt(context.getContentResolver(),
-                GLYPH_CHARGING_ENABLE, enable ? 1 : 0);
-    }
-
     public static boolean isGlyphChargingEnabled(Context context) {
-        return Settings.Secure.getInt(context.getContentResolver(),
-                GLYPH_CHARGING_ENABLE, 1) != 0;
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(GLYPH_CHARGING_ENABLE, false);
     }
 }

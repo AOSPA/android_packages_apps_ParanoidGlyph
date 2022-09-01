@@ -40,8 +40,8 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".GlyphService"
-                 android:permission="ParanoidGlyphService">
+        <service android:name=".GlyphChargingService"
+                 android:permission="ParanoidGlyphChargingService">
         </service>
 
         <activity

@@ -37,23 +37,23 @@ public final class GlyphUtils {
     protected static final String GLYPH_ENABLE = "glyph_enable";
     protected static final String GLYPH_CHARGING_ENABLE = "glyph_settings_charger";
 
-    public static void startGlyphService(Context context) {
+    public static void startGlyphChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting service");
-        context.startServiceAsUser(new Intent(context, GlyphService.class),
+        context.startServiceAsUser(new Intent(context, GlyphChargingService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopGlyphService(Context context) {
+    protected static void stopGlyphChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping service");
-        context.stopServiceAsUser(new Intent(context, GlyphService.class),
+        context.stopServiceAsUser(new Intent(context, GlyphChargingService.class),
                 UserHandle.CURRENT);
     }
 
     public static void checkGlyphService(Context context) {
         if (isGlyphEnabled(context)) {
-            startGlyphService(context);
+            startGlyphChargingService(context);
         } else {
-            stopGlyphService(context);
+            stopGlyphChargingService(context);
         }
     }
 

@@ -26,8 +26,8 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
-public class GlyphService extends Service {
-    private static final String TAG = "GlyphService";
+public class GlyphChargingService extends Service {
+    private static final String TAG = "GlyphChargingService";
     private static final boolean DEBUG = true;
 
     @Override

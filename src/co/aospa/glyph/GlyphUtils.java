@@ -51,9 +51,13 @@ public final class GlyphUtils {
 
     public static void checkGlyphService(Context context) {
         if (isGlyphEnabled(context)) {
-            startGlyphChargingService(context);
+            if (isGlyphChargingEnabled(context)) {
+                startGlyphChargingService(context);
+            }
         } else {
-            stopGlyphChargingService(context);
+          if (!isGlyphChargingEnabled(context)) {
+                stopGlyphChargingService(context);
+          }
         }
     }
 

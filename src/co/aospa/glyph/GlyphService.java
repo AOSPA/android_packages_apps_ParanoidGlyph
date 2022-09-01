@@ -34,11 +34,6 @@ public class GlyphService extends Service {
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
 
-        IntentFilter screenStateFilter = new IntentFilter();
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(mScreenStateReceiver, screenStateFilter);
-
         IntentFilter powerMonitor = new IntentFilter();
         powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
         powerMonitor.addAction(Intent.ACTION_POWER_DISCONNECTED);
@@ -55,21 +50,12 @@ public class GlyphService extends Service {
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
         super.onDestroy();
-        this.unregisterReceiver(mScreenStateReceiver);
         this.unregisterReceiver(mPowerMonitor);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    private void onDisplayOn() {
-        if (DEBUG) Log.d(TAG, "Display on");
-    }
-
-    private void onDisplayOff() {
-        if (DEBUG) Log.d(TAG, "Display off");
     }
 
     private void onPowerConnected() {
@@ -79,18 +65,6 @@ public class GlyphService extends Service {
     private void onPowerDisconnected() {
         if (DEBUG) Log.d(TAG, "Power disconnected");
     }
-
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                onDisplayOn();
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                onDisplayOff();
-            }
-
-        }
-    };
 
     public BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
         @Override

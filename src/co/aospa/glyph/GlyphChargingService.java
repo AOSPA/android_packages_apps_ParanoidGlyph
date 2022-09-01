@@ -30,6 +30,8 @@ public class GlyphChargingService extends Service {
     private static final String TAG = "GlyphChargingService";
     private static final boolean DEBUG = true;
 
+    private static final String BATTERYLEVEL = "/sys/class/power_supply/battery/capacity";
+
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
@@ -60,6 +62,8 @@ public class GlyphChargingService extends Service {
 
     private void onPowerConnected() {
         if (DEBUG) Log.d(TAG, "Power connected");
+        int batteryLevel = GlyphFileUtils.readLineInt(BATTERYLEVEL);
+        if (DEBUG) Log.d(TAG, "Battery level: " + batteryLevel);
     }
 
     private void onPowerDisconnected() {

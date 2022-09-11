@@ -30,10 +30,6 @@ public final class GlyphFileUtils {
     private static final String TAG = "GlyphFileUtils";
     private static final boolean DEBUG = true;
 
-    private GlyphFileUtils() {
-        // This class is not supposed to be instantiated
-    }
-
     public static String readLine(String fileName) {
         String line = null;
         BufferedReader reader = null;

@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -31,10 +32,22 @@ public class GlyphChargingService extends Service {
     private static final boolean DEBUG = true;
 
     private static final String BATTERYLEVEL = "/sys/class/power_supply/battery/capacity";
+    private static final String SINGLELEDPATH =  "/sys/class/leds/aw210xx_led/single_led_br";
+
+    private static final float[] ANIMATION_DOT = {0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.1f, 0.11f, 0.12f, 0.13f, 0.14f, 0.15f, 0.16f, 0.17f, 0.18f, 0.19f, 0.2f, 0.21f, 0.22f, 0.23f, 0.24f, 0.25f, 0.26f, 0.27f, 0.28f, 0.29f, 0.3f, 0.31f, 0.32f, 0.33f, 0.34f, 0.35f, 0.36f, 0.37f, 0.38f, 0.39f, 0.4f, 0.41f, 0.42f, 0.43f, 0.44f, 0.45f, 0.46f, 0.47f, 0.48f, 0.49f, 0.5f, 0.51f, 0.52f, 0.53f, 0.54f, 0.55f, 0.56f, 0.57f, 0.58f, 0.59f, 0.6f, 0.61f, 0.62f, 0.63f, 0.64f, 0.65f, 0.66f, 0.67f, 0.68f, 0.69f, 0.7f, 0.71f, 0.72f, 0.73f, 0.74f, 0.75f, 0.76f, 0.77f, 0.78f, 0.79f, 0.8f, 0.81f, 0.82f, 0.83f, 0.84f, 0.85f, 0.86f, 0.87f, 0.88f, 0.89f, 0.9f, 0.91f, 0.92f, 0.93f, 0.94f, 0.95f, 0.96f, 0.97f, 0.98f, 0.99f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 1f, 0.99f, 0.98f, 0.97f, 0.96f, 0.95f, 0.94f, 0.93f, 0.92f, 0.91f, 0.9f, 0.89f, 0.88f, 0.87f, 0.86f, 0.85f, 0.84f, 0.83f, 0.82f, 0.81f, 0.8f, 0.79f, 0.78f, 0.77f, 0.76f, 0.75f, 0.74f, 0.73f, 0.72f, 0.71f, 0.7f, 0.69f, 0.68f, 0.67f, 0.66f, 0.65f, 0.64f, 0.63f, 0.62f, 0.61f, 0.6f, 0.59f, 0.58f, 0.57f, 0.56f, 0.55f, 0.54f, 0.53f, 0.52f, 0.51f, 0.5f, 0.49f, 0.48f, 0.47f, 0.46f, 0.45f, 0.44f, 0.43f, 0.42f, 0.41f, 0.4f, 0.39f, 0.38f, 0.37f, 0.36f, 0.35f, 0.34f, 0.33f, 0.32f, 0.31f, 0.3f, 0.29f, 0.28f, 0.27f, 0.26f, 0.25f, 0.24f, 0.23f, 0.22f, 0.21f, 0.2f, 0.19f, 0.18f, 0.17f, 0.16f, 0.15f, 0.14f, 0.13f, 0.12f, 0.11f, 0.1f, 0.09f, 0.08f, 0.07f, 0.06f, 0.05f, 0.04f, 0.03f, 0.02f, 0.01f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
+
+    private int brightness = 4095;
+
+    private boolean mDotAnimationEnabled = false;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
+
+		BatteryManager myBatteryManager = (BatteryManager) this.getSystemService(Context.BATTERY_SERVICE);
+		if (myBatteryManager.isCharging()) {
+			onPowerConnected();
+		}
 
         IntentFilter powerMonitor = new IntentFilter();
         powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -51,6 +64,9 @@ public class GlyphChargingService extends Service {
     @Override
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
+
+		onPowerDisconnected();
+
         super.onDestroy();
         this.unregisterReceiver(mPowerMonitor);
     }
@@ -64,11 +80,28 @@ public class GlyphChargingService extends Service {
         if (DEBUG) Log.d(TAG, "Power connected");
         int batteryLevel = GlyphFileUtils.readLineInt(BATTERYLEVEL);
         if (DEBUG) Log.d(TAG, "Battery level: " + batteryLevel);
+        chargingDotAnimation.start();
     }
 
     private void onPowerDisconnected() {
         if (DEBUG) Log.d(TAG, "Power disconnected");
+        chargingDotAnimation.interrupt();
     }
+
+    Thread chargingDotAnimation = new Thread("Charging Dot Animation") {
+        public void run() {
+            try {
+                while (true) {
+                    for (float f: ANIMATION_DOT) {
+                        GlyphFileUtils.writeLedFloat(SINGLELEDPATH, 16, f * brightness);
+                        Thread.sleep(10);
+                    }
+                }
+            } catch (InterruptedException e) {
+                GlyphFileUtils.writeLedInt(SINGLELEDPATH, 16, 0);
+            }
+        }
+    };
 
     public BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
         @Override

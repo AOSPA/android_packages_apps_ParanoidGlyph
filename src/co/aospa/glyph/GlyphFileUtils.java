@@ -85,4 +85,12 @@ public final class GlyphFileUtils {
             }
         }
     }
+
+    public static void writeLedInt(String fileName, int led, int value) {
+        writeLine(fileName, Integer.toString(led) + " " + Integer.toString(value));
+    }
+
+    public static void writeLedFloat(String fileName, int led, float value) {
+        writeLine(fileName, Integer.toString(led) + " " + Integer.toString(Math.round(value)));
+    }
 }

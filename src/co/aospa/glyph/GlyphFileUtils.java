@@ -30,6 +30,8 @@ public final class GlyphFileUtils {
     private static final String TAG = "GlyphFileUtils";
     private static final boolean DEBUG = true;
 
+    private static final String SINGLELEDPATH =  "/sys/class/leds/aw210xx_led/single_led_br";
+
     public static String readLine(String fileName) {
         String line = null;
         BufferedReader reader = null;
@@ -82,11 +84,11 @@ public final class GlyphFileUtils {
         }
     }
 
-    public static void writeLedInt(String fileName, int led, int value) {
-        writeLine(fileName, Integer.toString(led) + " " + Integer.toString(value));
+    public static void writeSingleLed(int led, int value) {
+        writeLine(SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(value));
     }
 
-    public static void writeLedFloat(String fileName, int led, float value) {
-        writeLine(fileName, Integer.toString(led) + " " + Integer.toString(Math.round(value)));
+    public static void writeSingleLed(int led, float value) {
+        writeLine(SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(Math.round(value)));
     }
 }

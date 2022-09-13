@@ -43,10 +43,10 @@ public class GlyphChargingService extends Service {
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
 
-		BatteryManager myBatteryManager = (BatteryManager) this.getSystemService(Context.BATTERY_SERVICE);
-		if (myBatteryManager.isCharging()) {
-			onPowerConnected();
-		}
+        BatteryManager myBatteryManager = (BatteryManager) getSystemService(Context.BATTERY_SERVICE);
+        if (myBatteryManager.isCharging()) {
+            onPowerConnected();
+        }
 
         IntentFilter powerMonitor = new IntentFilter();
         powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -64,7 +64,7 @@ public class GlyphChargingService extends Service {
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
 
-		onPowerDisconnected();
+        onPowerDisconnected();
 
         super.onDestroy();
         this.unregisterReceiver(mPowerMonitor);
@@ -78,10 +78,10 @@ public class GlyphChargingService extends Service {
     private void onPowerConnected() {
         if (DEBUG) Log.d(TAG, "Power connected");
         if (DEBUG) Log.d(TAG, "Battery level: " + GlyphFileUtils.readLineInt(BATTERYLEVELPATH));
-        if (GlyphUtils.isGlyphChargingLevelEnabled(this)) {
+        if (GlyphUtils.isGlyphChargingLevelEnabled(this) && !chargingIndicatorAnimation.isAlive()) {
             chargingIndicatorAnimation.start();
         }
-        if (GlyphUtils.isGlyphChargingDotEnabled(this)) {
+        if (GlyphUtils.isGlyphChargingDotEnabled(this) && !chargingDotAnimation.isAlive()) {
             chargingDotAnimation.start();
         }
     }

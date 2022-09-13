@@ -78,7 +78,12 @@ public class GlyphChargingService extends Service {
     private void onPowerConnected() {
         if (DEBUG) Log.d(TAG, "Power connected");
         if (DEBUG) Log.d(TAG, "Battery level: " + GlyphFileUtils.readLineInt(BATTERYLEVELPATH));
-        chargingIndicatorAnimation.start();
+        if (GlyphUtils.isGlyphChargingLevelEnabled(this)) {
+            chargingIndicatorAnimation.start();
+        }
+        if (GlyphUtils.isGlyphChargingDotEnabled(this)) {
+            chargingDotAnimation.start();
+        }
     }
 
     private void onPowerDisconnected() {
@@ -90,6 +95,7 @@ public class GlyphChargingService extends Service {
     Thread chargingDotAnimation = new Thread("Charging Dot Animation") {
         public void run() {
             try {
+                while (chargingIndicatorAnimation.isAlive()) {}
                 while (true) {
                     for (float f: ANIMATION_DOT) {
                         GlyphFileUtils.writeSingleLed(16, f * brightness);
@@ -140,9 +146,8 @@ public class GlyphChargingService extends Service {
                     Thread.sleep(10);
                 }
                 Thread.sleep(730);
-                chargingDotAnimation.start();
             } catch (InterruptedException e) {
-                for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13}) {
+                for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
                     GlyphFileUtils.writeSingleLed(i, 0);
                 }
             }

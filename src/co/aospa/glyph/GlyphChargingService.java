@@ -129,7 +129,7 @@ public class GlyphChargingService extends Service {
                         GlyphFileUtils.writeSingleLed(16, ANIMATION_DOT[i] * brightness);
                         Thread.sleep(10);
                     }
-                    Thread.sleep(170);
+                    Thread.sleep(190);
                 }
             } catch (InterruptedException e) {
                 GlyphFileUtils.writeSingleLed(16, 0);

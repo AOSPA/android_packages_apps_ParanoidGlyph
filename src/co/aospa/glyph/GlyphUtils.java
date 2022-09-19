@@ -40,13 +40,13 @@ public final class GlyphUtils {
     protected static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
 
     public static void startGlyphChargingService(Context context) {
-        if (DEBUG) Log.d(TAG, "Starting service");
+        if (DEBUG) Log.d(TAG, "Starting Glyph charging service");
         context.startServiceAsUser(new Intent(context, GlyphChargingService.class),
                 UserHandle.CURRENT);
     }
 
     protected static void stopGlyphChargingService(Context context) {
-        if (DEBUG) Log.d(TAG, "Stopping service");
+        if (DEBUG) Log.d(TAG, "Stopping Glyph charging service");
         context.stopServiceAsUser(new Intent(context, GlyphChargingService.class),
                 UserHandle.CURRENT);
     }

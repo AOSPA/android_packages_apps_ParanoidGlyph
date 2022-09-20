@@ -70,8 +70,18 @@ public final class GlyphUtils {
     }
 
     public static int getGlyphBrightness(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(GlyphConstants.GLYPH_BRIGHTNESS, 4095);
+        int brightness = PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(GlyphConstants.GLYPH_BRIGHTNESS, 3);
+        switch (brightness) {
+            case 1:
+                return 102; // 4095/40
+            case 2:
+                return 682; // 4095/6
+            case 3:
+                return 1365; // 4095/6
+            default:
+                return 4095;
+        }
     }
 
     public static boolean isGlyphChargingEnabled(Context context) {

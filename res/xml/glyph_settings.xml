@@ -27,8 +27,8 @@
 
     <SeekBarPreference
         android:key="glyph_settings_brightness"
-        android:defaultValue="4095"
-        android:max="4095"
+        android:max="4"
+        android:defaultValue="3"
         android:title="@string/glyph_settings_brightness" />
 
     <PreferenceCategory

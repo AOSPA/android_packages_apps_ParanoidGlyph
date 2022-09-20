@@ -29,6 +29,8 @@
     <string name="glyph_settings_title">Glyph interface</string>
     <string name="glyph_settings_summary">Options for glyph lights</string>
 
+    <string name="glyph_settings_brightness">Brightness</string>
+
     <string name="glyph_settings_charging_title">Charging animation</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>
     <string name="glyph_settings_charging_level_summary">Show battery level when pluging in</string>

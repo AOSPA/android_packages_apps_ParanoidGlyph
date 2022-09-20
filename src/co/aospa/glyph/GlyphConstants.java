@@ -26,11 +26,16 @@ public final class GlyphConstants {
     protected static int BRIGHTNESS = 4095;
 
     protected static final String GLYPH_ENABLE = "glyph_enable";
+    protected static final String GLYPH_BRIGHTNESS = "glyph_settings_brightness";
     protected static final String GLYPH_CHARGING_CATEGORY = "glyph_settings_charging";
     protected static final String GLYPH_CHARGING_DOT_ENABLE = "glyph_settings_charging_dot";
     protected static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
 
     protected static final String BATTERYLEVELPATH = "/sys/class/power_supply/battery/capacity";
     protected static final String SINGLELEDPATH =  "/sys/class/leds/aw210xx_led/single_led_br";
+
+    protected static void setBrightness(int b) {
+        BRIGHTNESS = b;
+    }
 
 }

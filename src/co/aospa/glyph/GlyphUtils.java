@@ -48,6 +48,7 @@ public final class GlyphUtils {
 
     public static void checkGlyphService(Context context) {
         if (isGlyphEnabled(context)) {
+            GlyphConstants.setBrightness(getGlyphBrightness(context));
             if (isGlyphChargingEnabled(context)) {
                 startGlyphChargingService(context);
             } else {
@@ -66,6 +67,11 @@ public final class GlyphUtils {
     public static boolean isGlyphEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
                 GlyphConstants.GLYPH_ENABLE, 1) != 0;
+    }
+
+    public static int getGlyphBrightness(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(GlyphConstants.GLYPH_BRIGHTNESS, 4095);
     }
 
     public static boolean isGlyphChargingEnabled(Context context) {

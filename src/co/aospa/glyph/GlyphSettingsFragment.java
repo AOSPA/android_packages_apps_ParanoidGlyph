@@ -34,6 +34,7 @@ import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragment;
+import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 
 import com.android.settingslib.widget.MainSwitchPreference;
@@ -46,6 +47,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
     private MainSwitchPreference mSwitchBar;
 
+    private SeekBarPreference mBrightnessPreference;
     private SwitchPreference mChargingDotPreference;
     private SwitchPreference mChargingLevelPreference;
 
@@ -66,6 +68,11 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
         mSwitchBar = (MainSwitchPreference) findPreference(GlyphConstants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(glyphEnabled);
+
+        mBrightnessPreference = (SeekBarPreference) findPreference(GlyphConstants.GLYPH_BRIGHTNESS);
+        mBrightnessPreference.setEnabled(glyphEnabled);
+        mBrightnessPreference.setUpdatesContinuously(true);
+        mBrightnessPreference.setOnPreferenceChangeListener(this);
 
         mChargingDotPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE);
         mChargingDotPreference.setEnabled(glyphEnabled);

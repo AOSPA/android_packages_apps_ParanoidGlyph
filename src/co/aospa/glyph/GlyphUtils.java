@@ -34,11 +34,6 @@ public final class GlyphUtils {
     private static final String TAG = "GlyphUtils";
     private static final boolean DEBUG = true;
 
-    protected static final String GLYPH_ENABLE = "glyph_enable";
-    protected static final String GLYPH_CHARGING_CATEGORY = "glyph_settings_charging";
-    protected static final String GLYPH_CHARGING_DOT_ENABLE = "glyph_settings_charging_dot";
-    protected static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
-
     public static void startGlyphChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph charging service");
         context.startServiceAsUser(new Intent(context, GlyphChargingService.class),
@@ -65,12 +60,12 @@ public final class GlyphUtils {
 
     protected static boolean enableGlyph(Context context, boolean enable) {
         return Settings.Secure.putInt(context.getContentResolver(),
-                GLYPH_ENABLE, enable ? 1 : 0);
+                GlyphConstants.GLYPH_ENABLE, enable ? 1 : 0);
     }
 
     public static boolean isGlyphEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
-                GLYPH_ENABLE, 1) != 0;
+                GlyphConstants.GLYPH_ENABLE, 1) != 0;
     }
 
     public static boolean isGlyphChargingEnabled(Context context) {
@@ -79,11 +74,11 @@ public final class GlyphUtils {
 
     public static boolean isGlyphChargingDotEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GLYPH_CHARGING_DOT_ENABLE, false);
+                .getBoolean(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE, false);
     }
 
     public static boolean isGlyphChargingLevelEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GLYPH_CHARGING_LEVEL_ENABLE, false);
+                .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false);
     }
 }

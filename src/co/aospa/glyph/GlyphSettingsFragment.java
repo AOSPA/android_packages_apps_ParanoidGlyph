@@ -63,14 +63,14 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
         boolean glyphEnabled = GlyphUtils.isGlyphEnabled(getActivity());
 
-        mSwitchBar = (MainSwitchPreference) findPreference(GlyphUtils.GLYPH_ENABLE);
+        mSwitchBar = (MainSwitchPreference) findPreference(GlyphConstants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(glyphEnabled);
 
-        mChargingDotPreference = (SwitchPreference) findPreference(GlyphUtils.GLYPH_CHARGING_DOT_ENABLE);
+        mChargingDotPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE);
         mChargingDotPreference.setEnabled(glyphEnabled);
         mChargingDotPreference.setOnPreferenceChangeListener(this);
-        mChargingLevelPreference = (SwitchPreference) findPreference(GlyphUtils.GLYPH_CHARGING_LEVEL_ENABLE);
+        mChargingLevelPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE);
         mChargingLevelPreference.setEnabled(glyphEnabled);
         mChargingLevelPreference.setOnPreferenceChangeListener(this);
 

@@ -31,6 +31,7 @@ public final class GlyphConstants {
     protected static final String GLYPH_CHARGING_DOT_ENABLE = "glyph_settings_charging_dot";
     protected static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
 
+    protected static final String ALLWHITELEDSPATH = "/sys/class/leds/aw210xx_led/all_white_leds_br";
     protected static final String BATTERYLEVELPATH = "/sys/class/power_supply/battery/capacity";
     protected static final String SINGLELEDPATH =  "/sys/class/leds/aw210xx_led/single_led_br";
 

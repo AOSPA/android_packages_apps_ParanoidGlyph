@@ -83,6 +83,10 @@ public final class GlyphFileUtils {
         }
     }
 
+    public static void writeLine(String fileName, int value) {
+        writeLine(fileName, Integer.toString(value));
+    }
+
     public static void writeSingleLed(int led, int value) {
         writeLine(GlyphConstants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(value));
     }

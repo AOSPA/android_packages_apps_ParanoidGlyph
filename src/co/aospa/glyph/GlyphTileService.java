@@ -50,10 +50,12 @@ public class GlyphTileService extends TileService {
     }
 
     private boolean getEnabled() {
-        return (GlyphFileUtils.readLineInt(GlyphConstants.ALLWHITELEDSPATH) != 0);
+        return GlyphStatusManager.isAllLedEnabled();
     }
 
     private void setEnabled(boolean enabled) {
+        GlyphStatusManager.setAllLedsEnabled(enabled);
+        GlyphStatusManager.setAllLedsActive(enabled);
         GlyphFileUtils.writeLine(GlyphConstants.ALLWHITELEDSPATH, enabled ? 4095 : 0);
     }
 }

@@ -36,12 +36,14 @@ public class GlyphChargingService extends Service {
     private static final String TAG = "GlyphChargingService";
     private static final boolean DEBUG = true;
 
+    private static boolean isGlyphChargingDotSettingEnabled = false;
+    private static boolean isGlyphChargingLevelSettingEnabled = false;
+    private static boolean wasGlyphChargingDotSettingEnabled = false;
+    private static boolean wasGlyphChargingLevelSettingEnabled = false;
+
     private static final float[] ANIMATION_DOT = {0f, 0.01f, 0.02f, 0.03f, 0.04f, 0.05f, 0.06f, 0.07f, 0.08f, 0.09f, 0.1f, 0.11f, 0.12f, 0.13f, 0.14f, 0.15f, 0.16f, 0.17f, 0.18f, 0.19f, 0.2f, 0.21f, 0.22f, 0.23f, 0.24f, 0.25f, 0.26f, 0.27f, 0.28f, 0.29f, 0.3f, 0.31f, 0.32f, 0.33f, 0.34f, 0.35f, 0.36f, 0.37f, 0.38f, 0.39f, 0.4f, 0.41f, 0.42f, 0.43f, 0.44f, 0.45f, 0.46f, 0.47f, 0.48f, 0.49f, 0.5f, 0.51f, 0.52f, 0.53f, 0.54f, 0.55f, 0.56f, 0.57f, 0.58f, 0.59f, 0.6f, 0.61f, 0.62f, 0.63f, 0.64f, 0.65f, 0.66f, 0.67f, 0.68f, 0.69f, 0.7f, 0.71f, 0.72f, 0.73f, 0.74f, 0.75f, 0.76f, 0.77f, 0.78f, 0.79f, 0.8f, 0.81f, 0.82f, 0.83f, 0.84f, 0.85f, 0.86f, 0.87f, 0.88f, 0.89f, 0.9f, 0.91f, 0.92f, 0.93f, 0.94f, 0.95f, 0.96f, 0.97f, 0.98f, 0.99f, 1f};
 
     private ExecutorService mExecutorService;
-
-    private boolean chargingDotAnimationEnabled = false;
-    private boolean chargingLevelAnimationEnabled = false;
 
     @Override
     public void onCreate() {
@@ -51,7 +53,7 @@ public class GlyphChargingService extends Service {
 
         BatteryManager myBatteryManager = (BatteryManager) getSystemService(Context.BATTERY_SERVICE);
         if (myBatteryManager.isCharging()) {
-            onPowerConnected();
+            updateChargingAnimations(true);
         }
 
         IntentFilter powerMonitor = new IntentFilter();
@@ -67,6 +69,7 @@ public class GlyphChargingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG) Log.d(TAG, "Starting service");
+        updateChargingAnimations(false);
         return START_STICKY;
     }
 
@@ -85,63 +88,82 @@ public class GlyphChargingService extends Service {
         return null;
     }
 
+    private void updateChargingAnimations(boolean ignoreOldState) {
+        isGlyphChargingDotSettingEnabled = GlyphSettingsManager.isGlyphChargingDotEnabled(this);
+        isGlyphChargingLevelSettingEnabled = GlyphSettingsManager.isGlyphChargingLevelEnabled(this);
+        if (isGlyphChargingLevelSettingEnabled) {
+            if (isGlyphChargingLevelSettingEnabled != wasGlyphChargingLevelSettingEnabled || ignoreOldState) enableChargingLevelAnimation();
+        } else {
+            disableChargingLevelAnimation();
+        }
+        if (isGlyphChargingDotSettingEnabled) {
+            if (isGlyphChargingDotSettingEnabled != wasGlyphChargingDotSettingEnabled || ignoreOldState) enableChargingDotAnimation();
+        } else {
+            disableChargingDotAnimation();
+        }
+        wasGlyphChargingDotSettingEnabled = GlyphSettingsManager.isGlyphChargingDotEnabled(this);
+        wasGlyphChargingLevelSettingEnabled = GlyphSettingsManager.isGlyphChargingLevelEnabled(this);
+    }
+
     private void onPowerConnected() {
         if (DEBUG) Log.d(TAG, "Power connected");
         if (DEBUG) Log.d(TAG, "Battery level: " + GlyphFileUtils.readLineInt(GlyphConstants.BATTERYLEVELPATH));
-        if (GlyphUtils.isGlyphChargingLevelEnabled(this) && !chargingLevelAnimationEnabled) {
-            enableChargingLevelAnimation();
-        }
-        if (GlyphUtils.isGlyphChargingDotEnabled(this) && !chargingDotAnimationEnabled) {
-            enableChargingDotAnimation();
-        }
+        updateChargingAnimations(true);
     }
 
     private void onPowerDisconnected() {
         if (DEBUG) Log.d(TAG, "Power disconnected");
-        if (chargingLevelAnimationEnabled) {
-            disableChargingLevelAnimation();
-        }
-        if (chargingDotAnimationEnabled) {
-            disableChargingDotAnimation();
-        }
+        disableChargingLevelAnimation();
+        disableChargingDotAnimation();
     }
 
     private void enableChargingDotAnimation() {
+        if (GlyphStatusManager.isChargingLedActive()) return;
         if (DEBUG) Log.d(TAG, "Enabling Charging Dot Animation");
+        GlyphStatusManager.setChargingLedEnabled(true);
         submit(() -> {
-            chargingDotAnimationEnabled = true;
-            try {
-                while (chargingLevelAnimationEnabled) {};
-                while (true) {
-                    for (float f: ANIMATION_DOT) {
-                        if (!chargingDotAnimationEnabled) throw new InterruptedException();
-                        GlyphFileUtils.writeSingleLed(16, f * GlyphConstants.BRIGHTNESS);
-                        Thread.sleep(10);
+            while (GlyphStatusManager.isChargingLevelLedActive()) {};
+            GlyphStatusManager.setChargingLedActive(true);
+            while (GlyphStatusManager.isChargingLedEnabled()) {
+                try {
+                    while (true) {
+                        for (float f: ANIMATION_DOT) {
+                            if (!GlyphStatusManager.isChargingLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                            GlyphFileUtils.writeSingleLed(16, f * GlyphConstants.BRIGHTNESS);
+                            Thread.sleep(10);
+                        }
+                        Thread.sleep(190);
+                        for (int i=ANIMATION_DOT.length-1; i>=0; i--) {
+                            if (!GlyphStatusManager.isChargingLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                            GlyphFileUtils.writeSingleLed(16, ANIMATION_DOT[i] * GlyphConstants.BRIGHTNESS);
+                            Thread.sleep(10);
+                        }
+                        Thread.sleep(190);
                     }
-                    Thread.sleep(190);
-                    for (int i=ANIMATION_DOT.length-1; i>=0; i--) {
-                        if (!chargingDotAnimationEnabled) throw new InterruptedException();
-                        GlyphFileUtils.writeSingleLed(16, ANIMATION_DOT[i] * GlyphConstants.BRIGHTNESS);
-                        Thread.sleep(10);
+
+                } catch (InterruptedException e) {
+                    if (GlyphStatusManager.isAllLedEnabled()) {
+                        while (GlyphStatusManager.isAllLedActive()) {};
+                    } else {
+                        GlyphFileUtils.writeSingleLed(16, 0);
                     }
-                    Thread.sleep(190);
                 }
-            } catch (InterruptedException e) {
-                GlyphFileUtils.writeSingleLed(16, 0);
             }
-            chargingDotAnimationEnabled = false;
+            GlyphStatusManager.setChargingLedActive(false);
         });
     };
 
     private void disableChargingDotAnimation() {
         if (DEBUG) Log.d(TAG, "Disabling Charging Dot Animation");
-        chargingDotAnimationEnabled = false;
+        GlyphStatusManager.setChargingLedEnabled(false);
     }
 
     private void enableChargingLevelAnimation() {
+        if (GlyphStatusManager.isChargingLedActive() || GlyphStatusManager.isChargingLevelLedActive()) return;
         if (DEBUG) Log.d(TAG, "Enabling Charging Indicator Animation");
+        GlyphStatusManager.setChargingLevelLedEnabled(true);
         submit(() -> {
-            chargingLevelAnimationEnabled = true;
+            GlyphStatusManager.setChargingLevelLedActive(true);
             try {
                 int batteryLevel = GlyphFileUtils.readLineInt(GlyphConstants.BATTERYLEVELPATH);
                 int[] batteryArray = new int[]{};
@@ -163,32 +185,36 @@ public class GlyphChargingService extends Service {
                     batteryArray = new int[]{16, 13};
                 }
                 for (int i : batteryArray) {
-                    if (!chargingLevelAnimationEnabled) throw new InterruptedException();
+                    if (!GlyphStatusManager.isChargingLevelLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
                     GlyphFileUtils.writeSingleLed(i, GlyphConstants.BRIGHTNESS);
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
                 for (int i=batteryArray.length-1; i>=0; i--) {
-                    if (!chargingLevelAnimationEnabled) throw new InterruptedException();
+                    if (!GlyphStatusManager.isChargingLevelLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
                     GlyphFileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
                 }
                 Thread.sleep(730);
             } catch (InterruptedException e) {
-                for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
-                    GlyphFileUtils.writeSingleLed(i, 0);
+                if (!GlyphStatusManager.isAllLedActive()) {
+                    for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
+                        GlyphFileUtils.writeSingleLed(i, 0);
+                    }
                 }
+            } finally {
+                GlyphStatusManager.setChargingLevelLedActive(false);
+                GlyphStatusManager.setChargingLevelLedEnabled(false);
             }
-            chargingLevelAnimationEnabled = false;
         });
     };
 
     private void disableChargingLevelAnimation() {
         if (DEBUG) Log.d(TAG, "Disabling Charging Level Animation");
-        chargingLevelAnimationEnabled = false;
+        GlyphStatusManager.setChargingLevelLedEnabled(false);
     }
 
-    public BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
+    private BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_POWER_CONNECTED)) {

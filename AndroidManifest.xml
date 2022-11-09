@@ -42,8 +42,20 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".GlyphChargingService"
-                 android:permission="ParanoidGlyphChargingService">
+        <service
+            android:name=".GlyphChargingService"
+            android:permission="ParanoidGlyphChargingService">
+        </service>
+
+        <service
+            android:name=".GlyphTileService"
+            android:exported="true"
+            android:label="@string/glyph_settings_enable"
+            android:icon="@drawable/ic_glyphs_logo"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
         </service>
 
         <activity
@@ -66,17 +78,6 @@
                 android:name="com.android.settings.order"
                 android:value="-255" />
         </activity>
-
-        <service
-            android:name=".GlyphTileService"
-            android:exported="true"
-            android:label="@string/glyph_settings_enable"
-            android:icon="@drawable/ic_glyphs_logo"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action android:name="android.service.quicksettings.action.QS_TILE" />
-            </intent-filter>
-        </service>
 
     </application>
 </manifest>

@@ -20,14 +20,8 @@ package co.aospa.glyph;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.display.AmbientDisplayConfiguration;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.Log;
-import androidx.preference.PreferenceManager;
 
 public final class GlyphUtils {
 
@@ -47,9 +41,9 @@ public final class GlyphUtils {
     }
 
     public static void checkGlyphService(Context context) {
-        if (isGlyphEnabled(context)) {
-            GlyphConstants.setBrightness(getGlyphBrightness(context));
-            if (isGlyphChargingEnabled(context)) {
+        if (GlyphSettingsManager.isGlyphEnabled(context)) {
+            GlyphConstants.setBrightness(GlyphSettingsManager.getGlyphBrightness(context));
+            if (GlyphSettingsManager.isGlyphChargingEnabled(context)) {
                 startGlyphChargingService(context);
             } else {
                 stopGlyphChargingService(context);
@@ -57,44 +51,5 @@ public final class GlyphUtils {
         } else {
             stopGlyphChargingService(context);
         }
-    }
-
-    protected static boolean enableGlyph(Context context, boolean enable) {
-        return Settings.Secure.putInt(context.getContentResolver(),
-                GlyphConstants.GLYPH_ENABLE, enable ? 1 : 0);
-    }
-
-    public static boolean isGlyphEnabled(Context context) {
-        return Settings.Secure.getInt(context.getContentResolver(),
-                GlyphConstants.GLYPH_ENABLE, 1) != 0;
-    }
-
-    public static int getGlyphBrightness(Context context) {
-        int brightness = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(GlyphConstants.GLYPH_BRIGHTNESS, 3);
-        switch (brightness) {
-            case 1:
-                return 102; // 4095/40
-            case 2:
-                return 682; // 4095/6
-            case 3:
-                return 1365; // 4095/6
-            default:
-                return 4095;
-        }
-    }
-
-    public static boolean isGlyphChargingEnabled(Context context) {
-        return isGlyphChargingDotEnabled(context) || isGlyphChargingLevelEnabled(context);
-    }
-
-    public static boolean isGlyphChargingDotEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE, false);
-    }
-
-    public static boolean isGlyphChargingLevelEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false);
     }
 }

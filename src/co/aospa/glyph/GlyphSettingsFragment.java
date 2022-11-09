@@ -63,7 +63,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
             showHelp();
         }
 
-        boolean glyphEnabled = GlyphUtils.isGlyphEnabled(getActivity());
+        boolean glyphEnabled = GlyphSettingsManager.isGlyphEnabled(getActivity());
 
         mSwitchBar = (MainSwitchPreference) findPreference(GlyphConstants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
@@ -94,7 +94,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        GlyphUtils.enableGlyph(getActivity(), isChecked);
+        GlyphSettingsManager.enableGlyph(getActivity(), isChecked);
         GlyphUtils.checkGlyphService(getActivity());
 
         mSwitchBar.setChecked(isChecked);

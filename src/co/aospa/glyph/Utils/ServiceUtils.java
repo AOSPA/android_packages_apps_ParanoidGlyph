@@ -27,6 +27,7 @@ import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Services.CallReceiverService;
 import co.aospa.glyph.Services.ChargingService;
+import co.aospa.glyph.Services.NotificationService;
 
 public final class ServiceUtils {
 
@@ -57,6 +58,18 @@ public final class ServiceUtils {
                 UserHandle.CURRENT);
     }
 
+    public static void startNotificationService(Context context) {
+        if (DEBUG) Log.d(TAG, "Starting Glyph notifs service");
+        context.startServiceAsUser(new Intent(context, NotificationService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopNotificationService(Context context) {
+        if (DEBUG) Log.d(TAG, "Stopping Glyph notifs service");
+        context.stopServiceAsUser(new Intent(context, NotificationService.class),
+                UserHandle.CURRENT);
+    }
+
     public static void checkGlyphService(Context context) {
         if (SettingsManager.isGlyphEnabled(context)) {
             Constants.setBrightness(SettingsManager.getGlyphBrightness(context));
@@ -70,9 +83,15 @@ public final class ServiceUtils {
             } else {
                 stopCallReceiverService(context);
             }
+            if (SettingsManager.isGlyphNotifsEnabled(context)) {
+                startNotificationService(context);
+            } else {
+                stopNotificationService(context);
+            }
         } else {
             stopChargingService(context);
             stopCallReceiverService(context);
+            stopNotificationService(context);
         }
     }
 }

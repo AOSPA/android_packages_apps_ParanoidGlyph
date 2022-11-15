@@ -32,6 +32,9 @@ public final class Constants {
     public static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
     public static final String GLYPH_CALL_CATEGORY = "glyph_settings_call";
     public static final String GLYPH_CALL_ENABLE = "glyph_settings_call_toggle";
+    public static final String GLYPH_NOTIFS_ENABLE = "glyph_settings_notifs_toggle";
+    public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
+    public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
 
     public static final String BATTERYLEVELPATH = "/sys/class/power_supply/battery/capacity";
     
@@ -44,6 +47,18 @@ public final class Constants {
     public static final String EXCLAMATIONMARKLEDPATH =  BASELEDPATH + "horse_race_leds_br";     // Exclamation Mark Full
     public static final String SINGLELEDPATH =  BASELEDPATH + "single_led_br";                   // Single LED
     public static final String SLANTLEDPATH =  BASELEDPATH + "front_cam_led_br";                 // Slanting Line
+
+    public static final String[] APPSTOIGNORENOTIFS = {
+                                                        "android",
+                                                        "com.android.traceur",
+                                                        //"com.google.android.dialer",
+                                                        "com.google.android.setupwizard",
+                                                        "dev.kdrag0n.dyntheme.privileged.sys"
+                                                    };
+    public static final String[] CHANNELSTOIGNORENOTIFS = {
+                                                        "phone_incoming_call",
+                                                        "phone_ongoing_call"
+                                                    };
 
     public static void setBrightness(int b) {
         BRIGHTNESS = b;

@@ -72,4 +72,19 @@ public final class SettingsManager {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(Constants.GLYPH_CALL_ENABLE, false) && isGlyphEnabled(context);
     }
+
+    public static boolean isGlyphNotifsEnabled(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(),
+                Constants.GLYPH_NOTIFS_ENABLE, 1) != 0 && isGlyphEnabled(context);
+    }
+
+    public static boolean setGlyphNotifsEnabled(Context context, boolean enable) {
+        return Settings.Secure.putInt(context.getContentResolver(),
+                Constants.GLYPH_NOTIFS_ENABLE, enable ? 1 : 0);
+    }
+
+    public static boolean isGlyphNotifsAppEnabled(Context context, String app) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(app, true) && isGlyphNotifsEnabled(context);
+    }
 }

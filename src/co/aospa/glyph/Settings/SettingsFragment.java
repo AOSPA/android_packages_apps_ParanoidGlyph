@@ -22,12 +22,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemProperties;
+import android.provider.Settings;
 import android.widget.Switch;
 
 import androidx.preference.Preference;
@@ -37,6 +41,7 @@ import androidx.preference.PreferenceFragment;
 import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreference;
 
+import com.android.settingslib.PrimarySwitchPreference;
 import com.android.settingslib.widget.MainSwitchPreference;
 import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
@@ -51,9 +56,13 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     private MainSwitchPreference mSwitchBar;
 
     private SeekBarPreference mBrightnessPreference;
+    private PrimarySwitchPreference mNotifsPreference;
     private SwitchPreference mCallPreference;
     private SwitchPreference mChargingDotPreference;
     private SwitchPreference mChargingLevelPreference;
+
+    private ContentResolver mContentResolver;
+    private SettingObserver mSettingObserver;
 
     private Handler mHandler = new Handler();
 
@@ -67,6 +76,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             showHelp();
         }
 
+        mContentResolver = getActivity().getContentResolver();
+        mSettingObserver = new SettingObserver();
+        mSettingObserver.register(mContentResolver);
+
         boolean glyphEnabled = SettingsManager.isGlyphEnabled(getActivity());
 
         mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_ENABLE);
@@ -79,6 +92,12 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mBrightnessPreference.setMax(4);
         mBrightnessPreference.setUpdatesContinuously(true);
         mBrightnessPreference.setOnPreferenceChangeListener(this);
+
+        mNotifsPreference = (PrimarySwitchPreference) findPreference(Constants.GLYPH_NOTIFS_ENABLE);
+        mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
+        mNotifsPreference.setEnabled(glyphEnabled);
+        mNotifsPreference.setSwitchEnabled(glyphEnabled);
+        mNotifsPreference.setOnPreferenceChangeListener(this);
 
         mCallPreference = (SwitchPreference) findPreference(Constants.GLYPH_CALL_ENABLE);
         mCallPreference.setEnabled(glyphEnabled);
@@ -95,6 +114,12 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        final String preferenceKey = preference.getKey();
+
+        if (preferenceKey.equals(Constants.GLYPH_NOTIFS_ENABLE)) {
+            SettingsManager.setGlyphNotifsEnabled(getActivity(), !mNotifsPreference.isChecked() ? true : false);
+        }
+
         mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
 
         return true;
@@ -109,10 +134,42 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
 
         mBrightnessPreference.setEnabled(isChecked);
 
+        mNotifsPreference.setEnabled(isChecked);
+        mNotifsPreference.setSwitchEnabled(isChecked);
+
         mCallPreference.setEnabled(isChecked);
 
         mChargingDotPreference.setEnabled(isChecked);
         mChargingLevelPreference.setEnabled(isChecked);
+    }
+
+    @Override
+    public void onDestroy() {
+        mSettingObserver.unregister(mContentResolver);
+        super.onDestroy();
+    }
+
+    private class SettingObserver extends ContentObserver {
+        public SettingObserver() {
+            super(new Handler());
+        }
+
+        public void register(ContentResolver cr) {
+            cr.registerContentObserver(Settings.Secure.getUriFor(
+                Constants.GLYPH_NOTIFS_ENABLE), false, this);
+        }
+
+        public void unregister(ContentResolver cr) {
+            cr.unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.Secure.getUriFor(Constants.GLYPH_NOTIFS_ENABLE))) {
+                mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
+            }
+        }
     }
 
     private static class HelpDialogFragment extends DialogFragment {

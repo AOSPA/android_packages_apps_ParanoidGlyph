@@ -42,6 +42,20 @@
             android:summary="@string/glyph_settings_call_toggle_summary" />
 
     <PreferenceCategory
+        android:key="glyph_settings_notifs"
+        android:title="@string/glyph_settings_notifs_title" />
+
+        <com.android.settingslib.PrimarySwitchPreference
+            android:key="glyph_settings_notifs_toggle"
+            android:defaultValue="false"
+            android:title="@string/glyph_settings_notifs_toggle_title"
+            android:summary="@string/glyph_settings_notifs_toggle_summary" >
+            <intent android:action="android.intent.action.MAIN"
+                 android:targetPackage="co.aospa.glyph"
+                 android:targetClass="co.aospa.glyph.Settings.NotifsSettingsActivity"/>
+        </com.android.settingslib.PrimarySwitchPreference>
+
+    <PreferenceCategory
         android:key="glyph_settings_charging"
         android:title="@string/glyph_settings_charging_title" />
 

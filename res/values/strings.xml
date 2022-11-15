@@ -41,6 +41,12 @@
     <string name="glyph_settings_call_toggle_title">Call animation</string>
     <string name="glyph_settings_call_toggle_summary">Flash LEDs on incomming calls</string>
 
+    <string name="glyph_settings_notifs_title">Notifications</string>
+    <string name="glyph_settings_notifs_toggle_title">Notification animation</string>
+    <string name="glyph_settings_notifs_toggle_summary">Flash LEDs on new notifications</string>
+    <string name="glyph_settings_notifs_sub_title">Apps to allow</string>
+    <string name="glyph_settings_notifs_sub_toggle_title">Enable notification animation</string>
+
     <!-- Dialog texts -->
     <string name="glyph_settings_dialog_ok">OK</string>
 

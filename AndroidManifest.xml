@@ -53,6 +53,14 @@
         </service>
 
         <service
+            android:name=".Services.NotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <service
             android:name=".Services.GlyphTileService"
             android:exported="true"
             android:label="@string/glyph_settings_enable"
@@ -82,6 +90,14 @@
              <meta-data
                 android:name="com.android.settings.order"
                 android:value="-255" />
+        </activity>
+
+        <activity
+            android:name=".Settings.NotifsSettingsActivity"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
 
     </application>

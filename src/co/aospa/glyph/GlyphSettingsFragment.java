@@ -99,6 +99,8 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
         mSwitchBar.setChecked(isChecked);
 
+        mBrightnessPreference.setEnabled(isChecked);
+
         mChargingDotPreference.setEnabled(isChecked);
         mChargingLevelPreference.setEnabled(isChecked);
     }

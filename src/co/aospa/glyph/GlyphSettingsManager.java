@@ -58,11 +58,11 @@ public final class GlyphSettingsManager {
 
     public static boolean isGlyphChargingDotEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE, false);
+                .getBoolean(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE, false) && isGlyphEnabled(context);
     }
 
     public static boolean isGlyphChargingLevelEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false);
+                .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false) && isGlyphEnabled(context);
     }
 }

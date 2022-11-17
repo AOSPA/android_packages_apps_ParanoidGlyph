@@ -37,6 +37,10 @@
     <string name="glyph_settings_charging_dot_title">Charging dot</string>
     <string name="glyph_settings_charging_dot_summary">Indicate charging with a pulsing dot</string>
 
+    <string name="glyph_settings_call_title">Calls</string>
+    <string name="glyph_settings_call_toggle_title">Call animation</string>
+    <string name="glyph_settings_call_toggle_summary">Flash LEDs on incomming calls</string>
+
     <!-- Dialog texts -->
     <string name="glyph_settings_dialog_ok">OK</string>
 

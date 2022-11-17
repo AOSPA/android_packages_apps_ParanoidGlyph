@@ -32,6 +32,16 @@
         android:title="@string/glyph_settings_brightness" />
 
     <PreferenceCategory
+        android:key="glyph_settings_call"
+        android:title="@string/glyph_settings_call_title" />
+
+        <SwitchPreference
+            android:key="glyph_settings_call_toggle"
+            android:defaultValue="true"
+            android:title="@string/glyph_settings_call_toggle_title"
+            android:summary="@string/glyph_settings_call_toggle_summary" />
+
+    <PreferenceCategory
         android:key="glyph_settings_charging"
         android:title="@string/glyph_settings_charging_title" />
 

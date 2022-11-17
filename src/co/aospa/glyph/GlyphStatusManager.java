@@ -24,10 +24,12 @@ public final class GlyphStatusManager {
     private static final boolean DEBUG = true;
 
     private static boolean allLedActive = false;
+    private static boolean callLedActive = false;
     private static boolean chargingLedActive = false;
     private static boolean chargingLevelLedActive = false;
 
     private static boolean allLedEnabled = false;
+    private static boolean callLedEnabled = false;
     private static boolean chargingLedEnabled = false;
     private static boolean chargingLevelLedEnabled = false;
 
@@ -47,6 +49,22 @@ public final class GlyphStatusManager {
         allLedEnabled = status;
     }
 
+    public static boolean isCallLedActive() {
+        return callLedActive;
+    }
+
+    public static void setCallLedActive(boolean status) {
+        callLedActive = status;
+    }
+
+    public static boolean isCallLedEnabled() {
+        return callLedEnabled;
+    }
+
+    public static void setCallLedEnabled(boolean status) {
+        callLedEnabled = status;
+    }
+
     public static boolean isChargingLedActive() {
         return chargingLedActive;
     }
@@ -55,27 +73,27 @@ public final class GlyphStatusManager {
         chargingLedActive = status;
     }
 
-    public static boolean isChargingLedEnabled () {
+    public static boolean isChargingLedEnabled() {
         return chargingLedEnabled;
     }
 
-    public static void setChargingLedEnabled (boolean status) {
+    public static void setChargingLedEnabled(boolean status) {
         chargingLedEnabled = status;
     }
 
-    public static boolean isChargingLevelLedActive () {
+    public static boolean isChargingLevelLedActive() {
         return chargingLevelLedActive;
     }
 
-    public static void setChargingLevelLedActive (boolean status) {
+    public static void setChargingLevelLedActive(boolean status) {
         chargingLevelLedActive = status;
     }
 
-    public static boolean isChargingLevelLedEnabled () {
+    public static boolean isChargingLevelLedEnabled() {
         return chargingLevelLedEnabled;
     }
 
-    public static void setChargingLevelLedEnabled (boolean status) {
+    public static void setChargingLevelLedEnabled(boolean status) {
         chargingLevelLedEnabled = status;
     }
 

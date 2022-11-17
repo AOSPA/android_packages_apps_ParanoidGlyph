@@ -30,6 +30,8 @@ public final class GlyphConstants {
     protected static final String GLYPH_CHARGING_CATEGORY = "glyph_settings_charging";
     protected static final String GLYPH_CHARGING_DOT_ENABLE = "glyph_settings_charging_dot";
     protected static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
+    protected static final String GLYPH_CALL_CATEGORY = "glyph_settings_call";
+    protected static final String GLYPH_CALL_ENABLE = "glyph_settings_call_toggle";
 
     protected static final String ALLWHITELEDSPATH = "/sys/class/leds/aw210xx_led/all_white_leds_br";
     protected static final String BATTERYLEVELPATH = "/sys/class/power_supply/battery/capacity";

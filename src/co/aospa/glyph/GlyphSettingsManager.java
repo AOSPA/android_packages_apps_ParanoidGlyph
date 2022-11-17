@@ -65,4 +65,9 @@ public final class GlyphSettingsManager {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false) && isGlyphEnabled(context);
     }
+
+    public static boolean isGlyphCallEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(GlyphConstants.GLYPH_CALL_ENABLE, false) && isGlyphEnabled(context);
+    }
 }

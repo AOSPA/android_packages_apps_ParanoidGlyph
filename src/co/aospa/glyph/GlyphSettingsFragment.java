@@ -48,6 +48,7 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
     private MainSwitchPreference mSwitchBar;
 
     private SeekBarPreference mBrightnessPreference;
+    private SwitchPreference mCallPreference;
     private SwitchPreference mChargingDotPreference;
     private SwitchPreference mChargingLevelPreference;
 
@@ -76,6 +77,10 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
         mBrightnessPreference.setUpdatesContinuously(true);
         mBrightnessPreference.setOnPreferenceChangeListener(this);
 
+        mCallPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CALL_ENABLE);
+        mCallPreference.setEnabled(glyphEnabled);
+        mCallPreference.setOnPreferenceChangeListener(this);
+
         mChargingDotPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE);
         mChargingDotPreference.setEnabled(glyphEnabled);
         mChargingDotPreference.setOnPreferenceChangeListener(this);
@@ -100,6 +105,8 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
         mSwitchBar.setChecked(isChecked);
 
         mBrightnessPreference.setEnabled(isChecked);
+
+        mCallPreference.setEnabled(isChecked);
 
         mChargingDotPreference.setEnabled(isChecked);
         mChargingLevelPreference.setEnabled(isChecked);

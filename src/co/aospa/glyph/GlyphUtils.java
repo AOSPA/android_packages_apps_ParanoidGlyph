@@ -28,6 +28,18 @@ public final class GlyphUtils {
     private static final String TAG = "GlyphUtils";
     private static final boolean DEBUG = true;
 
+    public static void startGlyphCallReceiverService(Context context) {
+        if (DEBUG) Log.d(TAG, "Starting Glyph call receiver service");
+        context.startServiceAsUser(new Intent(context, GlyphCallReceiverService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopGlyphCallReceiverService(Context context) {
+        if (DEBUG) Log.d(TAG, "Stopping Glyph call receiver service");
+        context.stopServiceAsUser(new Intent(context, GlyphCallReceiverService.class),
+                UserHandle.CURRENT);
+    }
+
     public static void startGlyphChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph charging service");
         context.startServiceAsUser(new Intent(context, GlyphChargingService.class),
@@ -48,8 +60,14 @@ public final class GlyphUtils {
             } else {
                 stopGlyphChargingService(context);
             }
+            if (GlyphSettingsManager.isGlyphCallEnabled(context)) {
+                startGlyphCallReceiverService(context);
+            } else {
+                stopGlyphCallReceiverService(context);
+            }
         } else {
             stopGlyphChargingService(context);
+            stopGlyphCallReceiverService(context);
         }
     }
 }

@@ -56,6 +56,6 @@ public class GlyphTileService extends TileService {
     private void setEnabled(boolean enabled) {
         GlyphStatusManager.setAllLedsEnabled(enabled);
         GlyphStatusManager.setAllLedsActive(enabled);
-        GlyphFileUtils.writeLine(GlyphConstants.ALLWHITELEDSPATH, enabled ? 4095 : 0);
+        GlyphFileUtils.writeLine(GlyphConstants.ALLWHITELEDPATH, enabled ? 4095 : 0);
     }
 }

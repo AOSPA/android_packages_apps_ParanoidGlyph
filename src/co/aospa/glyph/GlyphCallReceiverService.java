@@ -60,8 +60,9 @@ public class GlyphCallReceiverService extends Service {
     @Override
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
-        super.onDestroy();
+        disableCallAnimation();
         this.unregisterReceiver(mCallReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -69,6 +70,44 @@ public class GlyphCallReceiverService extends Service {
         return null;
     }
 
+    private void enableCallAnimation() {
+        if (GlyphStatusManager.isCallLedActive()) return;
+        if (DEBUG) Log.d(TAG, "Enabling Charging Dot Animation");
+        GlyphStatusManager.setCallLedEnabled(true);
+        submit(() -> {
+            GlyphStatusManager.setCallLedActive(true);
+            while (GlyphStatusManager.isCallLedEnabled()) {
+                try {
+                    while (true) {
+                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, GlyphConstants.BRIGHTNESS);
+                        Thread.sleep(100);
+                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                        Thread.sleep(100);
+                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, GlyphConstants.BRIGHTNESS);
+                        Thread.sleep(100);
+                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                        Thread.sleep(300);
+                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                    }
+                } catch (InterruptedException e) {
+                    if (GlyphStatusManager.isAllLedEnabled()) {
+                        while (GlyphStatusManager.isAllLedActive()) {};
+                    } else {
+                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                    }
+                }
+            }
+            GlyphStatusManager.setCallLedActive(false);
+        });
+    };
+
+    private void disableCallAnimation() {
+        if (DEBUG) Log.d(TAG, "Disabling Charging Dot Animation");
+        GlyphStatusManager.setCallLedEnabled(false);
+    }
 
     private BroadcastReceiver mCallReceiver = new BroadcastReceiver() {
         @Override
@@ -77,12 +116,15 @@ public class GlyphCallReceiverService extends Service {
                 String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
                 if(state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
                     if (DEBUG) Log.d(TAG, "EXTRA_STATE_RINGING");
+                    enableCallAnimation();
                 }
                 if ((state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK))){
                     if (DEBUG) Log.d(TAG, "EXTRA_STATE_OFFHOOK");
+                    disableCallAnimation();
                 }
                 if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)){
                     if (DEBUG) Log.d(TAG, "EXTRA_STATE_IDLE");
+                    disableCallAnimation();
                 }
             }
         }

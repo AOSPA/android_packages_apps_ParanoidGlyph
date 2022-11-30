@@ -69,7 +69,6 @@ public class GlyphChargingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG) Log.d(TAG, "Starting service");
-        updateChargingAnimations(false);
         return START_STICKY;
     }
 

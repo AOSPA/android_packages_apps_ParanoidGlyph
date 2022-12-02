@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph;
+package co.aospa.glyph.Manager;
 
 import android.content.Context;
 import android.provider.Settings;
@@ -22,24 +22,26 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
-public final class GlyphSettingsManager {
+import co.aospa.glyph.Constants.Constants;
+
+public final class SettingsManager {
 
     private static final String TAG = "GlyphSettingsManager";
     private static final boolean DEBUG = true;
 
     public static boolean enableGlyph(Context context, boolean enable) {
         return Settings.Secure.putInt(context.getContentResolver(),
-                GlyphConstants.GLYPH_ENABLE, enable ? 1 : 0);
+                Constants.GLYPH_ENABLE, enable ? 1 : 0);
     }
 
     public static boolean isGlyphEnabled(Context context) {
         return Settings.Secure.getInt(context.getContentResolver(),
-                GlyphConstants.GLYPH_ENABLE, 1) != 0;
+                Constants.GLYPH_ENABLE, 1) != 0;
     }
 
     public static int getGlyphBrightness(Context context) {
         int brightness = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(GlyphConstants.GLYPH_BRIGHTNESS, 3);
+                .getInt(Constants.GLYPH_BRIGHTNESS, 3);
         switch (brightness) {
             case 1:
                 return 102; // 4095/40
@@ -58,16 +60,16 @@ public final class GlyphSettingsManager {
 
     public static boolean isGlyphChargingDotEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE, false) && isGlyphEnabled(context);
+                .getBoolean(Constants.GLYPH_CHARGING_DOT_ENABLE, false) && isGlyphEnabled(context);
     }
 
     public static boolean isGlyphChargingLevelEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE, false) && isGlyphEnabled(context);
+                .getBoolean(Constants.GLYPH_CHARGING_LEVEL_ENABLE, false) && isGlyphEnabled(context);
     }
 
     public static boolean isGlyphCallEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(GlyphConstants.GLYPH_CALL_ENABLE, false) && isGlyphEnabled(context);
+                .getBoolean(Constants.GLYPH_CALL_ENABLE, false) && isGlyphEnabled(context);
     }
 }

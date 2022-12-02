@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph;
+package co.aospa.glyph.Utils;
 
 import android.util.Log;
 
@@ -26,7 +26,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public final class GlyphFileUtils {
+import co.aospa.glyph.Constants.Constants;
+
+public final class FileUtils {
 
     private static final String TAG = "GlyphFileUtils";
     private static final boolean DEBUG = true;
@@ -88,10 +90,10 @@ public final class GlyphFileUtils {
     }
 
     public static void writeSingleLed(int led, int value) {
-        writeLine(GlyphConstants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(value));
+        writeLine(Constants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(value));
     }
 
     public static void writeSingleLed(int led, float value) {
-        writeLine(GlyphConstants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(Math.round(value)));
+        writeLine(Constants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(Math.round(value)));
     }
 }

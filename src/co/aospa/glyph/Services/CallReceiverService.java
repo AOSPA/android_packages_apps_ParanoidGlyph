@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph;
+package co.aospa.glyph.Services;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -29,7 +29,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class GlyphCallReceiverService extends Service {
+import co.aospa.glyph.Constants.Constants;
+import co.aospa.glyph.Manager.StatusManager;
+import co.aospa.glyph.Utils.FileUtils;
+
+public class CallReceiverService extends Service {
 
     private static final String TAG = "GlyphCallReceiverService";
     private static final boolean DEBUG = true;
@@ -71,42 +75,42 @@ public class GlyphCallReceiverService extends Service {
     }
 
     private void enableCallAnimation() {
-        if (GlyphStatusManager.isCallLedActive()) return;
+        if (StatusManager.isCallLedActive()) return;
         if (DEBUG) Log.d(TAG, "Enabling Charging Dot Animation");
-        GlyphStatusManager.setCallLedEnabled(true);
+        StatusManager.setCallLedEnabled(true);
         submit(() -> {
-            GlyphStatusManager.setCallLedActive(true);
-            while (GlyphStatusManager.isCallLedEnabled()) {
+            StatusManager.setCallLedActive(true);
+            while (StatusManager.isCallLedEnabled()) {
                 try {
                     while (true) {
-                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, GlyphConstants.BRIGHTNESS);
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
                         Thread.sleep(100);
-                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
-                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                         Thread.sleep(100);
-                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
-                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, GlyphConstants.BRIGHTNESS);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
                         Thread.sleep(100);
-                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
-                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                         Thread.sleep(300);
-                        if (!GlyphStatusManager.isCallLedEnabled() || GlyphStatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
                     }
                 } catch (InterruptedException e) {
-                    if (GlyphStatusManager.isAllLedEnabled()) {
-                        while (GlyphStatusManager.isAllLedActive()) {};
+                    if (StatusManager.isAllLedEnabled()) {
+                        while (StatusManager.isAllLedActive()) {};
                     } else {
-                        GlyphFileUtils.writeLine(GlyphConstants.CENTERRINGLEDPATH, 0);
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                     }
                 }
             }
-            GlyphStatusManager.setCallLedActive(false);
+            StatusManager.setCallLedActive(false);
         });
     };
 
     private void disableCallAnimation() {
         if (DEBUG) Log.d(TAG, "Disabling Charging Dot Animation");
-        GlyphStatusManager.setCallLedEnabled(false);
+        StatusManager.setCallLedEnabled(false);
     }
 
     private BroadcastReceiver mCallReceiver = new BroadcastReceiver() {

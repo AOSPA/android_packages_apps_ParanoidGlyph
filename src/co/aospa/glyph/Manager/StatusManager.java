@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph;
+package co.aospa.glyph.Manager;
 
 import android.util.Log;
 
-public final class GlyphStatusManager {
+public final class StatusManager {
 
     private static final String TAG = "GlyphStatusManager";
     private static final boolean DEBUG = true;

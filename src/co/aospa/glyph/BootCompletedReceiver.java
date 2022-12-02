@@ -1,6 +1,6 @@
 /*
- * Copyright (C) 2015-2016 The CyanogenMod Project
- *               2017 The LineageOS Project
+ * Copyright (C) 2015 The CyanogenMod Project
+ *               2017-2019 The LineageOS Project
  *               2020-2022 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,20 +18,21 @@
 
 package co.aospa.glyph;
 
-import android.os.Bundle;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
-import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
-import com.android.settingslib.collapsingtoolbar.R;
+import co.aospa.glyph.Utils.ServiceUtils;
 
-public class GlyphSettingsActivity extends CollapsingToolbarBaseActivity {
+public class BootCompletedReceiver extends BroadcastReceiver {
 
-    private static final String TAG_GLYPH = "glyph";
+    private static final boolean DEBUG = true;
+    private static final String TAG = "ParanoidGlyph";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getFragmentManager().beginTransaction().replace(R.id.content_frame,
-                new GlyphSettingsFragment(), TAG_GLYPH).commit();
+    public void onReceive(final Context context, Intent intent) {
+        if (DEBUG) Log.d(TAG, "Received boot completed intent");
+        ServiceUtils.checkGlyphService(context);
     }
 }

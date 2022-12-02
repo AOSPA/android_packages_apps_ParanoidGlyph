@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph;
+package co.aospa.glyph.Settings;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,8 +41,11 @@ import com.android.settingslib.widget.MainSwitchPreference;
 import com.android.settingslib.widget.OnMainSwitchChangeListener;
 
 import co.aospa.glyph.R;
+import co.aospa.glyph.Constants.Constants;
+import co.aospa.glyph.Manager.SettingsManager;
+import co.aospa.glyph.Utils.ServiceUtils;
 
-public class GlyphSettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
+public class SettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
         OnMainSwitchChangeListener {
 
     private MainSwitchPreference mSwitchBar;
@@ -64,27 +67,27 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
             showHelp();
         }
 
-        boolean glyphEnabled = GlyphSettingsManager.isGlyphEnabled(getActivity());
+        boolean glyphEnabled = SettingsManager.isGlyphEnabled(getActivity());
 
-        mSwitchBar = (MainSwitchPreference) findPreference(GlyphConstants.GLYPH_ENABLE);
+        mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(glyphEnabled);
 
-        mBrightnessPreference = (SeekBarPreference) findPreference(GlyphConstants.GLYPH_BRIGHTNESS);
+        mBrightnessPreference = (SeekBarPreference) findPreference(Constants.GLYPH_BRIGHTNESS);
         mBrightnessPreference.setEnabled(glyphEnabled);
         mBrightnessPreference.setMin(1);
         mBrightnessPreference.setMax(4);
         mBrightnessPreference.setUpdatesContinuously(true);
         mBrightnessPreference.setOnPreferenceChangeListener(this);
 
-        mCallPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CALL_ENABLE);
+        mCallPreference = (SwitchPreference) findPreference(Constants.GLYPH_CALL_ENABLE);
         mCallPreference.setEnabled(glyphEnabled);
         mCallPreference.setOnPreferenceChangeListener(this);
 
-        mChargingDotPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_DOT_ENABLE);
+        mChargingDotPreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_DOT_ENABLE);
         mChargingDotPreference.setEnabled(glyphEnabled);
         mChargingDotPreference.setOnPreferenceChangeListener(this);
-        mChargingLevelPreference = (SwitchPreference) findPreference(GlyphConstants.GLYPH_CHARGING_LEVEL_ENABLE);
+        mChargingLevelPreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_LEVEL_ENABLE);
         mChargingLevelPreference.setEnabled(glyphEnabled);
         mChargingLevelPreference.setOnPreferenceChangeListener(this);
 
@@ -92,15 +95,15 @@ public class GlyphSettingsFragment extends PreferenceFragment implements OnPrefe
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        mHandler.post(() -> GlyphUtils.checkGlyphService(getActivity()));
+        mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
 
         return true;
     }
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        GlyphSettingsManager.enableGlyph(getActivity(), isChecked);
-        GlyphUtils.checkGlyphService(getActivity());
+        SettingsManager.enableGlyph(getActivity(), isChecked);
+        ServiceUtils.checkGlyphService(getActivity());
 
         mSwitchBar.setChecked(isChecked);
 

@@ -36,7 +36,7 @@
         android:directBootAware="true">
 
         <receiver
-            android:name=".GlyphBootCompletedReceiver">
+            android:name=".BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -44,16 +44,16 @@
         </receiver>
 
         <service
-            android:name=".GlyphCallReceiverService"
+            android:name=".Services.CallReceiverService"
             android:permission="android.permission.READ_PHONE_STATEREAD_PHONE_STATE">
         </service>
 
         <service
-            android:name=".GlyphChargingService">
+            android:name=".Services.ChargingService">
         </service>
 
         <service
-            android:name=".GlyphTileService"
+            android:name=".Services.GlyphTileService"
             android:exported="true"
             android:label="@string/glyph_settings_enable"
             android:icon="@drawable/ic_glyphs_logo"
@@ -64,7 +64,7 @@
         </service>
 
         <activity
-            android:name=".GlyphSettingsActivity"
+            android:name=".Settings.SettingsActivity"
             android:label="@string/glyph_settings_title"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>

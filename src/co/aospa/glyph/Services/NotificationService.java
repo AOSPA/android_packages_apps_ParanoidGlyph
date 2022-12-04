@@ -89,6 +89,7 @@ public class NotificationService extends NotificationListenerService {
         } catch (PackageManager.NameNotFoundException e) {};
         if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
         if (SettingsManager.isGlyphNotifsAppEnabled(this, packageName)
+                        && !sbn.isOngoing()
                         && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
                         && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {

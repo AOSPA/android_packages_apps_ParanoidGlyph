@@ -25,8 +25,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="24"/>
+        android:minSdkVersion="31"
+        android:targetSdkVersion="31"/>
 
     <application
         android:label="@string/glyph_settings_app_name"
@@ -36,6 +36,7 @@
 
         <receiver
             android:name=".BootCompletedReceiver"
+            android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
@@ -54,6 +55,7 @@
 
         <service
             android:name=".Services.NotificationService"
+            android:exported="false"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
                 <action android:name="android.service.notification.NotificationListenerService" />
@@ -73,6 +75,7 @@
 
         <activity
             android:name=".Settings.SettingsActivity"
+            android:exported="true"
             android:label="@string/glyph_settings_title"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
@@ -94,6 +97,7 @@
 
         <activity
             android:name=".Settings.NotifsSettingsActivity"
+            android:exported="false"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

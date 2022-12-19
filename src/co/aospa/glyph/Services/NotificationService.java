@@ -17,8 +17,11 @@
 package co.aospa.glyph.Services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -73,10 +76,20 @@ public class NotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn){
-        if (DEBUG) Log.d(TAG, "onNotificationPosted: " + sbn.getPackageName());
-        if (SettingsManager.isGlyphNotifsAppEnabled(this, sbn.getPackageName())
-                        && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, sbn.getPackageName())
-                        && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, sbn.getNotification().getChannelId())) {
+        String packageName = sbn.getPackageName();
+        String packageChannelID = sbn.getNotification().getChannelId();
+        int packageImportance = -1;
+        try {
+            Context packageContext = createPackageContext(packageName, 0);
+            NotificationManager packageNotificationManager = (NotificationManager) packageContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel packageChannel = packageNotificationManager.getNotificationChannel(packageChannelID);
+            packageImportance = packageChannel.getImportance();
+        } catch (PackageManager.NameNotFoundException e) {};
+        if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
+        if (SettingsManager.isGlyphNotifsAppEnabled(this, packageName)
+                        && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
+                        && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
+                        && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
             enableNotificationAnimation();
         }
     }

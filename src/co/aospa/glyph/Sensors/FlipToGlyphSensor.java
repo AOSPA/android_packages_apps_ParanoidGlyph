@@ -16,12 +16,12 @@
 
 package co.aospa.glyph.Sensors;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -30,7 +30,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
     private static final boolean DEBUG = true;
     private static final String TAG = "FlipToGlyphSensor";
 
-    private int zenMode;
+    private int ringerMode;
 
     private boolean faceDown = false;
     private boolean frontCovered = false;
@@ -38,7 +38,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
     private boolean flipped = false;
     private boolean wasFlipped = false;
 
-    private NotificationManager mNotificationManager;
+    private AudioManager mAudioManager;
     private SensorManager mSensorManager;
     private Sensor mSensorAccelerometer;
     private Sensor mSensorProximity;
@@ -46,12 +46,12 @@ public class FlipToGlyphSensor implements SensorEventListener {
 
     public FlipToGlyphSensor(Context context) {
         mContext = context;
-        mNotificationManager = mContext.getSystemService(NotificationManager.class);
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mSensorManager = mContext.getSystemService(SensorManager.class);
         mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false);
         mSensorProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, false);
 
-        zenMode = mNotificationManager.getZenMode();
+        ringerMode = mAudioManager.getRingerMode();
     }
 
     @Override
@@ -80,13 +80,13 @@ public class FlipToGlyphSensor implements SensorEventListener {
         if (flipped != wasFlipped) {
             if (DEBUG) Log.d(TAG, "flipped: " + Boolean.toString(flipped) + " || faceDown: " + Boolean.toString(faceDown) + " || frontCovered: " + Boolean.toString(frontCovered));
             if (flipped) {
-                zenMode = mNotificationManager.getZenMode();
-                if (zenMode != Settings.Global.ZEN_MODE_ALARMS && zenMode != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS) {
-                    mNotificationManager.setZenMode(Settings.Global.ZEN_MODE_ALARMS, null, TAG);
+                ringerMode = mAudioManager.getRingerMode();
+                if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
                 }
             } else {
-                if (zenMode != Settings.Global.ZEN_MODE_ALARMS && zenMode != Settings.Global.ZEN_MODE_NO_INTERRUPTIONS) {
-                    mNotificationManager.setZenMode(zenMode, null, TAG);
+                if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                    mAudioManager.setRingerMode(ringerMode);
                 }
             }
             wasFlipped = flipped;

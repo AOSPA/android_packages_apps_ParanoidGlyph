@@ -25,6 +25,12 @@
         android:key="glyph_enable"
         android:title="@string/glyph_settings_enable" />
 
+    <SwitchPreference
+        android:key="glyph_settings_flip_toggle"
+        android:defaultValue="true"
+        android:title="@string/glyph_settings_flip_toggle_title"
+        android:summary="@string/glyph_settings_flip_toggle_summary" />
+
     <SeekBarPreference
         android:key="glyph_settings_brightness"
         android:max="4"

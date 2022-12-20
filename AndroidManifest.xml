@@ -54,6 +54,10 @@
         </service>
 
         <service
+            android:name=".Services.FlipToGlyphService">
+        </service>
+
+        <service
             android:name=".Services.NotificationService"
             android:exported="false"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">

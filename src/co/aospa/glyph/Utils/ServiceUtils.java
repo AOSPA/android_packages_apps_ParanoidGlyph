@@ -27,6 +27,7 @@ import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Services.CallReceiverService;
 import co.aospa.glyph.Services.ChargingService;
+import co.aospa.glyph.Services.FlipToGlyphService;
 import co.aospa.glyph.Services.NotificationService;
 
 public final class ServiceUtils {
@@ -55,6 +56,18 @@ public final class ServiceUtils {
     protected static void stopChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping Glyph charging service");
         context.stopServiceAsUser(new Intent(context, ChargingService.class),
+                UserHandle.CURRENT);
+    }
+
+    public static void startFlipToGlyphService(Context context) {
+        if (DEBUG) Log.d(TAG, "Starting Flip to Glyph service");
+        context.startServiceAsUser(new Intent(context, FlipToGlyphService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopFlipToGlyphService(Context context) {
+        if (DEBUG) Log.d(TAG, "Stopping Flip to Glyph service");
+        context.stopServiceAsUser(new Intent(context, FlipToGlyphService.class),
                 UserHandle.CURRENT);
     }
 
@@ -88,10 +101,16 @@ public final class ServiceUtils {
             } else {
                 stopNotificationService(context);
             }
+            if (SettingsManager.isGlyphFlipEnabled(context)) {
+                startFlipToGlyphService(context);
+            } else {
+                stopFlipToGlyphService(context);
+            }
         } else {
             stopChargingService(context);
             stopCallReceiverService(context);
             stopNotificationService(context);
+            stopFlipToGlyphService(context);
         }
     }
 }

@@ -26,6 +26,7 @@ public final class Constants {
     public static int BRIGHTNESS_MAX = 4095;
 
     public static final String GLYPH_ENABLE = "glyph_enable";
+    public static final String GLYPH_FLIP_ENABLE = "glyph_settings_flip_toggle";
     public static final String GLYPH_BRIGHTNESS = "glyph_settings_brightness";
     public static final String GLYPH_CHARGING_CATEGORY = "glyph_settings_charging";
     public static final String GLYPH_CHARGING_DOT_ENABLE = "glyph_settings_charging_dot";

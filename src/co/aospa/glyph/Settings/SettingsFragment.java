@@ -55,6 +55,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
 
     private MainSwitchPreference mSwitchBar;
 
+    private SwitchPreference mFlipPreference;
     private SeekBarPreference mBrightnessPreference;
     private PrimarySwitchPreference mNotifsPreference;
     private SwitchPreference mCallPreference;
@@ -85,6 +86,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
         mSwitchBar.setChecked(glyphEnabled);
+
+        mFlipPreference = (SwitchPreference) findPreference(Constants.GLYPH_FLIP_ENABLE);
+        mFlipPreference.setEnabled(glyphEnabled);
+        mFlipPreference.setOnPreferenceChangeListener(this);
 
         mBrightnessPreference = (SeekBarPreference) findPreference(Constants.GLYPH_BRIGHTNESS);
         mBrightnessPreference.setEnabled(glyphEnabled);
@@ -131,6 +136,8 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         ServiceUtils.checkGlyphService(getActivity());
 
         mSwitchBar.setChecked(isChecked);
+
+        mFlipPreference.setEnabled(isChecked);
 
         mBrightnessPreference.setEnabled(isChecked);
 

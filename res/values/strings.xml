@@ -29,6 +29,9 @@
     <string name="glyph_settings_title">Glyph interface</string>
     <string name="glyph_settings_summary">Options for glyph lights</string>
 
+    <string name="glyph_settings_flip_toggle_title">Flip to Glyph</string>
+    <string name="glyph_settings_flip_toggle_summary">Mute if phone is faced down, just show glyphs then</string>
+
     <string name="glyph_settings_brightness">Brightness</string>
 
     <string name="glyph_settings_charging_title">Charging animation</string>

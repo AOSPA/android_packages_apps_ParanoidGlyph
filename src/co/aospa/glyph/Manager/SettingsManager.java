@@ -39,6 +39,11 @@ public final class SettingsManager {
                 Constants.GLYPH_ENABLE, 1) != 0;
     }
 
+    public static boolean isGlyphFlipEnabled(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(Constants.GLYPH_FLIP_ENABLE, false) && isGlyphEnabled(context);
+    }
+
     public static int getGlyphBrightness(Context context) {
         int brightness = PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(Constants.GLYPH_BRIGHTNESS, 3);

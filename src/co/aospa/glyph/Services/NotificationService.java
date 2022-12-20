@@ -83,7 +83,9 @@ public class NotificationService extends NotificationListenerService {
             Context packageContext = createPackageContext(packageName, 0);
             NotificationManager packageNotificationManager = (NotificationManager) packageContext.getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel packageChannel = packageNotificationManager.getNotificationChannel(packageChannelID);
-            packageImportance = packageChannel.getImportance();
+            if (packageChannel != null) {
+                packageImportance = packageChannel.getImportance();
+            }
         } catch (PackageManager.NameNotFoundException e) {};
         if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
         if (SettingsManager.isGlyphNotifsAppEnabled(this, packageName)

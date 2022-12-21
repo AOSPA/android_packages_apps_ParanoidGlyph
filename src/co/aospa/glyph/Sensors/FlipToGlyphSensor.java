@@ -35,8 +35,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
     private boolean faceDown = false;
     private boolean frontCovered = false;
 
-    private boolean flipped = false;
-    private boolean wasFlipped = false;
+    private boolean isFlipped = false;
 
     private AudioManager mAudioManager;
     private SensorManager mSensorManager;
@@ -77,7 +76,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     private void update(boolean flipped) {
-        if (flipped != wasFlipped) {
+        if (flipped != isFlipped) {
             if (DEBUG) Log.d(TAG, "flipped: " + Boolean.toString(flipped) + " || faceDown: " + Boolean.toString(faceDown) + " || frontCovered: " + Boolean.toString(frontCovered));
             if (flipped) {
                 ringerMode = mAudioManager.getRingerMode();
@@ -89,7 +88,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
                     mAudioManager.setRingerMode(ringerMode);
                 }
             }
-            wasFlipped = flipped;
+            isFlipped = flipped;
         }
     }
 

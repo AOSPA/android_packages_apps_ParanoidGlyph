@@ -25,6 +25,8 @@ import android.media.AudioManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import java.time.Duration;
+
 public class FlipToGlyphSensor implements SensorEventListener {
 
     private static final boolean DEBUG = true;
@@ -32,79 +34,128 @@ public class FlipToGlyphSensor implements SensorEventListener {
 
     private int ringerMode;
 
-    private boolean faceDown = false;
-    private boolean frontCovered = false;
-
     private boolean isFlipped = false;
 
     private AudioManager mAudioManager;
     private SensorManager mSensorManager;
     private Sensor mSensorAccelerometer;
-    private Sensor mSensorProximity;
     private Context mContext;
+
+    private Duration mTimeThreshold = Duration.ofMillis(1_000L);;
+    private float mAccelerationThreshold = 0.2f;
+    private float mZAccelerationThreshold = -9.5f;
+    private float mZAccelerationThresholdLenient = mZAccelerationThreshold + 1.0f;
+    private float mPrevAcceleration = 0;
+    private long mPrevAccelerationTime = 0;
+    private boolean mZAccelerationIsFaceDown = false;
+    private long mZAccelerationFaceDownTime = 0L;
+
+    private static final float MOVING_AVERAGE_WEIGHT = 0.5f;
+    private final ExponentialMovingAverage mCurrentXYAcceleration =
+            new ExponentialMovingAverage(MOVING_AVERAGE_WEIGHT);
+    private final ExponentialMovingAverage mCurrentZAcceleration =
+            new ExponentialMovingAverage(MOVING_AVERAGE_WEIGHT);
 
     public FlipToGlyphSensor(Context context) {
         mContext = context;
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mSensorManager = mContext.getSystemService(SensorManager.class);
         mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false);
-        mSensorProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, false);
 
         ringerMode = mAudioManager.getRingerMode();
     }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if (event.values[2] < -6 && (event.values[0] < 2 && event.values[0] > -2) && (event.values[1] < 2 && event.values[1] > -2)) {
-                faceDown = true;
-            } else {
-                faceDown = false;
-            }
+        if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) return;
+
+        final float x = event.values[0];
+        final float y = event.values[1];
+        mCurrentXYAcceleration.updateMovingAverage(x * x + y * y);
+        mCurrentZAcceleration.updateMovingAverage(event.values[2]);
+
+        final long curTime = event.timestamp;
+        if (Math.abs(mCurrentXYAcceleration.mMovingAverage - mPrevAcceleration)
+                > mAccelerationThreshold) {
+            mPrevAcceleration = mCurrentXYAcceleration.mMovingAverage;
+            mPrevAccelerationTime = curTime;
         }
-        if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0] < 5) {
-                frontCovered = true;
-            } else {
-                frontCovered = false;
-            }
+        final boolean moving = curTime - mPrevAccelerationTime <= mTimeThreshold.toNanos();
+
+        final float zAccelerationThreshold =
+                isFlipped ? mZAccelerationThresholdLenient : mZAccelerationThreshold;
+        final boolean isCurrentlyFaceDown =
+                mCurrentZAcceleration.mMovingAverage < zAccelerationThreshold;
+        final boolean isFaceDownForPeriod = isCurrentlyFaceDown
+                && mZAccelerationIsFaceDown
+                && curTime - mZAccelerationFaceDownTime > mTimeThreshold.toNanos();
+        if (isCurrentlyFaceDown && !mZAccelerationIsFaceDown) {
+            mZAccelerationFaceDownTime = curTime;
+            mZAccelerationIsFaceDown = true;
+        } else if (!isCurrentlyFaceDown) {
+            mZAccelerationIsFaceDown = false;
         }
-        update(faceDown && frontCovered);
+
+        if (!moving && isFaceDownForPeriod && !isFlipped) {
+            update(true);
+        } else if (!isFaceDownForPeriod && isFlipped) {
+            update(false);
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     private void update(boolean flipped) {
-        if (flipped != isFlipped) {
-            if (DEBUG) Log.d(TAG, "flipped: " + Boolean.toString(flipped) + " || faceDown: " + Boolean.toString(faceDown) + " || frontCovered: " + Boolean.toString(frontCovered));
-            if (flipped) {
-                ringerMode = mAudioManager.getRingerMode();
-                if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                    mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                }
-            } else {
-                if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                    mAudioManager.setRingerMode(ringerMode);
-                }
+        if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
+        if (flipped) {
+            ringerMode = mAudioManager.getRingerMode();
+            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
             }
-            isFlipped = flipped;
+        } else {
+            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                mAudioManager.setRingerMode(ringerMode);
+            }
         }
+        isFlipped = flipped;
     }
 
     public void enable() {
         if (DEBUG) Log.d(TAG, "Enabling Sensor");
         mSensorManager.registerListener(this, mSensorAccelerometer,
-                    SensorManager.SENSOR_DELAY_NORMAL);
-        mSensorManager.registerListener(this, mSensorProximity,
-                    SensorManager.SENSOR_DELAY_NORMAL);
+                    SensorManager.SENSOR_DELAY_NORMAL,
+                    mContext.getResources().getInteger(
+                        com.android.internal.R.integer.config_flipToScreenOffMaxLatencyMicros));
     }
 
     public void disable() {
         if (DEBUG) Log.d(TAG, "Disabling Sensor");
         update(false);
         mSensorManager.unregisterListener(this, mSensorAccelerometer);
-        mSensorManager.unregisterListener(this, mSensorProximity);
     }
 
+    private final class ExponentialMovingAverage {
+        private final float mAlpha;
+        private final float mInitialAverage;
+        private float mMovingAverage;
+
+        ExponentialMovingAverage(float alpha) {
+            this(alpha, 0.0f);
+        }
+
+        ExponentialMovingAverage(float alpha, float initialAverage) {
+            this.mAlpha = alpha;
+            this.mInitialAverage = initialAverage;
+            this.mMovingAverage = initialAverage;
+        }
+
+        void updateMovingAverage(float newValue) {
+            mMovingAverage = newValue + mAlpha * (mMovingAverage - newValue);
+        }
+
+        void reset() {
+            mMovingAverage = this.mInitialAverage;
+        }
+    }
 }

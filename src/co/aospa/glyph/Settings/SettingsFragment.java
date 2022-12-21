@@ -18,15 +18,9 @@
 
 package co.aospa.glyph.Settings;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,12 +64,6 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.glyph_settings);
-
-        SharedPreferences prefs = getActivity().getSharedPreferences("glyph_settings",
-                Activity.MODE_PRIVATE);
-        if (savedInstanceState == null && !prefs.getBoolean("first_help_shown", false)) {
-            showHelp();
-        }
 
         mContentResolver = getActivity().getContentResolver();
         mSettingObserver = new SettingObserver();
@@ -177,29 +165,5 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
                 mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
             }
         }
-    }
-
-    private static class HelpDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.glyph_settings_help_title)
-                    .setMessage(R.string.glyph_settings_help_text)
-                    .setNegativeButton(R.string.glyph_settings_dialog_ok, (dialog, which) -> dialog.cancel())
-                    .create();
-        }
-
-        @Override
-        public void onCancel(DialogInterface dialog) {
-            getActivity().getSharedPreferences("glyph_settings", Activity.MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("first_help_shown", true)
-                    .commit();
-        }
-    }
-
-    private void showHelp() {
-        HelpDialogFragment fragment = new HelpDialogFragment();
-        fragment.show(getFragmentManager(), "help_dialog");
     }
 }

@@ -50,13 +50,6 @@
     <string name="glyph_settings_notifs_sub_title">Apps to allow</string>
     <string name="glyph_settings_notifs_sub_toggle_title">Enable notification animation</string>
 
-    <!-- Dialog texts -->
-    <string name="glyph_settings_dialog_ok">OK</string>
-
-    <!-- Help texts -->
-    <string name="glyph_settings_help_title">Help</string>
-    <string name="glyph_settings_help_text">This menu will allow you to set up lights to show charging percentage, wireless reverse charging, and more. The menu will also enable users to switch to the Flip to Glyph feature which can trigger the Glyph interface to work only when the phone is flipped upside down.</string>
-
     <!-- QS tile -->
     <string name="glyph_accessibility_quick_settings_off">Glyph Off</string>
     <string name="glyph_accessibility_quick_settings_on">Glyph On</string>

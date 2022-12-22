@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -37,13 +38,19 @@ public class FlipToGlyphService extends Service {
     private static final String TAG = "FlipToGlyphService";
     private static final boolean DEBUG = true;
 
+    private boolean isFlipped;
+    private int ringerMode;
+
+    private AudioManager mAudioManager;
     private FlipToGlyphSensor mFlipToGlyphSensor;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
 
-        mFlipToGlyphSensor = new FlipToGlyphSensor(this);
+        mFlipToGlyphSensor = new FlipToGlyphSensor(this, this::onFlip);
+
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         IntentFilter screenStateFilter = new IntentFilter();
         screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
@@ -68,6 +75,22 @@ public class FlipToGlyphService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private void onFlip(boolean flipped) {
+        if (flipped == isFlipped) return;
+        if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
+        if (flipped) {
+            ringerMode = mAudioManager.getRingerMode();
+            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            }
+        } else {
+            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+                mAudioManager.setRingerMode(ringerMode);
+            }
+        }
+        isFlipped = flipped;
     }
 
     private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {

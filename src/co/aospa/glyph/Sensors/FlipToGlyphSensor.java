@@ -16,27 +16,27 @@
 
 package co.aospa.glyph.Sensors;
 
+import android.annotation.NonNull;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
 import android.provider.Settings;
 import android.util.Log;
 
 import java.time.Duration;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class FlipToGlyphSensor implements SensorEventListener {
 
     private static final boolean DEBUG = true;
     private static final String TAG = "FlipToGlyphSensor";
 
-    private int ringerMode;
-
     private boolean isFlipped = false;
+    private final Consumer<Boolean> mOnFlip;
 
-    private AudioManager mAudioManager;
     private SensorManager mSensorManager;
     private Sensor mSensorAccelerometer;
     private Context mContext;
@@ -56,13 +56,11 @@ public class FlipToGlyphSensor implements SensorEventListener {
     private final ExponentialMovingAverage mCurrentZAcceleration =
             new ExponentialMovingAverage(MOVING_AVERAGE_WEIGHT);
 
-    public FlipToGlyphSensor(Context context) {
+    public FlipToGlyphSensor(Context context, @NonNull Consumer<Boolean> onFlip) {
         mContext = context;
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        mOnFlip = Objects.requireNonNull(onFlip);
         mSensorManager = mContext.getSystemService(SensorManager.class);
         mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false);
-
-        ringerMode = mAudioManager.getRingerMode();
     }
 
     @Override
@@ -97,27 +95,18 @@ public class FlipToGlyphSensor implements SensorEventListener {
         }
 
         if (!moving && isFaceDownForPeriod && !isFlipped) {
-            update(true);
+            onFlip(true);
         } else if (!isFaceDownForPeriod && isFlipped) {
-            update(false);
+            onFlip(false);
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
-    private void update(boolean flipped) {
+    private void onFlip(boolean flipped) {
         if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
-        if (flipped) {
-            ringerMode = mAudioManager.getRingerMode();
-            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-            }
-        } else {
-            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                mAudioManager.setRingerMode(ringerMode);
-            }
-        }
+        mOnFlip.accept(flipped);
         isFlipped = flipped;
     }
 
@@ -131,7 +120,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
 
     public void disable() {
         if (DEBUG) Log.d(TAG, "Disabling Sensor");
-        update(false);
+        onFlip(false);
         mSensorManager.unregisterListener(this, mSensorAccelerometer);
     }
 

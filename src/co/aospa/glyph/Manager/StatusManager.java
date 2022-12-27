@@ -23,6 +23,8 @@ public final class StatusManager {
     private static final String TAG = "GlyphStatusManager";
     private static final boolean DEBUG = true;
 
+    private static boolean animation = false;
+
     private static boolean allLedActive = false;
     private static boolean callLedActive = false;
     private static boolean chargingLedActive = false;
@@ -34,6 +36,14 @@ public final class StatusManager {
     private static boolean chargingLedEnabled = false;
     private static boolean chargingLevelLedEnabled = false;
     private static boolean notificationLedEnabled = false;
+
+    public static boolean isAnimationActive() {
+        return animation;
+    }
+
+    public static void setAnimationActive(boolean status) {
+        animation = status;
+    }
 
     public static boolean isAllLedActive() {
         return allLedActive;

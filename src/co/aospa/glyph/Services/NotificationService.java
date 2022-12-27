@@ -34,6 +34,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import co.aospa.glyph.Constants.Constants;
+import co.aospa.glyph.Manager.AnimationManager;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Manager.StatusManager;
 import co.aospa.glyph.Utils.FileUtils;
@@ -43,12 +44,15 @@ public class NotificationService extends NotificationListenerService {
     private static final String TAG = "GlyphNotification";
     private static final boolean DEBUG = true;
 
+    private AnimationManager mAnimationManager;
     private ExecutorService mExecutorService;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
         super.onCreate();
+
+        mAnimationManager = new AnimationManager(this);
 
         mExecutorService = Executors.newSingleThreadExecutor();
     }
@@ -93,46 +97,12 @@ public class NotificationService extends NotificationListenerService {
                         && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
                         && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
-            enableNotificationAnimation();
+            mAnimationManager.play("flashslant");
         }
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn){
         if (DEBUG) Log.d(TAG, "onNotificationRemoved: " + sbn.getPackageName());
-    }
-
-    private void enableNotificationAnimation() {
-        if (StatusManager.isNotificationLedActive()) return;
-        if (DEBUG) Log.d(TAG, "Enabling Notification Animation");
-        StatusManager.setNotificationLedEnabled(true);
-        submit(() -> {
-            StatusManager.setNotificationLedActive(true);
-            try {
-                if (!StatusManager.isNotificationLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
-                FileUtils.writeLine(Constants.SLANTLEDPATH, Constants.BRIGHTNESS);
-                Thread.sleep(100);
-                if (!StatusManager.isNotificationLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
-                FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
-                Thread.sleep(100);
-                if (!StatusManager.isNotificationLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
-                FileUtils.writeLine(Constants.SLANTLEDPATH, Constants.BRIGHTNESS);
-                Thread.sleep(100);
-                if (!StatusManager.isNotificationLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
-                FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
-            } catch (InterruptedException e) {
-                if (!StatusManager.isAllLedEnabled()) {
-                    FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
-                }
-            }
-            if (DEBUG) Log.d(TAG, "Done with Notification Animation");
-            StatusManager.setNotificationLedActive(false);
-            StatusManager.setNotificationLedEnabled(false);
-        });
-    };
-
-    private void disableNotificationAnimation() {
-        if (DEBUG) Log.d(TAG, "Disabling Notification Animation");
-        StatusManager.setNotificationLedEnabled(false);
     }
 }

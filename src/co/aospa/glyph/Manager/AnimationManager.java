@@ -64,6 +64,11 @@ public final class AnimationManager {
             if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait");
             return;
         }
+
+        playCsv(name, wait);
+    }
+
+    private void playCsv(String name, boolean wait) {
         submit(() -> {
             if (wait && StatusManager.isAnimationActive()) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait");

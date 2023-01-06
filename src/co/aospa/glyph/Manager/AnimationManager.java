@@ -87,8 +87,10 @@ public final class AnimationManager {
                     FileUtils.writeLine(Constants.SLANTLEDPATH, (Float.parseFloat(split[4]) / 100 ) * Constants.BRIGHTNESS);
                     Thread.sleep(10);
                 }
-            } catch (IOException | NumberFormatException | InterruptedException e) {
+            } catch (IOException | NumberFormatException e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation");
+            } catch (InterruptedException e) {
+                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted");
             } finally {
                 if (DEBUG) Log.d(TAG, "Done playing animation");
                 FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);

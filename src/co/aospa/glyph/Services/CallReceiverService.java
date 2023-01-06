@@ -80,6 +80,7 @@ public class CallReceiverService extends Service {
         StatusManager.setCallLedEnabled(true);
         submit(() -> {
             StatusManager.setCallLedActive(true);
+            while (StatusManager.isAnimationActive()) {};
             while (StatusManager.isCallLedEnabled()) {
                 try {
                     while (true) {

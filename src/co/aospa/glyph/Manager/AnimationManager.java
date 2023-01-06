@@ -60,6 +60,11 @@ public final class AnimationManager {
     public void play(String name, boolean wait) {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
+        if (StatusManager.isAllLedActive()) {
+            if (DEBUG) Log.d(TAG, "All LEDs are active, exiting");
+            return;
+        }
+
         if (!wait && StatusManager.isAnimationActive()) {
             if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait");
             return;

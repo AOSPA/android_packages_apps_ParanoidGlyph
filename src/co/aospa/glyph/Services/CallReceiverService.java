@@ -83,21 +83,21 @@ public class CallReceiverService extends Service {
             while (StatusManager.isCallLedEnabled()) {
                 try {
                     while (true) {
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
                         Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                         Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
                         Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                         Thread.sleep(300);
                     }
                 } catch (InterruptedException e) {
-                    if (StatusManager.isAllLedEnabled()) {
+                    if (StatusManager.isAllLedActive()) {
                         while (StatusManager.isAllLedActive()) {};
                     } else {
                         FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);

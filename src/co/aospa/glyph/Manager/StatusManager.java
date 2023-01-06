@@ -30,7 +30,6 @@ public final class StatusManager {
     private static boolean chargingLedActive = false;
     private static boolean chargingLevelLedActive = false;
 
-    private static boolean allLedEnabled = false;
     private static boolean callLedEnabled = false;
     private static boolean chargingLedEnabled = false;
     private static boolean chargingLevelLedEnabled = false;
@@ -49,14 +48,6 @@ public final class StatusManager {
 
     public static void setAllLedsActive(boolean status) {
         allLedActive = status;
-    }
-
-    public static boolean isAllLedEnabled() {
-        return allLedEnabled;
-    }
-
-    public static void setAllLedsEnabled(boolean status) {
-        allLedEnabled = status;
     }
 
     public static boolean isCallLedActive() {

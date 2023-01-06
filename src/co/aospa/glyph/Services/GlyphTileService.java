@@ -53,11 +53,10 @@ public class GlyphTileService extends TileService {
     }
 
     private boolean getEnabled() {
-        return StatusManager.isAllLedEnabled();
+        return StatusManager.isAllLedActive();
     }
 
     private void setEnabled(boolean enabled) {
-        StatusManager.setAllLedsEnabled(enabled);
         StatusManager.setAllLedsActive(enabled);
         FileUtils.writeLine(Constants.ALLWHITELEDPATH, enabled ? 4095 : 0);
     }

@@ -138,13 +138,13 @@ public class ChargingService extends Service {
                 try {
                     while (true) {
                         for (float f: ANIMATION_DOT) {
-                            if (!StatusManager.isChargingLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                            if (!StatusManager.isChargingLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                             FileUtils.writeSingleLed(16, f * Constants.BRIGHTNESS);
                             Thread.sleep(10);
                         }
                         Thread.sleep(190);
                         for (int i=ANIMATION_DOT.length-1; i>=0; i--) {
-                            if (!StatusManager.isChargingLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                            if (!StatusManager.isChargingLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                             FileUtils.writeSingleLed(16, ANIMATION_DOT[i] * Constants.BRIGHTNESS);
                             Thread.sleep(10);
                         }
@@ -152,7 +152,7 @@ public class ChargingService extends Service {
                     }
 
                 } catch (InterruptedException e) {
-                    if (StatusManager.isAllLedEnabled()) {
+                    if (StatusManager.isAllLedActive()) {
                         while (StatusManager.isAllLedActive()) {};
                     } else {
                         FileUtils.writeSingleLed(16, 0);
@@ -195,13 +195,13 @@ public class ChargingService extends Service {
                     batteryArray = new int[]{16, 13};
                 }
                 for (int i : batteryArray) {
-                    if (!StatusManager.isChargingLevelLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                    if (!StatusManager.isChargingLevelLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                     FileUtils.writeSingleLed(i, Constants.BRIGHTNESS);
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
                 for (int i=batteryArray.length-1; i>=0; i--) {
-                    if (!StatusManager.isChargingLevelLedEnabled() || StatusManager.isAllLedEnabled()) throw new InterruptedException();
+                    if (!StatusManager.isChargingLevelLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                     FileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
                 }

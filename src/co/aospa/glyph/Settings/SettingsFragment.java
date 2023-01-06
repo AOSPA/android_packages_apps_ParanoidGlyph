@@ -53,7 +53,6 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     private SeekBarPreference mBrightnessPreference;
     private PrimarySwitchPreference mNotifsPreference;
     private SwitchPreference mCallPreference;
-    private SwitchPreference mChargingDotPreference;
     private SwitchPreference mChargingLevelPreference;
 
     private ContentResolver mContentResolver;
@@ -96,9 +95,6 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mCallPreference.setEnabled(glyphEnabled);
         mCallPreference.setOnPreferenceChangeListener(this);
 
-        mChargingDotPreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_DOT_ENABLE);
-        mChargingDotPreference.setEnabled(glyphEnabled);
-        mChargingDotPreference.setOnPreferenceChangeListener(this);
         mChargingLevelPreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_LEVEL_ENABLE);
         mChargingLevelPreference.setEnabled(glyphEnabled);
         mChargingLevelPreference.setOnPreferenceChangeListener(this);
@@ -134,7 +130,6 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
 
         mCallPreference.setEnabled(isChecked);
 
-        mChargingDotPreference.setEnabled(isChecked);
         mChargingLevelPreference.setEnabled(isChecked);
     }
 

@@ -60,15 +60,6 @@ public final class SettingsManager {
     }
 
     public static boolean isGlyphChargingEnabled(Context context) {
-        return isGlyphChargingDotEnabled(context) || isGlyphChargingLevelEnabled(context);
-    }
-
-    public static boolean isGlyphChargingDotEnabled(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(Constants.GLYPH_CHARGING_DOT_ENABLE, false) && isGlyphEnabled(context);
-    }
-
-    public static boolean isGlyphChargingLevelEnabled(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(Constants.GLYPH_CHARGING_LEVEL_ENABLE, false) && isGlyphEnabled(context);
     }

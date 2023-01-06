@@ -37,8 +37,6 @@
     <string name="glyph_settings_charging_title">Charging animation</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>
     <string name="glyph_settings_charging_level_summary">Show battery level when pluging in</string>
-    <string name="glyph_settings_charging_dot_title">Charging dot</string>
-    <string name="glyph_settings_charging_dot_summary">Indicate charging with a pulsing dot</string>
 
     <string name="glyph_settings_call_title">Calls</string>
     <string name="glyph_settings_call_toggle_title">Call animation</string>

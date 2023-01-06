@@ -89,6 +89,10 @@ public final class FileUtils {
         writeLine(fileName, Integer.toString(value));
     }
 
+    public static void writeLine(String fileName, float value) {
+        writeLine(fileName, Float.toString(value));
+    }
+
     public static void writeSingleLed(int led, int value) {
         writeLine(Constants.SINGLELEDPATH, Integer.toString(led) + " " + Integer.toString(value));
     }

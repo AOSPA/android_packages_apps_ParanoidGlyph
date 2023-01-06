@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -36,13 +35,9 @@ public class ChargingService extends Service {
     private static final String TAG = "GlyphChargingService";
     private static final boolean DEBUG = true;
 
-    private BatteryManager mBatteryManager;
-
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
-
-        mBatteryManager = (BatteryManager) getSystemService(Context.BATTERY_SERVICE);
 
         IntentFilter powerMonitor = new IntentFilter();
         powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -53,11 +48,6 @@ public class ChargingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG) Log.d(TAG, "Starting service");
-
-        if (mBatteryManager.isCharging()) {
-            playChargingAnimation();
-        }
-
         return START_STICKY;
     }
 

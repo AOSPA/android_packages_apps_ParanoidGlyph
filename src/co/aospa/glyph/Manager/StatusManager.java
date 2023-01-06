@@ -26,10 +26,8 @@ public final class StatusManager {
     private static boolean allLedActive = false;
     private static boolean animationActive = false;
     private static boolean callLedActive = false;
-    private static boolean chargingLevelLedActive = false;
 
     private static boolean callLedEnabled = false;
-    private static boolean chargingLevelLedEnabled = false;
 
     public static boolean isAnimationActive() {
         return animationActive;
@@ -61,22 +59,6 @@ public final class StatusManager {
 
     public static void setCallLedEnabled(boolean status) {
         callLedEnabled = status;
-    }
-
-    public static boolean isChargingLevelLedActive() {
-        return chargingLevelLedActive;
-    }
-
-    public static void setChargingLevelLedActive(boolean status) {
-        chargingLevelLedActive = status;
-    }
-
-    public static boolean isChargingLevelLedEnabled() {
-        return chargingLevelLedEnabled;
-    }
-
-    public static void setChargingLevelLedEnabled(boolean status) {
-        chargingLevelLedEnabled = status;
     }
 
 }

@@ -70,7 +70,11 @@ public final class AnimationManager {
             return;
         }
 
-        playCsv(name, wait);
+        if (name == "charging") {
+            playCharging(wait);
+        } else {
+            playCsv(name, wait);
+        }
     }
 
     private void playCsv(String name, boolean wait) {
@@ -103,6 +107,60 @@ public final class AnimationManager {
                 FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);
                 FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, 0);
                 FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
+                StatusManager.setAnimationActive(false);
+            }
+        });
+    }
+
+    private void playCharging(boolean wait) {
+        submit(() -> {
+            if (wait && StatusManager.isAnimationActive()) {
+                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: charging");
+                while (StatusManager.isAnimationActive()) {};
+            }
+
+            try {
+                StatusManager.setAnimationActive(true);
+                int batteryLevel = FileUtils.readLineInt(Constants.BATTERYLEVELPATH);
+                int[] batteryArray = new int[]{};
+                if (batteryLevel == 100 ) {
+                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15, 8};
+                } else if (batteryLevel >= 88) {
+                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15};
+                } else if (batteryLevel >= 75) {
+                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14};
+                } else if (batteryLevel >= 62) {
+                    batteryArray = new int[]{16, 13, 11, 9, 12, 10};
+                } else if (batteryLevel >= 49) {
+                    batteryArray = new int[]{16, 13, 11, 9, 12};
+                } else if (batteryLevel >= 36) {
+                    batteryArray = new int[]{16, 13, 11, 9};
+                } else if (batteryLevel >= 24) {
+                    batteryArray = new int[]{16, 13, 11};
+                } else if (batteryLevel >= 12) {
+                    batteryArray = new int[]{16, 13};
+                }
+                for (int i : batteryArray) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS);
+                    Thread.sleep(10);
+                }
+                Thread.sleep(1000);
+                for (int i=batteryArray.length-1; i>=0; i--) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    FileUtils.writeSingleLed(batteryArray[i], 0);
+                    Thread.sleep(10);
+                }
+                Thread.sleep(730);
+            } catch (InterruptedException e) {
+                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: charging");
+                if (!StatusManager.isAllLedActive()) {
+                    for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
+                        FileUtils.writeSingleLed(i, 0);
+                    }
+                }
+            } finally {
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
                 StatusManager.setAnimationActive(false);
             }
         });

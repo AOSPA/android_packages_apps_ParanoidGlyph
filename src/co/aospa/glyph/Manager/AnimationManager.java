@@ -114,7 +114,7 @@ public final class AnimationManager {
         });
     }
 
-    public static void playCharging(Context context) {
+    public static void playCharging(int batteryLevel, Context context) {
         submit(() -> {
             
             if (!check("charging", true))
@@ -123,7 +123,6 @@ public final class AnimationManager {
             StatusManager.setAnimationActive(true);
 
             try {
-                int batteryLevel = FileUtils.readLineInt(Constants.BATTERYLEVELPATH);
                 int[] batteryArray = new int[]{};
                 if (batteryLevel == 100 ) {
                     batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15, 8};

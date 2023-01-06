@@ -36,8 +36,6 @@ public final class Constants {
     public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
     public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
 
-    public static final String BATTERYLEVELPATH = "/sys/class/power_supply/battery/capacity";
-    
     public static final String BASELEDPATH = "/sys/class/leds/aw210xx_led/";                     // Base LED Path
     public static final String ALLWHITELEDPATH = BASELEDPATH + "all_white_leds_br";              // All LEDs
     public static final String CAMERARINGLEDPATH =  BASELEDPATH + "rear_cam_led_br";             // Camera Ring

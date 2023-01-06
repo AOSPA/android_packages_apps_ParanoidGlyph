@@ -41,23 +41,23 @@ public final class AnimationManager {
     private static final String TAG = "GlyphAnimationManager";
     private static final boolean DEBUG = true;
 
-    private Context mContext;
-    private ExecutorService mExecutorService;
+    private static Context mContext;
+    private static ExecutorService mExecutorService;
 
     public AnimationManager(Context context) {
         mContext = context;
         mExecutorService = Executors.newSingleThreadExecutor();
     }
 
-    private Future<?> submit(Runnable runnable) {
+    private static Future<?> submit(Runnable runnable) {
         return mExecutorService.submit(runnable);
     }
 
-    public void play(String name) {
+    public static void play(String name) {
         play(name, false);
     }
 
-    public void play(String name, boolean wait) {
+    public static void play(String name, boolean wait) {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
         if (StatusManager.isAllLedActive()) {
@@ -77,7 +77,7 @@ public final class AnimationManager {
         }
     }
 
-    private void playCsv(String name, boolean wait) {
+    private static void playCsv(String name, boolean wait) {
         submit(() -> {
             if (wait && StatusManager.isAnimationActive()) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
@@ -112,7 +112,7 @@ public final class AnimationManager {
         });
     }
 
-    private void playCharging(boolean wait) {
+    private static void playCharging(boolean wait) {
         submit(() -> {
             if (wait && StatusManager.isAnimationActive()) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: charging");

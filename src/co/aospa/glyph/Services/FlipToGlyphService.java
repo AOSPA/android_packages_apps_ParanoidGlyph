@@ -87,13 +87,9 @@ public class FlipToGlyphService extends Service {
         if (flipped) {
             mAnimationManager.play("flip");
             ringerMode = mAudioManager.getRingerMode();
-            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-            }
+            mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         } else {
-            if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
-                mAudioManager.setRingerMode(ringerMode);
-            }
+            mAudioManager.setRingerMode(ringerMode);
         }
         isFlipped = flipped;
     }

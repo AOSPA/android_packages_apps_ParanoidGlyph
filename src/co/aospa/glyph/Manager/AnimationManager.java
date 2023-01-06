@@ -61,12 +61,12 @@ public final class AnimationManager {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
         if (StatusManager.isAllLedActive()) {
-            if (DEBUG) Log.d(TAG, "All LEDs are active, exiting");
+            if (DEBUG) Log.d(TAG, "All LEDs are active, exiting animation | name: " + name);
             return;
         }
 
         if (!wait && StatusManager.isAnimationActive()) {
-            if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait");
+            if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait | name: " + name);
             return;
         }
 
@@ -76,7 +76,7 @@ public final class AnimationManager {
     private void playCsv(String name, boolean wait) {
         submit(() -> {
             if (wait && StatusManager.isAnimationActive()) {
-                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait");
+                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
                 while (StatusManager.isAnimationActive()) {};
             }
 
@@ -93,11 +93,11 @@ public final class AnimationManager {
                     Thread.sleep(10);
                 }
             } catch (IOException | NumberFormatException e) {
-                if (DEBUG) Log.d(TAG, "Exception while playing animation");
+                if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name);
             } catch (InterruptedException e) {
-                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted");
+                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: " + name);
             } finally {
-                if (DEBUG) Log.d(TAG, "Done playing animation");
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
                 FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);
                 FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                 FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);

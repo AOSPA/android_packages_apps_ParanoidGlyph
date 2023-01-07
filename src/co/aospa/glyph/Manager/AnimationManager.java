@@ -61,6 +61,11 @@ public final class AnimationManager {
             return;
         }
 
+        if (StatusManager.isCallLedActive()) {
+            if (DEBUG) Log.d(TAG, "Call animation ist currently active, exiting animation | name: " + name);
+            return;
+        }
+
         if (!wait && StatusManager.isAnimationActive()) {
             if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait | name: " + name);
             return;
@@ -160,4 +165,46 @@ public final class AnimationManager {
             }
         });
     }
+
+    public static void playCall() {
+        submit(() -> {
+
+            check("call", true);
+
+            StatusManager.setCallLedEnabled(true);
+            StatusManager.setCallLedActive(true);
+            while (StatusManager.isCallLedEnabled()) {
+                try {
+                    while (true) {
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
+                        Thread.sleep(100);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
+                        Thread.sleep(100);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
+                        Thread.sleep(100);
+                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
+                        Thread.sleep(300);
+                    }
+                } catch (InterruptedException e) {
+                    if (StatusManager.isAllLedActive()) {
+                        while (StatusManager.isAllLedActive()) {};
+                    } else {
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
+                    }
+                }
+            }
+            StatusManager.setCallLedActive(false);
+        });
+    }
+
+    public static void stopCall() {
+        if (DEBUG) Log.d(TAG, "Disabling Call Animation");
+        StatusManager.setCallLedEnabled(false);
+    }
+
+
 }

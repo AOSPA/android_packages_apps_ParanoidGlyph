@@ -25,34 +25,24 @@ import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import co.aospa.glyph.Constants.Constants;
-import co.aospa.glyph.Manager.StatusManager;
-import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Manager.AnimationManager;
 
 public class CallReceiverService extends Service {
 
     private static final String TAG = "GlyphCallReceiverService";
     private static final boolean DEBUG = true;
 
-    private ExecutorService mExecutorService;
+    private AnimationManager mAnimationManager;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
 
-        mExecutorService = Executors.newSingleThreadExecutor();
+        mAnimationManager = new AnimationManager(this);
 
         IntentFilter callReceiver = new IntentFilter();
         callReceiver.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
         registerReceiver(mCallReceiver, callReceiver);
-    }
-
-    private Future<?> submit(Runnable runnable) {
-        return mExecutorService.submit(runnable);
     }
 
     @Override
@@ -75,43 +65,11 @@ public class CallReceiverService extends Service {
     }
 
     private void enableCallAnimation() {
-        if (StatusManager.isCallLedActive()) return;
-        if (DEBUG) Log.d(TAG, "Enabling Charging Dot Animation");
-        StatusManager.setCallLedEnabled(true);
-        submit(() -> {
-            StatusManager.setCallLedActive(true);
-            while (StatusManager.isAnimationActive()) {};
-            while (StatusManager.isCallLedEnabled()) {
-                try {
-                    while (true) {
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                        Thread.sleep(300);
-                    }
-                } catch (InterruptedException e) {
-                    if (StatusManager.isAllLedActive()) {
-                        while (StatusManager.isAllLedActive()) {};
-                    } else {
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                    }
-                }
-            }
-            StatusManager.setCallLedActive(false);
-        });
+        mAnimationManager.playCall();
     };
 
     private void disableCallAnimation() {
-        if (DEBUG) Log.d(TAG, "Disabling Charging Dot Animation");
-        StatusManager.setCallLedEnabled(false);
+        mAnimationManager.stopCall();
     }
 
     private BroadcastReceiver mCallReceiver = new BroadcastReceiver() {

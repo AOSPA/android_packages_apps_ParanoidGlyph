@@ -53,11 +53,7 @@ public final class AnimationManager {
         return mExecutorService.submit(runnable);
     }
 
-    public static void play(String name) {
-        play(name, false);
-    }
-
-    public static void play(String name, boolean wait) {
+    private static void check(String name, boolean wait) {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
         if (StatusManager.isAllLedActive()) {
@@ -70,19 +66,20 @@ public final class AnimationManager {
             return;
         }
 
-        if (name == "charging") {
-            playCharging(wait);
-        } else {
-            playCsv(name, wait);
+        if (wait && StatusManager.isAnimationActive()) {
+            if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
+            while (StatusManager.isAnimationActive()) {};
         }
     }
 
-    private static void playCsv(String name, boolean wait) {
+    public static void playCsv(String name) {
+        playCsv(name, false);
+    }
+
+    public static void playCsv(String name, boolean wait) {
         submit(() -> {
-            if (wait && StatusManager.isAnimationActive()) {
-                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
-                while (StatusManager.isAnimationActive()) {};
-            }
+
+            check(name, wait);
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     mContext.getResources().openRawResource(mContext.getResources().getIdentifier("anim_"+name, "raw", mContext.getPackageName()))))) {
@@ -112,12 +109,10 @@ public final class AnimationManager {
         });
     }
 
-    private static void playCharging(boolean wait) {
+    public static void playCharging() {
         submit(() -> {
-            if (wait && StatusManager.isAnimationActive()) {
-                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: charging");
-                while (StatusManager.isAnimationActive()) {};
-            }
+            
+            check("charging", true);
 
             try {
                 StatusManager.setAnimationActive(true);

@@ -97,7 +97,7 @@ public class NotificationService extends NotificationListenerService {
                         && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
                         && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
-            mAnimationManager.play("flashslant");
+            mAnimationManager.playCsv("flashslant");
         }
     }
 

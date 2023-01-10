@@ -27,20 +27,20 @@
     <!-- Ambient Display -->
     <string name="glyph_settings_enable">Glyph lights</string>
     <string name="glyph_settings_title">Glyph interface</string>
-    <string name="glyph_settings_summary">Options for glyph lights</string>
+    <string name="glyph_settings_summary">Options for Glyph lights</string>
 
     <string name="glyph_settings_flip_toggle_title">Flip to Glyph</string>
-    <string name="glyph_settings_flip_toggle_summary">Mute if phone is faced down, just show glyphs then</string>
+    <string name="glyph_settings_flip_toggle_summary">Mute and show Glyphs if phone is faced down</string>
 
     <string name="glyph_settings_brightness">Brightness</string>
 
     <string name="glyph_settings_charging_title">Charging animation</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>
-    <string name="glyph_settings_charging_level_summary">Show battery level when pluging in</string>
+    <string name="glyph_settings_charging_level_summary">Show battery level when plugging in</string>
 
     <string name="glyph_settings_call_title">Calls</string>
     <string name="glyph_settings_call_toggle_title">Call animation</string>
-    <string name="glyph_settings_call_toggle_summary">Flash LEDs on incomming calls</string>
+    <string name="glyph_settings_call_toggle_summary">Flash LEDs on incoming calls</string>
 
     <string name="glyph_settings_notifs_title">Notifications</string>
     <string name="glyph_settings_notifs_toggle_title">Notification animation</string>

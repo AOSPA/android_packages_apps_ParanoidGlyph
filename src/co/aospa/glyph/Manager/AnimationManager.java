@@ -90,6 +90,7 @@ public final class AnimationManager {
                     mContext.getResources().openRawResource(mContext.getResources().getIdentifier("anim_"+name, "raw", mContext.getPackageName()))))) {
                 StatusManager.setAnimationActive(true);
                 while (reader.readLine() != null) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                     final String[] split = reader.readLine().split(";");
                     FileUtils.writeLine(Constants.CAMERARINGLEDPATH, (Float.parseFloat(split[0]) / 100 ) * Constants.BRIGHTNESS);
                     FileUtils.writeLine(Constants.CENTERRINGLEDPATH, (Float.parseFloat(split[1]) / 100 ) * Constants.BRIGHTNESS);

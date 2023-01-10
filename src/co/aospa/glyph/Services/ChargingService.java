@@ -77,7 +77,7 @@ public class ChargingService extends Service {
     }
 
     private void playChargingAnimation() {
-        AnimationManager.playCharging();
+        AnimationManager.playCharging(this);
     };
 
     private BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {

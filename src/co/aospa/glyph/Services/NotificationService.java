@@ -44,15 +44,12 @@ public class NotificationService extends NotificationListenerService {
     private static final String TAG = "GlyphNotification";
     private static final boolean DEBUG = true;
 
-    private AnimationManager mAnimationManager;
     private ExecutorService mExecutorService;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
         super.onCreate();
-
-        mAnimationManager = new AnimationManager(this);
 
         mExecutorService = Executors.newSingleThreadExecutor();
     }
@@ -97,7 +94,7 @@ public class NotificationService extends NotificationListenerService {
                         && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
                         && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
-            mAnimationManager.playCsv("break");
+            AnimationManager.playCsv("break", this);
         }
     }
 

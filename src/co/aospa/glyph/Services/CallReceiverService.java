@@ -33,8 +33,6 @@ public class CallReceiverService extends Service {
 
     private static final String TAG = "GlyphCallReceiverService";
     private static final boolean DEBUG = true;
-
-    private AnimationManager mAnimationManager;
     private AudioManager mAudioManager;
     private ExecutorService mExecutorService;
 
@@ -43,8 +41,6 @@ public class CallReceiverService extends Service {
         if (DEBUG) Log.d(TAG, "Creating service");
 
         mExecutorService = Executors.newSingleThreadExecutor();
-
-        mAnimationManager = new AnimationManager(this);
 
         mAudioManager = getSystemService(AudioManager.class);
         mAudioManager.addOnModeChangedListener(mExecutorService, mAudioManagerOnModeChangedListener);
@@ -72,12 +68,12 @@ public class CallReceiverService extends Service {
 
     private void enableCallAnimation() {
         if (DEBUG) Log.d(TAG, "enableCallAnimation");
-        mAnimationManager.playCall();
+        AnimationManager.playCall(this);
     }
 
     private void disableCallAnimation() {
         if (DEBUG) Log.d(TAG, "disableCallAnimation");
-        mAnimationManager.stopCall();
+        AnimationManager.stopCall();
     }
 
     private AudioManager.OnModeChangedListener mAudioManagerOnModeChangedListener = new AudioManager.OnModeChangedListener() {

@@ -41,13 +41,7 @@ public final class AnimationManager {
     private static final String TAG = "GlyphAnimationManager";
     private static final boolean DEBUG = true;
 
-    private static Context mContext;
-    private static ExecutorService mExecutorService;
-
-    public AnimationManager(Context context) {
-        mContext = context;
-        mExecutorService = Executors.newSingleThreadExecutor();
-    }
+    private static ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
 
     private static Future<?> submit(Runnable runnable) {
         return mExecutorService.submit(runnable);
@@ -66,66 +60,69 @@ public final class AnimationManager {
             return false;
         }
 
-        if (!wait && StatusManager.isAnimationActive()) {
-            if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait | name: " + name);
-            return false;
-        }
-
-        if (wait && StatusManager.isAnimationActive()) {
-            if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
-            while (StatusManager.isAnimationActive()) {};
+        if (StatusManager.isAnimationActive()) {
+            if (wait) {
+                if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
+                while (StatusManager.isAnimationActive()) {};
+            } else {
+                if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting | name: " + name);
+                return false;
+            }
         }
 
         return true;
     }
 
-    public static void playCsv(String name) {
-        playCsv(name, false);
+    public static void playCsv(String name, Context context) {
+        playCsv(name, false, context);
     }
 
-    public static void playCsv(String name, boolean wait) {
+    public static void playCsv(String name, boolean wait, Context context) {
         submit(() -> {
 
             if (!check(name, wait))
                 return;
 
+            StatusManager.setAnimationActive(true);
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    mContext.getResources().openRawResource(mContext.getResources().getIdentifier("anim_"+name, "raw", mContext.getPackageName()))))) {
-                StatusManager.setAnimationActive(true);
-                while (reader.readLine() != null) {
+                    context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
+                if (reader.readLine() == null) throw new Exception();
+                while (true) {
+                    String line = reader.readLine(); if (line == null) break;
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    final String[] split = reader.readLine().split(";");
-                    FileUtils.writeLine(Constants.CAMERARINGLEDPATH, (Float.parseFloat(split[0]) / 100 ) * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.CENTERRINGLEDPATH, (Float.parseFloat(split[1]) / 100 ) * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, (Float.parseFloat(split[2]) / 100 ) * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, (Float.parseFloat(split[3]) / 100 ) * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.SLANTLEDPATH, (Float.parseFloat(split[4]) / 100 ) * Constants.BRIGHTNESS);
+                    final String[] split = line.split(",");
+                    FileUtils.writeLine(Constants.CAMERARINGLEDPATH, Float.parseFloat(split[0]) / 4095 * Constants.BRIGHTNESS);
+                    FileUtils.writeLine(Constants.SLANTLEDPATH, Float.parseFloat(split[1]) / 4095 * Constants.BRIGHTNESS);
+                    FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Float.parseFloat(split[2]) / 4095 * Constants.BRIGHTNESS);
+                    FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, Float.parseFloat(split[3]) / 4095 * Constants.BRIGHTNESS);
+                    FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, Float.parseFloat(split[4]) / 4095 * Constants.BRIGHTNESS);
                     Thread.sleep(10);
                 }
-            } catch (IOException | NumberFormatException e) {
-                if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name);
-            } catch (InterruptedException e) {
-                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: " + name);
+            } catch (Exception e) {
+                if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
             } finally {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
                 FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);
+                FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
                 FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                 FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);
                 FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, 0);
-                FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
-                StatusManager.setAnimationActive(false);
             }
+
+            StatusManager.setAnimationActive(false);
         });
     }
 
-    public static void playCharging() {
+    public static void playCharging(Context context) {
         submit(() -> {
             
             if (!check("charging", true))
                 return;
 
+            StatusManager.setAnimationActive(true);
+
             try {
-                StatusManager.setAnimationActive(true);
                 int batteryLevel = FileUtils.readLineInt(Constants.BATTERYLEVELPATH);
                 int[] batteryArray = new int[]{};
                 if (batteryLevel == 100 ) {
@@ -166,20 +163,21 @@ public final class AnimationManager {
                 }
             } finally {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
-                StatusManager.setAnimationActive(false);
             }
+
+            StatusManager.setAnimationActive(false);
         });
     }
 
-    public static void playCall() {
+    public static void playCall(Context context) {
         submit(() -> {
 
             if (!check("call", true))
                 return;
             
-
             StatusManager.setCallLedEnabled(true);
             StatusManager.setCallLedActive(true);
+
             while (StatusManager.isCallLedEnabled()) {
                 try {
                     while (true) {
@@ -204,6 +202,7 @@ public final class AnimationManager {
                     }
                 }
             }
+
             StatusManager.setCallLedActive(false);
         });
     }

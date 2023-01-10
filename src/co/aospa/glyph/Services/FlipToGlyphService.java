@@ -42,7 +42,6 @@ public class FlipToGlyphService extends Service {
     private boolean isFlipped;
     private int ringerMode;
 
-    private AnimationManager mAnimationManager;
     private AudioManager mAudioManager;
     private FlipToGlyphSensor mFlipToGlyphSensor;
 
@@ -51,8 +50,6 @@ public class FlipToGlyphService extends Service {
         if (DEBUG) Log.d(TAG, "Creating service");
 
         mFlipToGlyphSensor = new FlipToGlyphSensor(this, this::onFlip);
-
-        mAnimationManager = new AnimationManager(this);
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
@@ -85,7 +82,7 @@ public class FlipToGlyphService extends Service {
         if (flipped == isFlipped) return;
         if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
         if (flipped) {
-            mAnimationManager.playCsv("flip");
+            AnimationManager.playCsv("flip", this);
             ringerMode = mAudioManager.getRingerModeInternal();
             mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);
         } else {

@@ -53,28 +53,30 @@ public final class AnimationManager {
         return mExecutorService.submit(runnable);
     }
 
-    private static void check(String name, boolean wait) {
+    private static boolean check(String name, boolean wait) {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
         if (StatusManager.isAllLedActive()) {
             if (DEBUG) Log.d(TAG, "All LEDs are active, exiting animation | name: " + name);
-            return;
+            return false;
         }
 
         if (StatusManager.isCallLedActive()) {
             if (DEBUG) Log.d(TAG, "Call animation ist currently active, exiting animation | name: " + name);
-            return;
+            return false;
         }
 
         if (!wait && StatusManager.isAnimationActive()) {
             if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting as there is no need to wait | name: " + name);
-            return;
+            return false;
         }
 
         if (wait && StatusManager.isAnimationActive()) {
             if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
             while (StatusManager.isAnimationActive()) {};
         }
+
+        return true;
     }
 
     public static void playCsv(String name) {
@@ -84,7 +86,8 @@ public final class AnimationManager {
     public static void playCsv(String name, boolean wait) {
         submit(() -> {
 
-            check(name, wait);
+            if (!check(name, wait))
+                return;
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     mContext.getResources().openRawResource(mContext.getResources().getIdentifier("anim_"+name, "raw", mContext.getPackageName()))))) {
@@ -118,7 +121,8 @@ public final class AnimationManager {
     public static void playCharging() {
         submit(() -> {
             
-            check("charging", true);
+            if (!check("charging", true))
+                return;
 
             try {
                 StatusManager.setAnimationActive(true);
@@ -170,7 +174,9 @@ public final class AnimationManager {
     public static void playCall() {
         submit(() -> {
 
-            check("call", true);
+            if (!check("call", true))
+                return;
+            
 
             StatusManager.setCallLedEnabled(true);
             StatusManager.setCallLedActive(true);

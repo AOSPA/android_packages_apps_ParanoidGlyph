@@ -68,7 +68,7 @@ public class CallReceiverService extends Service {
 
     private void enableCallAnimation() {
         if (DEBUG) Log.d(TAG, "enableCallAnimation");
-        AnimationManager.playCall("flashcenter", this);
+        AnimationManager.playCall("radiate", this);
     }
 
     private void disableCallAnimation() {

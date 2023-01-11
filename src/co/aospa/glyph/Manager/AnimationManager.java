@@ -169,39 +169,46 @@ public final class AnimationManager {
         });
     }
 
-    public static void playCall(Context context) {
+    public static void playCall(String name, Context context) {
         submit(() -> {
 
-            if (!check("call", true))
+            if (!check("call: " + name, true))
                 return;
             
             StatusManager.setCallLedEnabled(true);
             StatusManager.setCallLedActive(true);
 
             while (StatusManager.isCallLedEnabled()) {
-                try {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
+                    if (reader.readLine() == null) throw new Exception();
                     while (true) {
+                        String line = reader.readLine(); if (line == null) break;
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Constants.BRIGHTNESS);
-                        Thread.sleep(100);
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                        Thread.sleep(300);
+                        final String[] split = line.split(",");
+                        FileUtils.writeLine(Constants.CAMERARINGLEDPATH, Float.parseFloat(split[0]) / 4095 * Constants.BRIGHTNESS);
+                        FileUtils.writeLine(Constants.SLANTLEDPATH, Float.parseFloat(split[1]) / 4095 * Constants.BRIGHTNESS);
+                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Float.parseFloat(split[2]) / 4095 * Constants.BRIGHTNESS);
+                        FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, Float.parseFloat(split[3]) / 4095 * Constants.BRIGHTNESS);
+                        FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, Float.parseFloat(split[4]) / 4095 * Constants.BRIGHTNESS);
+                        Thread.sleep(10);
                     }
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
+                    if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
+                } finally {
                     if (StatusManager.isAllLedActive()) {
+                        if (DEBUG) Log.d(TAG, "All LED active, pause playing animation | name: " + name);
                         while (StatusManager.isAllLedActive()) {};
-                    } else {
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
                     }
                 }
             }
+
+            if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
+            FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);
+            FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
+            FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);
+            FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, 0);
+            FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
 
             StatusManager.setCallLedActive(false);
         });

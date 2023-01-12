@@ -63,7 +63,10 @@ public final class AnimationManager {
         if (StatusManager.isAnimationActive()) {
             if (wait) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
-                while (StatusManager.isAnimationActive()) {};
+                long start = System.currentTimeMillis();
+                while (StatusManager.isAnimationActive()){
+                    if (System.currentTimeMillis() - start >= 2500 ) return false;
+                }
             } else {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting | name: " + name);
                 return false;

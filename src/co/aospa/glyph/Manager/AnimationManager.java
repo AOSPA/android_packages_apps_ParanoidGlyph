@@ -171,10 +171,11 @@ public final class AnimationManager {
     public static void playCall(String name, Context context) {
         submit(() -> {
 
+            StatusManager.setCallLedEnabled(true);
+
             if (!check("call: " + name, true))
                 return;
-            
-            StatusManager.setCallLedEnabled(true);
+
             StatusManager.setCallLedActive(true);
 
             while (StatusManager.isCallLedEnabled()) {

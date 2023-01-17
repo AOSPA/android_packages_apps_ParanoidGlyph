@@ -19,10 +19,8 @@
 package co.aospa.glyph.Services;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -52,23 +50,18 @@ public class FlipToGlyphService extends Service {
         mFlipToGlyphSensor = new FlipToGlyphSensor(this, this::onFlip);
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-        IntentFilter screenStateFilter = new IntentFilter();
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_ON);
-        screenStateFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(mScreenStateReceiver, screenStateFilter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (DEBUG) Log.d(TAG, "Starting service");
+        mFlipToGlyphSensor.enable();
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
-        unregisterReceiver(mScreenStateReceiver);
         mFlipToGlyphSensor.disable();
         super.onDestroy();
     }
@@ -90,15 +83,4 @@ public class FlipToGlyphService extends Service {
         }
         isFlipped = flipped;
     }
-
-    private BroadcastReceiver mScreenStateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
-                mFlipToGlyphSensor.disable();
-            } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
-                mFlipToGlyphSensor.enable();
-            }
-        }
-    };
 }

@@ -79,8 +79,8 @@ public class NotificationService extends NotificationListenerService {
         if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
         if (SettingsManager.isGlyphNotifsAppEnabled(this, packageName)
                         && !sbn.isOngoing()
-                        && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, packageName)
-                        && !ArrayUtils.contains(Constants.CHANNELSTOIGNORENOTIFS, packageChannelID)
+                        && !ArrayUtils.contains(Constants.APPSTOIGNORE, packageName)
+                        && !ArrayUtils.contains(Constants.NOTIFSTOIGNORE, packageName + ":" + packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
             AnimationManager.playCsv("break", this);
         }
@@ -88,6 +88,6 @@ public class NotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn){
-        if (DEBUG) Log.d(TAG, "onNotificationRemoved: " + sbn.getPackageName());
+        if (DEBUG) Log.d(TAG, "onNotificationRemoved: package:" + sbn.getPackageName() + " | channel id: " + sbn.getNotification().getChannelId());
     }
 }

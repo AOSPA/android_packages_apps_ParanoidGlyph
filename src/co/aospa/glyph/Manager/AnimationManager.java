@@ -41,9 +41,8 @@ public final class AnimationManager {
     private static final String TAG = "GlyphAnimationManager";
     private static final boolean DEBUG = true;
 
-    private static ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
-
     private static Future<?> submit(Runnable runnable) {
+        ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
         return mExecutorService.submit(runnable);
     }
 

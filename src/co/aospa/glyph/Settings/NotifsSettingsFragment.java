@@ -71,7 +71,7 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
         mApps = mPackageManager.getInstalledApplications(PackageManager.GET_GIDS);
         Collections.sort(mApps, new ApplicationInfo.DisplayNameComparator(mPackageManager));
         for (ApplicationInfo app : mApps) {
-            if(mPackageManager.getLaunchIntentForPackage(app.packageName) != null  && !ArrayUtils.contains(Constants.APPSTOIGNORENOTIFS, app.packageName)) { // apps with launcher intent
+            if(mPackageManager.getLaunchIntentForPackage(app.packageName) != null  && !ArrayUtils.contains(Constants.APPSTOIGNORE, app.packageName)) { // apps with launcher intent
                 SwitchPreference mSwitchPreference = new SwitchPreference(mScreen.getContext());
                 mSwitchPreference.setKey(app.packageName);
                 mSwitchPreference.setTitle(" " + app.loadLabel(mPackageManager).toString()); // add this space since the layout looks off otherwise

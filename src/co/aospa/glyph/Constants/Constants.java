@@ -46,16 +46,16 @@ public final class Constants {
     public static final String SINGLELEDPATH =  BASELEDPATH + "single_led_br";                   // Single LED
     public static final String SLANTLEDPATH =  BASELEDPATH + "front_cam_led_br";                 // Slanting Line
 
-    public static final String[] APPSTOIGNORENOTIFS = {
+    public static final String[] APPSTOIGNORE = {
                                                         "android",
                                                         "com.android.traceur",
                                                         //"com.google.android.dialer",
                                                         "com.google.android.setupwizard",
                                                         "dev.kdrag0n.dyntheme.privileged.sys"
                                                     };
-    public static final String[] CHANNELSTOIGNORENOTIFS = {
-                                                        "phone_incoming_call",
-                                                        "phone_ongoing_call"
+    public static final String[] NOTIFSTOIGNORE = {
+                                                        "com.google.android.dialer:phone_incoming_call",
+                                                        "com.google.android.dialer:phone_ongoing_call"
                                                     };
 
     public static void setBrightness(int b) {

@@ -29,10 +29,6 @@ import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
 import co.aospa.glyph.Manager.SettingsManager;
@@ -44,18 +40,10 @@ public class NotificationService extends NotificationListenerService {
     private static final String TAG = "GlyphNotification";
     private static final boolean DEBUG = true;
 
-    private ExecutorService mExecutorService;
-
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
         super.onCreate();
-
-        mExecutorService = Executors.newSingleThreadExecutor();
-    }
-
-    private Future<?> submit(Runnable runnable) {
-        return mExecutorService.submit(runnable);
     }
 
     @Override

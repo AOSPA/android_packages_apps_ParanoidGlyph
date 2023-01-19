@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6802b848_e7227a1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2023-01-19T00:25:58Z",
+      "side": 1,
+      "message": "no need to import co.aospa.glyph.Manager.StatusManager",
+      "revId": "cf5fea8ca87b25a90e413891efdfb4b0d299fa68",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}

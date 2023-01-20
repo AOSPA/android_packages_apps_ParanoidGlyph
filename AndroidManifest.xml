@@ -46,7 +46,7 @@
 
         <service
             android:name=".Services.CallReceiverService"
-            android:permission="android.permission.READ_PHONE_STATEREAD_PHONE_STATE">
+            android:permission="android.permission.READ_PHONE_STATE">
         </service>
 
         <service

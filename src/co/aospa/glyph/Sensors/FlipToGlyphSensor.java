@@ -22,7 +22,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.provider.Settings;
 import android.util.Log;
 
 import java.time.Duration;
@@ -105,7 +104,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
     private void onFlip(boolean flipped) {
-        if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
+        if (DEBUG) Log.d(TAG, "Flipped: " + flipped);
         mOnFlip.accept(flipped);
         isFlipped = flipped;
     }

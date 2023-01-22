@@ -35,49 +35,49 @@ public final class ServiceUtils {
     private static final String TAG = "GlyphServiceUtils";
     private static final boolean DEBUG = true;
 
-    public static void startCallReceiverService(Context context) {
+    private static void startCallReceiverService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph call receiver service");
         context.startServiceAsUser(new Intent(context, CallReceiverService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopCallReceiverService(Context context) {
+    private static void stopCallReceiverService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping Glyph call receiver service");
         context.stopServiceAsUser(new Intent(context, CallReceiverService.class),
                 UserHandle.CURRENT);
     }
 
-    public static void startChargingService(Context context) {
+    private static void startChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph charging service");
         context.startServiceAsUser(new Intent(context, ChargingService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopChargingService(Context context) {
+    private static void stopChargingService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping Glyph charging service");
         context.stopServiceAsUser(new Intent(context, ChargingService.class),
                 UserHandle.CURRENT);
     }
 
-    public static void startFlipToGlyphService(Context context) {
+    private static void startFlipToGlyphService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Flip to Glyph service");
         context.startServiceAsUser(new Intent(context, FlipToGlyphService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopFlipToGlyphService(Context context) {
+    private static void stopFlipToGlyphService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping Flip to Glyph service");
         context.stopServiceAsUser(new Intent(context, FlipToGlyphService.class),
                 UserHandle.CURRENT);
     }
 
-    public static void startNotificationService(Context context) {
+    private static void startNotificationService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph notifs service");
         context.startServiceAsUser(new Intent(context, NotificationService.class),
                 UserHandle.CURRENT);
     }
 
-    protected static void stopNotificationService(Context context) {
+    private static void stopNotificationService(Context context) {
         if (DEBUG) Log.d(TAG, "Stopping Glyph notifs service");
         context.stopServiceAsUser(new Intent(context, NotificationService.class),
                 UserHandle.CURRENT);

@@ -17,23 +17,15 @@
 package co.aospa.glyph.Manager;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.util.Log;
 
-import androidx.preference.PreferenceManager;
-
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
-import co.aospa.glyph.Manager.StatusManager;
 import co.aospa.glyph.Utils.FileUtils;
 
 public final class AnimationManager {
@@ -200,7 +192,7 @@ public final class AnimationManager {
                 } finally {
                     if (StatusManager.isAllLedActive()) {
                         if (DEBUG) Log.d(TAG, "All LED active, pause playing animation | name: " + name);
-                        while (StatusManager.isAllLedActive()) {};
+                        while (StatusManager.isAllLedActive()) {}
                     }
                 }
             }

@@ -80,7 +80,7 @@ public class CallReceiverService extends Service {
         AnimationManager.stopCall();
     }
 
-    private BroadcastReceiver mCallReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mCallReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {

@@ -25,12 +25,8 @@ import android.media.AudioManager;
 import android.os.IBinder;
 import android.util.Log;
 
-import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
-import co.aospa.glyph.Manager.SettingsManager;
-import co.aospa.glyph.Manager.StatusManager;
 import co.aospa.glyph.Sensors.FlipToGlyphSensor;
-import co.aospa.glyph.Utils.FileUtils;
 
 public class FlipToGlyphService extends Service {
 
@@ -73,7 +69,7 @@ public class FlipToGlyphService extends Service {
 
     private void onFlip(boolean flipped) {
         if (flipped == isFlipped) return;
-        if (DEBUG) Log.d(TAG, "Flipped: " + Boolean.toString(flipped));
+        if (DEBUG) Log.d(TAG, "Flipped: " + flipped);
         if (flipped) {
             AnimationManager.playCsv("flip", this);
             ringerMode = mAudioManager.getRingerModeInternal();

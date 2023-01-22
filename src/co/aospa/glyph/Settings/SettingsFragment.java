@@ -19,12 +19,10 @@
 package co.aospa.glyph.Settings;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemProperties;
 import android.provider.Settings;
 import android.widget.Switch;
 

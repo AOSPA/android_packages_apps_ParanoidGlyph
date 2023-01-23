@@ -89,6 +89,7 @@
 
         <activity
             android:name=".Settings.SettingsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:label="@string/glyph_settings_title"
             android:theme="@style/Theme.SubSettingsBase">
@@ -111,6 +112,7 @@
 
         <activity
             android:name=".Settings.NotifsSettingsActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="false"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2e7c24b_42d791b0",
+        "filename": "src/co/aospa/glyph/Services/GlyphTileServiceActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000427
+      },
+      "writtenOn": "2023-01-28T05:10:50Z",
+      "side": 1,
+      "message": "this should be a constant",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 88
+      },
+      "revId": "bf7bdfb714291168810722d9e69f188213b7fa04",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}

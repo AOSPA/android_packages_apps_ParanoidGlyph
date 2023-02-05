@@ -23,6 +23,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -35,12 +39,20 @@ public class ChargingService extends Service {
     private static final boolean DEBUG = true;
 
     private BatteryManager mBatteryManager;
+    private SensorManager mSensorManager;
+
+    private Sensor mAccelerometerSensor;
+    private static final float ACCELEROMETER_THRESHOLD = 10.0f;
+    private static final float ZFACEDOWN_THRESHOLD = -5.0f;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
 
         mBatteryManager = (BatteryManager) getSystemService(Context.BATTERY_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         IntentFilter powerMonitor = new IntentFilter();
         powerMonitor.addAction(Intent.ACTION_POWER_CONNECTED);
@@ -61,7 +73,6 @@ public class ChargingService extends Service {
         onPowerDisconnected();
 
         super.onDestroy();
-        this.unregisterReceiver(mPowerMonitor);
     }
 
     @Override
@@ -77,10 +88,13 @@ public class ChargingService extends Service {
         if (DEBUG) Log.d(TAG, "Power connected");
         if (DEBUG) Log.d(TAG, "Battery level: " + getBatteryLevel());
         playChargingAnimation();
+        mSensorManager.registerListener(mSensorEventListener,
+            mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private void onPowerDisconnected() {
         if (DEBUG) Log.d(TAG, "Power disconnected");
+	    mSensorManager.unregisterListener(mSensorEventListener);
     }
 
     private void playChargingAnimation() {
@@ -96,5 +110,23 @@ public class ChargingService extends Service {
                 onPowerDisconnected();
             }
         }
+    };
+
+    private final SensorEventListener mSensorEventListener = new SensorEventListener() {
+	    @Override
+	    public void onSensorChanged(SensorEvent event) {
+		    float x = event.values[0];
+		    float y = event.values[1];
+		    float z = event.values[2];
+		    float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
+
+		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD) {
+			    playChargingAnimation();
+		    }
+	    }
+
+	    @Override
+	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	    }
     };
 }

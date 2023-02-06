@@ -213,5 +213,50 @@ public final class AnimationManager {
         StatusManager.setCallLedEnabled(false);
     }
 
+    public static void playMusic(String name, Context context) {
+        submit(() -> {
+
+            //if (!check("music_"+name, true))
+                //return;
+
+            //StatusManager.setAnimationActive(true);
+
+            String path = null;
+
+            switch(name) {
+                case "low":
+                    path = Constants.EXCLAMATIONDOTLEDPATH;
+                    break;
+                case "mid_low":
+                    path = Constants.EXCLAMATIONBARLEDPATH;
+                    break;
+                case "mid":
+                    path = Constants.CENTERRINGLEDPATH;
+                    break;
+                case "mid_high":
+                    path = Constants.CAMERARINGLEDPATH;
+                    break;
+                case "high":
+                    path = Constants.SLANTLEDPATH;
+                    break;
+                default:
+                    if (DEBUG) Log.d(TAG, "Name doesnt match any zone, returning | name: " + name);
+                    return;
+            }
+
+            try {
+                FileUtils.writeLine(path, 1 * Constants.BRIGHTNESS);
+                Thread.sleep(90);
+            } catch (Exception e) {
+                if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
+            } finally {
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
+                FileUtils.writeLine(path, 0);
+            }
+
+            //StatusManager.setAnimationActive(false);
+
+        });
+    }
 
 }

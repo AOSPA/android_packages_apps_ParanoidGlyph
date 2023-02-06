@@ -28,6 +28,7 @@ import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Services.CallReceiverService;
 import co.aospa.glyph.Services.ChargingService;
 import co.aospa.glyph.Services.FlipToGlyphService;
+import co.aospa.glyph.Services.MusicVisualizerService;
 import co.aospa.glyph.Services.NotificationService;
 
 public final class ServiceUtils {
@@ -71,6 +72,18 @@ public final class ServiceUtils {
                 UserHandle.CURRENT);
     }
 
+    public static void startMusicVisualizerService(Context context) {
+        if (DEBUG) Log.d(TAG, "Starting Music Visualizer service");
+        context.startServiceAsUser(new Intent(context, MusicVisualizerService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopMusicVisualizerService(Context context) {
+        if (DEBUG) Log.d(TAG, "Stopping Music Visualizer service");
+        context.stopServiceAsUser(new Intent(context, MusicVisualizerService.class),
+                UserHandle.CURRENT);
+    }
+
     private static void startNotificationService(Context context) {
         if (DEBUG) Log.d(TAG, "Starting Glyph notifs service");
         context.startServiceAsUser(new Intent(context, NotificationService.class),
@@ -106,11 +119,17 @@ public final class ServiceUtils {
             } else {
                 stopFlipToGlyphService(context);
             }
+            if (SettingsManager.isGlyphMusicVisualizerEnabled(context)) {
+                startMusicVisualizerService(context);
+            } else {
+                stopMusicVisualizerService(context);
+            }
         } else {
             stopChargingService(context);
             stopCallReceiverService(context);
             stopNotificationService(context);
             stopFlipToGlyphService(context);
+            stopMusicVisualizerService(context);
         }
     }
 }

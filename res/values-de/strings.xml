@@ -45,6 +45,10 @@
     <string name="glyph_settings_notifs_sub_title">Zuzulassende Anwendungen</string>
     <string name="glyph_settings_notifs_sub_toggle_title">Animation der Benachrichtigung aktivieren</string>
 
+    <string name="glyph_settings_misc_title">Verschiedenes</string>
+    <string name="glyph_settings_music_visualizer_toggle_title">Music Visualizer</string>
+    <string name="glyph_settings_music_visualizer_toggle_summary">DISCO LICHTER!\nDiese Option deaktiviert alle anderen Funktionen solange aktiv</string>
+
     <!-- QS tile -->
     <string name="glyph_accessibility_quick_settings_off">Glyph aus</string>
     <string name="glyph_accessibility_quick_settings_on">Glyph an</string>

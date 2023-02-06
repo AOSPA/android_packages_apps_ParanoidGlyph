@@ -71,4 +71,14 @@
             android:title="@string/glyph_settings_charging_level_title"
             android:summary="@string/glyph_settings_charging_level_summary" />
 
+    <PreferenceCategory
+        android:key="glyph_settings_misc"
+        android:title="@string/glyph_settings_misc_title" />
+
+        <SwitchPreference
+            android:key="glyph_settings_music_visualizer_toggle"
+            android:defaultValue="false"
+            android:title="@string/glyph_settings_music_visualizer_toggle_title"
+            android:summary="@string/glyph_settings_music_visualizer_toggle_summary" />
+
 </PreferenceScreen>

@@ -22,6 +22,30 @@
       },
       "revId": "bf7bdfb714291168810722d9e69f188213b7fa04",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dc89f82_c1ccea92",
+        "filename": "src/co/aospa/glyph/Services/GlyphTileServiceActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2023-02-06T05:49:50Z",
+      "side": 1,
+      "message": "will be done in a future rework",
+      "parentUuid": "d2e7c24b_42d791b0",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 88
+      },
+      "revId": "bf7bdfb714291168810722d9e69f188213b7fa04",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ],
   "submitRequirementResults": []

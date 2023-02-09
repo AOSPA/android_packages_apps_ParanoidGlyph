@@ -87,7 +87,7 @@ public class ChargingService extends Service {
     private void onPowerConnected() {
         if (DEBUG) Log.d(TAG, "Power connected");
         if (DEBUG) Log.d(TAG, "Battery level: " + getBatteryLevel());
-        playChargingAnimation();
+        playChargingAnimation(true);
         mSensorManager.registerListener(mSensorEventListener,
             mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
@@ -97,8 +97,8 @@ public class ChargingService extends Service {
 	    mSensorManager.unregisterListener(mSensorEventListener);
     }
 
-    private void playChargingAnimation() {
-        AnimationManager.playCharging(getBatteryLevel(), this);
+    private void playChargingAnimation(boolean wait) {
+        AnimationManager.playCharging(getBatteryLevel(), wait, this);
     }
 
     private final BroadcastReceiver mPowerMonitor = new BroadcastReceiver() {
@@ -121,7 +121,7 @@ public class ChargingService extends Service {
 		    float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
 
 		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD) {
-			    playChargingAnimation();
+			    playChargingAnimation(false);
 		    }
 	    }
 

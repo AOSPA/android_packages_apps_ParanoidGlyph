@@ -108,10 +108,10 @@ public final class AnimationManager {
         });
     }
 
-    public static void playCharging(int batteryLevel, Context context) {
+    public static void playCharging(int batteryLevel, boolean wait, Context context) {
         submit(() -> {
             
-            if (!check("charging", true))
+            if (!check("charging", wait))
                 return;
 
             StatusManager.setAnimationActive(true);

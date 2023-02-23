@@ -34,6 +34,7 @@ public final class Constants {
     public static final String GLYPH_CALL_ENABLE = "glyph_settings_call_toggle";
     public static final String GLYPH_MUSIC_VISUALIZER_ENABLE = "glyph_settings_music_visualizer_toggle";
     public static final String GLYPH_NOTIFS_ENABLE = "glyph_settings_notifs_toggle";
+    public static final String GLYPH_NOTIFS_SUB_ANIMATIONS = "glyph_settings_notifs_sub_animations";
     public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
     public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
 

@@ -44,6 +44,7 @@
     <string name="glyph_settings_notifs_toggle_summary">Blinkende LEDs bei neuen Benachrichtigungen</string>
     <string name="glyph_settings_notifs_sub_title">Zuzulassende Anwendungen</string>
     <string name="glyph_settings_notifs_sub_toggle_title">Animation der Benachrichtigung aktivieren</string>
+    <string name="glyph_settings_notifs_sub_animations_title">Muster</string>
 
     <string name="glyph_settings_misc_title">Verschiedenes</string>
     <string name="glyph_settings_music_visualizer_toggle_title">Music Visualizer</string>

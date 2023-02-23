@@ -23,6 +23,7 @@ import android.util.Log;
 import androidx.preference.PreferenceManager;
 
 import co.aospa.glyph.Constants.Constants;
+import co.aospa.glyph.Utils.FileUtils;
 
 public final class SettingsManager {
 
@@ -45,8 +46,9 @@ public final class SettingsManager {
     }
 
     public static int getGlyphBrightness(Context context) {
+        int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
         int brightness = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(Constants.GLYPH_BRIGHTNESS, 3);
+                .getInt(Constants.GLYPH_BRIGHTNESS, d);
         switch (brightness) {
             case 1:
                 return 102; // 4095/40
@@ -57,6 +59,12 @@ public final class SettingsManager {
             default:
                 return 4095;
         }
+    }
+
+    public static int getGlyphBrightnessSetting(Context context) {
+        int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getInt(Constants.GLYPH_BRIGHTNESS, d);
     }
 
     public static boolean isGlyphChargingEnabled(Context context) {

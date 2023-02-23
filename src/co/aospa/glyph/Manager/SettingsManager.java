@@ -22,6 +22,7 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
+import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
 
@@ -90,6 +91,12 @@ public final class SettingsManager {
     public static boolean setGlyphNotifsEnabled(Context context, boolean enable) {
         return Settings.Secure.putInt(context.getContentResolver(),
                 Constants.GLYPH_NOTIFS_ENABLE, enable ? 1 : 0);
+    }
+
+    public static String getGlyphNotifsAnimation(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS,
+                    context.getString(R.string.glyph_settings_notifs_animations_default));
     }
 
     public static boolean isGlyphNotifsAppEnabled(Context context, String app) {

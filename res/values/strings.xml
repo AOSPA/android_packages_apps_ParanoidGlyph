@@ -47,6 +47,7 @@
     <string name="glyph_settings_notifs_toggle_summary">Flash LEDs on new notifications</string>
     <string name="glyph_settings_notifs_sub_title">Apps to allow</string>
     <string name="glyph_settings_notifs_sub_toggle_title">Enable notification animation</string>
+    <string name="glyph_settings_notifs_sub_animations_title">Pattern</string>
 
     <string name="glyph_settings_misc_title">Miscellaneous</string>
     <string name="glyph_settings_music_visualizer_toggle_title">Music Visualizer</string>

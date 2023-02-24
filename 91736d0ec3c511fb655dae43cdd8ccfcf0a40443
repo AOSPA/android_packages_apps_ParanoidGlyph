@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c980d63_b56b34f2",
+        "filename": "src/co/aospa/glyph/Manager/SettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000012
+      },
+      "writtenOn": "2023-02-24T17:11:57Z",
+      "side": 1,
+      "message": "likely gonna be denials here.",
+      "revId": "91736d0ec3c511fb655dae43cdd8ccfcf0a40443",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}

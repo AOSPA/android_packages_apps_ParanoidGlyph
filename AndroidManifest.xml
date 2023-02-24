@@ -55,6 +55,10 @@
         </service>
 
         <service
+            android:name=".Services.FaceDownService">
+        </service>
+
+        <service
             android:name=".Services.PowershareService">
         </service>
 

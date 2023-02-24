@@ -27,6 +27,7 @@ import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Services.CallReceiverService;
 import co.aospa.glyph.Services.ChargingService;
+import co.aospa.glyph.Services.FaceDownService;
 import co.aospa.glyph.Services.FlipToGlyphService;
 import co.aospa.glyph.Services.MusicVisualizerService;
 import co.aospa.glyph.Services.NotificationService;
@@ -61,6 +62,18 @@ public final class ServiceUtils {
     private static void stopChargingService() {
         if (DEBUG) Log.d(TAG, "Stopping Glyph charging service");
         context.stopServiceAsUser(new Intent(context, ChargingService.class),
+                UserHandle.CURRENT);
+    }
+
+    public static void startFaceDownService() {
+        if (DEBUG) Log.d(TAG, "Starting Face Down service");
+        context.startServiceAsUser(new Intent(context, FaceDownService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopFaceDownService() {
+        if (DEBUG) Log.d(TAG, "Stopping Face Down service");
+        context.stopServiceAsUser(new Intent(context, FaceDownService.class),
                 UserHandle.CURRENT);
     }
 
@@ -127,6 +140,7 @@ public final class ServiceUtils {
     public static void checkGlyphService() {
         if (SettingsManager.isGlyphEnabled()) {
             Constants.setBrightness(SettingsManager.getGlyphBrightness());
+            startFaceDownService();
             if (SettingsManager.isGlyphChargingEnabled()) {
                 startChargingService();
             } else {
@@ -170,6 +184,7 @@ public final class ServiceUtils {
             stopFlipToGlyphService();
             stopMusicVisualizerService();
             stopVolumeLevelService();
+            stopFaceDownService();
         }
     }
 }

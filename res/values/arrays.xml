@@ -17,14 +17,32 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Call Animations -->
-    <string name="glyph_settings_call_animations_default" translatable="false">beetle</string>
+    <string name="glyph_settings_call_animations_default" translatable="false">beetle_custom</string>
     <string-array name="glyph_settings_call_animations_names" translatable="false">
+        <item>Abra</item>
         <item>Beetle</item>
+        <item>Beetle (Custom)</item>
+        <item>Coded</item>
+        <item>Plot</item>
+        <item>Pneumatic</item>
         <item>Radiate</item>
+        <item>Scribble</item>
+        <item>Snaps</item>
+        <item>Squirrels</item>
+        <item>Tennis</item>
     </string-array>
     <string-array name="glyph_settings_call_animations_values" translatable="false">
+        <item>abra</item>
         <item>beetle</item>
+        <item>beetle_custom</item>
+        <item>coded</item>
+        <item>plot</item>
+        <item>pneumatic</item>
         <item>radiate</item>
+        <item>scribble</item>
+        <item>snaps</item>
+        <item>squirrels</item>
+        <item>tennis</item>
     </string-array>
 
     <!-- Notification Animations -->

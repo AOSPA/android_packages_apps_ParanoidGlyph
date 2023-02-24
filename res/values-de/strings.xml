@@ -38,6 +38,8 @@
     <string name="glyph_settings_call_title">Anruf</string>
     <string name="glyph_settings_call_toggle_title">Animation bei Anruf</string>
     <string name="glyph_settings_call_toggle_summary">Blinkende LEDs bei eingehenden Anrufen</string>
+    <string name="glyph_settings_call_sub_toggle_title">Animation der eingehenden Anrufen aktivieren</string>
+    <string name="glyph_settings_call_sub_animations_title">Muster</string>
 
     <string name="glyph_settings_notifs_title">Benachrichtigung</string>
     <string name="glyph_settings_notifs_toggle_title">Animation bei Benachrichtigung</string>

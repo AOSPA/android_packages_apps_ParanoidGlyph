@@ -29,6 +29,7 @@ import android.util.Log;
 import java.util.concurrent.Executors;
 
 import co.aospa.glyph.Manager.AnimationManager;
+import co.aospa.glyph.Manager.SettingsManager;
 
 public class CallReceiverService extends Service {
 
@@ -72,7 +73,7 @@ public class CallReceiverService extends Service {
 
     private void enableCallAnimation() {
         if (DEBUG) Log.d(TAG, "enableCallAnimation");
-        AnimationManager.playCall("beetle", this);
+        AnimationManager.playCall(SettingsManager.getGlyphNotifsAnimation(this), this);
     }
 
     private void disableCallAnimation() {

@@ -16,6 +16,24 @@
       "message": "likely gonna be denials here.",
       "revId": "91736d0ec3c511fb655dae43cdd8ccfcf0a40443",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92ffcddd_3174c2cc",
+        "filename": "src/co/aospa/glyph/Manager/SettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2023-02-24T17:22:22Z",
+      "side": 1,
+      "message": "will push the device tree in a bit",
+      "parentUuid": "4c980d63_b56b34f2",
+      "revId": "91736d0ec3c511fb655dae43cdd8ccfcf0a40443",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }

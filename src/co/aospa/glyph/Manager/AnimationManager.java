@@ -42,6 +42,11 @@ public final class AnimationManager {
     private static boolean check(String name, boolean wait) {
         if (DEBUG) Log.d(TAG, "Playing animation | name: " + name + " | waiting: " + Boolean.toString(wait));
 
+        if (StatusManager.isScreenUpwards()) {
+            if (DEBUG) Log.d(TAG, "Screen is facing upwards, exiting animation | name: " + name);
+            return false;
+        }
+
         if (StatusManager.isAllLedActive()) {
             if (DEBUG) Log.d(TAG, "All LEDs are active, exiting animation | name: " + name);
             return false;

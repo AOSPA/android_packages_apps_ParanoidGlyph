@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import co.aospa.glyph.Manager.StatusManager;
 import co.aospa.glyph.Sensors.FaceDownSensor;
 
 public class FaceDownService extends Service {
@@ -62,5 +63,6 @@ public class FaceDownService extends Service {
 
     private void isScreenUpwards(boolean upwards) {
         if (DEBUG) Log.d(TAG, "Upwards: " + upwards);
+        StatusManager.setScreenUpwards(upwards);
     }
 }

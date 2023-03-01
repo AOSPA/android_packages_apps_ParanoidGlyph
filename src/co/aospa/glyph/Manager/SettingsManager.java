@@ -48,17 +48,18 @@ public final class SettingsManager {
 
     public static int getGlyphBrightness(Context context) {
         int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
+        int[] levels = context.getResources().getIntArray(R.array.glyph_settings_animations_brightness_levels);
         int brightness = PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(Constants.GLYPH_BRIGHTNESS, d);
         switch (brightness) {
             case 1:
-                return 102; // 4095/40
+                return levels[0];
             case 2:
-                return 682; // 4095/6
+                return levels[1];
             case 3:
-                return 1365; // 4095/6
+                return levels[2];
             default:
-                return 4095;
+                return levels[3];
         }
     }
 

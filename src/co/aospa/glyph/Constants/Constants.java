@@ -40,16 +40,6 @@ public final class Constants {
     public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
     public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
 
-    public static final String BASELEDPATH = "/sys/class/leds/aw210xx_led/";                     // Base LED Path
-    public static final String ALLWHITELEDPATH = BASELEDPATH + "all_white_leds_br";              // All LEDs
-    public static final String CAMERARINGLEDPATH =  BASELEDPATH + "rear_cam_led_br";             // Camera Ring
-    public static final String CENTERRINGLEDPATH =  BASELEDPATH + "round_leds_br";               // Center Ring Section
-    public static final String EXCLAMATIONBARLEDPATH =  BASELEDPATH + "vline_leds_br";           // Exclamation Mark Bar
-    public static final String EXCLAMATIONDOTLEDPATH =  BASELEDPATH + "dot_led_br";              // Exclamation Mark Dot
-    public static final String EXCLAMATIONMARKLEDPATH =  BASELEDPATH + "horse_race_leds_br";     // Exclamation Mark Full
-    public static final String SINGLELEDPATH =  BASELEDPATH + "single_led_br";                   // Single LED
-    public static final String SLANTLEDPATH =  BASELEDPATH + "front_cam_led_br";                 // Slanting Line
-
     public static final String[] APPSTOIGNORE = {
                                                         "android",
                                                         "com.android.traceur",

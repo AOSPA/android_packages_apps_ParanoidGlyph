@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
 
@@ -79,29 +80,26 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
+            String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_animations_slugs);
+
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
-                if (reader.readLine() == null) throw new Exception();
                 while (true) {
                     String line = reader.readLine(); if (line == null) break;
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    final String[] split = line.split(",");
-                    FileUtils.writeLine(Constants.CAMERARINGLEDPATH, Float.parseFloat(split[0]) / 4095 * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.SLANTLEDPATH, Float.parseFloat(split[1]) / 4095 * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Float.parseFloat(split[2]) / 4095 * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, Float.parseFloat(split[3]) / 4095 * Constants.BRIGHTNESS);
-                    FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, Float.parseFloat(split[4]) / 4095 * Constants.BRIGHTNESS);
+                    String[] split = line.split(",");
+                    for (int i = 0; i< slugs.length; i++){
+                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS, context);
+                    }
                     Thread.sleep(10);
                 }
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
-            } finally {
-                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-                FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);
-                FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
-                FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-                FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);
-                FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, 0);
+            }
+
+            if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
+            for (int i = 0; i< slugs.length; i++){
+                FileUtils.writeLineFromSlug(slugs[i], 0, context);
             }
 
             StatusManager.setAnimationActive(false);
@@ -116,34 +114,37 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
+            int[] batteryArray = new int[]{};
+            if (batteryLevel == 100 ) {
+                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15, 8};
+            } else if (batteryLevel >= 88) {
+                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15};
+            } else if (batteryLevel >= 75) {
+                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14};
+            } else if (batteryLevel >= 62) {
+                batteryArray = new int[]{16, 13, 11, 9, 12, 10};
+            } else if (batteryLevel >= 49) {
+                batteryArray = new int[]{16, 13, 11, 9, 12};
+            } else if (batteryLevel >= 36) {
+                batteryArray = new int[]{16, 13, 11, 9};
+            } else if (batteryLevel >= 24) {
+                batteryArray = new int[]{16, 13, 11};
+            } else if (batteryLevel >= 12) {
+                batteryArray = new int[]{16, 13};
+            } else {
+                return;
+            }
+
             try {
-                int[] batteryArray = new int[]{};
-                if (batteryLevel == 100 ) {
-                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15, 8};
-                } else if (batteryLevel >= 88) {
-                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15};
-                } else if (batteryLevel >= 75) {
-                    batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14};
-                } else if (batteryLevel >= 62) {
-                    batteryArray = new int[]{16, 13, 11, 9, 12, 10};
-                } else if (batteryLevel >= 49) {
-                    batteryArray = new int[]{16, 13, 11, 9, 12};
-                } else if (batteryLevel >= 36) {
-                    batteryArray = new int[]{16, 13, 11, 9};
-                } else if (batteryLevel >= 24) {
-                    batteryArray = new int[]{16, 13, 11};
-                } else if (batteryLevel >= 12) {
-                    batteryArray = new int[]{16, 13};
-                }
                 for (int i : batteryArray) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS);
+                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS, context);
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
                 for (int i=batteryArray.length-1; i>=0; i--) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    FileUtils.writeSingleLed(batteryArray[i], 0);
+                    FileUtils.writeSingleLed(batteryArray[i], 0, context);
                     Thread.sleep(10);
                 }
                 Thread.sleep(730);
@@ -151,12 +152,12 @@ public final class AnimationManager {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: charging");
                 if (!StatusManager.isAllLedActive()) {
                     for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
-                        FileUtils.writeSingleLed(i, 0);
+                        FileUtils.writeSingleLed(i, 0, context);
                     }
                 }
-            } finally {
-                if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
             }
+
+            if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
 
             StatusManager.setAnimationActive(false);
         });
@@ -172,19 +173,18 @@ public final class AnimationManager {
 
             StatusManager.setCallLedActive(true);
 
+            String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_animations_slugs);
+
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                         context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
-                    if (reader.readLine() == null) throw new Exception();
                     while (true) {
                         String line = reader.readLine(); if (line == null) break;
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                        final String[] split = line.split(",");
-                        FileUtils.writeLine(Constants.CAMERARINGLEDPATH, Float.parseFloat(split[0]) / 4095 * Constants.BRIGHTNESS);
-                        FileUtils.writeLine(Constants.SLANTLEDPATH, Float.parseFloat(split[1]) / 4095 * Constants.BRIGHTNESS);
-                        FileUtils.writeLine(Constants.CENTERRINGLEDPATH, Float.parseFloat(split[2]) / 4095 * Constants.BRIGHTNESS);
-                        FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, Float.parseFloat(split[3]) / 4095 * Constants.BRIGHTNESS);
-                        FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, Float.parseFloat(split[4]) / 4095 * Constants.BRIGHTNESS);
+                        String[] split = line.split(",");
+                        for (int i = 0; i< slugs.length; i++){
+                            FileUtils.writeLine(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS);
+                        }
                         Thread.sleep(10);
                     }
                 } catch (Exception e) {
@@ -198,11 +198,9 @@ public final class AnimationManager {
             }
 
             if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-            FileUtils.writeLine(Constants.CAMERARINGLEDPATH, 0);
-            FileUtils.writeLine(Constants.CENTERRINGLEDPATH, 0);
-            FileUtils.writeLine(Constants.EXCLAMATIONBARLEDPATH, 0);
-            FileUtils.writeLine(Constants.EXCLAMATIONDOTLEDPATH, 0);
-            FileUtils.writeLine(Constants.SLANTLEDPATH, 0);
+            for (int i = 0; i< slugs.length; i++){
+                FileUtils.writeLineFromSlug(slugs[i], 0, context);
+            }
 
             StatusManager.setCallLedActive(false);
         });
@@ -225,19 +223,19 @@ public final class AnimationManager {
 
             switch(name) {
                 case "low":
-                    path = Constants.EXCLAMATIONDOTLEDPATH;
+                    path = "dot";
                     break;
                 case "mid_low":
-                    path = Constants.EXCLAMATIONBARLEDPATH;
+                    path = "bar";
                     break;
                 case "mid":
-                    path = Constants.CENTERRINGLEDPATH;
+                    path = "center";
                     break;
                 case "mid_high":
-                    path = Constants.CAMERARINGLEDPATH;
+                    path = "camera";
                     break;
                 case "high":
-                    path = Constants.SLANTLEDPATH;
+                    path = "slant";
                     break;
                 default:
                     if (DEBUG) Log.d(TAG, "Name doesnt match any zone, returning | name: " + name);
@@ -245,13 +243,13 @@ public final class AnimationManager {
             }
 
             try {
-                FileUtils.writeLine(path, 1 * Constants.BRIGHTNESS);
+                FileUtils.writeLineFromSlug(path, Constants.BRIGHTNESS, context);
                 Thread.sleep(90);
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
             } finally {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-                FileUtils.writeLine(path, 0);
+                FileUtils.writeLineFromSlug(path, 0, context);
             }
 
             //StatusManager.setAnimationActive(false);

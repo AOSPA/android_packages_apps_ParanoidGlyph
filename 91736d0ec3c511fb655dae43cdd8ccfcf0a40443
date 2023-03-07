@@ -34,6 +34,24 @@
       "parentUuid": "4c980d63_b56b34f2",
       "revId": "91736d0ec3c511fb655dae43cdd8ccfcf0a40443",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e77318b_c7c3ce36",
+        "filename": "src/co/aospa/glyph/Manager/SettingsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2023-03-07T10:46:26Z",
+      "side": 1,
+      "message": "https://gerrit.aospa.co/c/AOSPA/android_device_nothing_phone1/+/28027",
+      "parentUuid": "92ffcddd_3174c2cc",
+      "revId": "91736d0ec3c511fb655dae43cdd8ccfcf0a40443",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }

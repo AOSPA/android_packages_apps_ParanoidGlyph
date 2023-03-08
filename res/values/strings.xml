@@ -41,6 +41,8 @@
     <string name="glyph_settings_call_title">Calls</string>
     <string name="glyph_settings_call_toggle_title">Call animation</string>
     <string name="glyph_settings_call_toggle_summary">Flash LEDs on incoming calls</string>
+    <string name="glyph_settings_call_sub_toggle_title">Enable call animation</string>
+    <string name="glyph_settings_call_sub_animations_title">Pattern</string>
 
     <string name="glyph_settings_notifs_title">Notifications</string>
     <string name="glyph_settings_notifs_toggle_title">Notification animation</string>

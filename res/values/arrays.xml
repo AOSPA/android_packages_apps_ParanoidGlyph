@@ -16,6 +16,17 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Call Animations -->
+    <string name="glyph_settings_call_animations_default" translatable="false">beetle</string>
+    <string-array name="glyph_settings_call_animations_names" translatable="false">
+        <item>Beetle</item>
+        <item>Radiate</item>
+    </string-array>
+    <string-array name="glyph_settings_call_animations_values" translatable="false">
+        <item>beetle</item>
+        <item>radiate</item>
+    </string-array>
+
     <!-- Notification Animations -->
     <string name="glyph_settings_notifs_animations_default" translatable="false">break_custom</string>
     <string-array name="glyph_settings_notifs_animations_names" translatable="false">

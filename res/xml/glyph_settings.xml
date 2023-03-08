@@ -40,11 +40,15 @@
         android:key="glyph_settings_call"
         android:title="@string/glyph_settings_call_title" />
 
-        <SwitchPreference
+        <com.android.settingslib.PrimarySwitchPreference
             android:key="glyph_settings_call_toggle"
             android:defaultValue="true"
             android:title="@string/glyph_settings_call_toggle_title"
-            android:summary="@string/glyph_settings_call_toggle_summary" />
+            android:summary="@string/glyph_settings_call_toggle_summary" >
+            <intent android:action="android.intent.action.MAIN"
+                 android:targetPackage="co.aospa.glyph"
+                 android:targetClass="co.aospa.glyph.Settings.CallSettingsActivity"/>
+        </com.android.settingslib.PrimarySwitchPreference>
 
     <PreferenceCategory
         android:key="glyph_settings_notifs"
@@ -52,7 +56,7 @@
 
         <com.android.settingslib.PrimarySwitchPreference
             android:key="glyph_settings_notifs_toggle"
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:title="@string/glyph_settings_notifs_toggle_title"
             android:summary="@string/glyph_settings_notifs_toggle_summary" >
             <intent android:action="android.intent.action.MAIN"

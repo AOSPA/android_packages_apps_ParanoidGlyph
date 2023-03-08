@@ -74,8 +74,19 @@ public final class SettingsManager {
     }
 
     public static boolean isGlyphCallEnabled(Context context) {
+        return Settings.Secure.getInt(context.getContentResolver(),
+                Constants.GLYPH_CALL_ENABLE, 1) != 0 && isGlyphEnabled(context);
+    }
+
+    public static boolean setGlyphCallEnabled(Context context, boolean enable) {
+        return Settings.Secure.putInt(context.getContentResolver(),
+                Constants.GLYPH_CALL_ENABLE, enable ? 1 : 0);
+    }
+
+    public static String getGlyphCallAnimation(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(Constants.GLYPH_CALL_ENABLE, false) && isGlyphEnabled(context);
+                .getString(Constants.GLYPH_CALL_SUB_ANIMATIONS,
+                    context.getString(R.string.glyph_settings_call_animations_default));
     }
 
     public static boolean isGlyphMusicVisualizerEnabled(Context context) {

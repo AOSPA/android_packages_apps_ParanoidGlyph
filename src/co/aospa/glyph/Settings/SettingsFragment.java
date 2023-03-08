@@ -50,7 +50,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     private SwitchPreference mFlipPreference;
     private SeekBarPreference mBrightnessPreference;
     private PrimarySwitchPreference mNotifsPreference;
-    private SwitchPreference mCallPreference;
+    private PrimarySwitchPreference mCallPreference;
     private SwitchPreference mChargingLevelPreference;
     private SwitchPreference mMusicVisualizerPreference;
 
@@ -91,8 +91,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mNotifsPreference.setSwitchEnabled(glyphEnabled);
         mNotifsPreference.setOnPreferenceChangeListener(this);
 
-        mCallPreference = (SwitchPreference) findPreference(Constants.GLYPH_CALL_ENABLE);
+        mCallPreference = (PrimarySwitchPreference) findPreference(Constants.GLYPH_CALL_ENABLE);
+        mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled(getActivity()));
         mCallPreference.setEnabled(glyphEnabled);
+        mCallPreference.setSwitchEnabled(glyphEnabled);
         mCallPreference.setOnPreferenceChangeListener(this);
 
         mChargingLevelPreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_LEVEL_ENABLE);
@@ -108,6 +110,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mNotifsPreference.setEnabled(false);
             mNotifsPreference.setSwitchEnabled(false);
             mCallPreference.setEnabled(false);
+            mCallPreference.setSwitchEnabled(false);
             mChargingLevelPreference.setEnabled(false);
         }
 
@@ -117,6 +120,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String preferenceKey = preference.getKey();
+
+        if (preferenceKey.equals(Constants.GLYPH_CALL_ENABLE)) {
+            SettingsManager.setGlyphCallEnabled(getActivity(), !mCallPreference.isChecked() ? true : false);
+        }
 
         if (preferenceKey.equals(Constants.GLYPH_NOTIFS_ENABLE)) {
             SettingsManager.setGlyphNotifsEnabled(getActivity(), !mNotifsPreference.isChecked() ? true : false);
@@ -129,6 +136,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mNotifsPreference.setEnabled(isChecked);
             mNotifsPreference.setSwitchEnabled(isChecked);
             mCallPreference.setEnabled(isChecked);
+            mCallPreference.setSwitchEnabled(isChecked);
             mChargingLevelPreference.setEnabled(isChecked);
         }
 
@@ -148,6 +156,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mNotifsPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mNotifsPreference.setSwitchEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mCallPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
+        mCallPreference.setSwitchEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mChargingLevelPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mMusicVisualizerPreference.setEnabled(isChecked);
 
@@ -167,6 +176,8 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
 
         public void register(ContentResolver cr) {
             cr.registerContentObserver(Settings.Secure.getUriFor(
+                Constants.GLYPH_CALL_ENABLE), false, this);
+            cr.registerContentObserver(Settings.Secure.getUriFor(
                 Constants.GLYPH_NOTIFS_ENABLE), false, this);
         }
 
@@ -177,6 +188,9 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
+            if (uri.equals(Settings.Secure.getUriFor(Constants.GLYPH_CALL_ENABLE))) {
+                mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled(getActivity()));
+            }
             if (uri.equals(Settings.Secure.getUriFor(Constants.GLYPH_NOTIFS_ENABLE))) {
                 mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
             }

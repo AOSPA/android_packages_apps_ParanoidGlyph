@@ -70,7 +70,7 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
 
         mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
-        mSwitchBar.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
+        mSwitchBar.setChecked(SettingsManager.isGlyphNotifsEnabled());
 
         mCategory = (PreferenceCategory) findPreference(Constants.GLYPH_NOTIFS_SUB_CATEGORY);
 
@@ -98,8 +98,8 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(getActivity()),
-                SettingsManager.getGlyphNotifsAnimation(getActivity()), 1500);
+        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(),
+                SettingsManager.getGlyphNotifsAnimation(), 1500);
     }
 
     @Override
@@ -107,21 +107,21 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
         final String preferenceKey = preference.getKey();
 
         if (preferenceKey.equals(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS)) {
-            mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(getActivity()),
+            mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(),
                 newValue.toString(), 1500);
         }
 
-        //mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
+        //mHandler.post(() -> ServiceUtils.checkGlyphService());
 
         return true;
     }
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        SettingsManager.setGlyphNotifsEnabled(getActivity(), isChecked);
-        ServiceUtils.checkGlyphService(getActivity());
+        SettingsManager.setGlyphNotifsEnabled(isChecked);
+        ServiceUtils.checkGlyphService();
         mGlyphAnimationPreference.updateAnimation(isChecked,
-                SettingsManager.getGlyphNotifsAnimation(getActivity()), 1500);
+                SettingsManager.getGlyphNotifsAnimation(), 1500);
     }
 
 }

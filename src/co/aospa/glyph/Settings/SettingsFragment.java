@@ -67,7 +67,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mSettingObserver = new SettingObserver();
         mSettingObserver.register(mContentResolver);
 
-        boolean glyphEnabled = SettingsManager.isGlyphEnabled(getActivity());
+        boolean glyphEnabled = SettingsManager.isGlyphEnabled();
 
         mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
@@ -81,18 +81,18 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mBrightnessPreference.setEnabled(glyphEnabled);
         mBrightnessPreference.setMin(1);
         mBrightnessPreference.setMax(4);
-        mBrightnessPreference.setValue(SettingsManager.getGlyphBrightnessSetting(getActivity()));
+        mBrightnessPreference.setValue(SettingsManager.getGlyphBrightnessSetting());
         mBrightnessPreference.setUpdatesContinuously(true);
         mBrightnessPreference.setOnPreferenceChangeListener(this);
 
         mNotifsPreference = (PrimarySwitchPreference) findPreference(Constants.GLYPH_NOTIFS_ENABLE);
-        mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
+        mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled());
         mNotifsPreference.setEnabled(glyphEnabled);
         mNotifsPreference.setSwitchEnabled(glyphEnabled);
         mNotifsPreference.setOnPreferenceChangeListener(this);
 
         mCallPreference = (PrimarySwitchPreference) findPreference(Constants.GLYPH_CALL_ENABLE);
-        mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled(getActivity()));
+        mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled());
         mCallPreference.setEnabled(glyphEnabled);
         mCallPreference.setSwitchEnabled(glyphEnabled);
         mCallPreference.setOnPreferenceChangeListener(this);
@@ -114,7 +114,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mChargingLevelPreference.setEnabled(false);
         }
 
-        mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
+        mHandler.post(() -> ServiceUtils.checkGlyphService());
     }
 
     @Override
@@ -122,11 +122,11 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         final String preferenceKey = preference.getKey();
 
         if (preferenceKey.equals(Constants.GLYPH_CALL_ENABLE)) {
-            SettingsManager.setGlyphCallEnabled(getActivity(), !mCallPreference.isChecked() ? true : false);
+            SettingsManager.setGlyphCallEnabled(!mCallPreference.isChecked() ? true : false);
         }
 
         if (preferenceKey.equals(Constants.GLYPH_NOTIFS_ENABLE)) {
-            SettingsManager.setGlyphNotifsEnabled(getActivity(), !mNotifsPreference.isChecked() ? true : false);
+            SettingsManager.setGlyphNotifsEnabled(!mNotifsPreference.isChecked() ? true : false);
         }
 
         if (preferenceKey.equals(Constants.GLYPH_MUSIC_VISUALIZER_ENABLE)) {
@@ -140,14 +140,14 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mChargingLevelPreference.setEnabled(isChecked);
         }
 
-        mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
+        mHandler.post(() -> ServiceUtils.checkGlyphService());
 
         return true;
     }
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        SettingsManager.enableGlyph(getActivity(), isChecked);
+        SettingsManager.enableGlyph(isChecked);
 
         mSwitchBar.setChecked(isChecked);
 
@@ -160,7 +160,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mChargingLevelPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mMusicVisualizerPreference.setEnabled(isChecked);
 
-        mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
+        mHandler.post(() -> ServiceUtils.checkGlyphService());
     }
 
     @Override
@@ -189,10 +189,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             if (uri.equals(Settings.Secure.getUriFor(Constants.GLYPH_CALL_ENABLE))) {
-                mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled(getActivity()));
+                mCallPreference.setChecked(SettingsManager.isGlyphCallEnabled());
             }
             if (uri.equals(Settings.Secure.getUriFor(Constants.GLYPH_NOTIFS_ENABLE))) {
-                mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled(getActivity()));
+                mNotifsPreference.setChecked(SettingsManager.isGlyphNotifsEnabled());
             }
         }
     }

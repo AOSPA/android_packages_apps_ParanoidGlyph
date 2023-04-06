@@ -75,12 +75,12 @@ public class NotificationService extends NotificationListenerService {
             }
         } catch (PackageManager.NameNotFoundException e) {}
         if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
-        if (SettingsManager.isGlyphNotifsAppEnabled(this, packageName)
+        if (SettingsManager.isGlyphNotifsAppEnabled(packageName)
                         && !sbn.isOngoing()
                         && !ArrayUtils.contains(Constants.APPSTOIGNORE, packageName)
                         && !ArrayUtils.contains(Constants.NOTIFSTOIGNORE, packageName + ":" + packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
-            AnimationManager.playCsv(SettingsManager.getGlyphNotifsAnimation(this), this);
+            AnimationManager.playCsv(SettingsManager.getGlyphNotifsAnimation());
         }
     }
 

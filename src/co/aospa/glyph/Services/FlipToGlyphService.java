@@ -71,7 +71,7 @@ public class FlipToGlyphService extends Service {
         if (flipped == isFlipped) return;
         if (DEBUG) Log.d(TAG, "Flipped: " + flipped);
         if (flipped) {
-            AnimationManager.playCsv("flip", this);
+            AnimationManager.playCsv("flip");
             ringerMode = mAudioManager.getRingerModeInternal();
             mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);
         } else {

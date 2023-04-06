@@ -16,10 +16,14 @@
 
 package co.aospa.glyph.Constants;
 
+import android.content.Context;
+
 public final class Constants {
 
     private static final String TAG = "GlyphConstants";
     private static final boolean DEBUG = true;
+
+    public static Context CONTEXT;
 
     public static int BRIGHTNESS = 4095;
     public static int BRIGHTNESS_MIN = 0;

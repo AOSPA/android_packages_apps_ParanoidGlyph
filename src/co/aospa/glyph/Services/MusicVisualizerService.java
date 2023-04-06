@@ -152,7 +152,7 @@ public class MusicVisualizerService extends Service {
         // Also make sure the mCurrentAvgEnergy has been set, otherwise its -1 before its first pass
         if( (sampleAvgAudioEnergy >  mCurrentAvgEnergyOneSec[0]) && (mCurrentAvgEnergyOneSec[0] > 0) ) {
             if (DEBUG) Log.d(TAG, "Low frequency band beat detected");
-            AnimationManager.playMusic("low", this);
+            AnimationManager.playMusic("low");
         }
 
         energySum = 0;
@@ -176,7 +176,7 @@ public class MusicVisualizerService extends Service {
         // Check for a beat in the mid-low frequency band
         if((sampleAvgAudioEnergy >  mCurrentAvgEnergyOneSec[1]) && (mCurrentAvgEnergyOneSec[1] > 0)) {
             if (DEBUG) Log.d(TAG, "Mid-low frequency band beat detected");
-            AnimationManager.playMusic("mid_low", this);
+            AnimationManager.playMusic("mid_low");
         }
 
         energySum = 0;
@@ -200,7 +200,7 @@ public class MusicVisualizerService extends Service {
         // Check for a beat in the mid frequency band
         if( (sampleAvgAudioEnergy >  mCurrentAvgEnergyOneSec[2]) && (mCurrentAvgEnergyOneSec[2] > 0) ) {
             if (DEBUG) Log.d(TAG, "Mid frequency band beat detected");
-            AnimationManager.playMusic("mid", this);
+            AnimationManager.playMusic("mid");
         }
 
         energySum = 0;
@@ -224,7 +224,7 @@ public class MusicVisualizerService extends Service {
         // Check for a beat in the mid-high frequency band
         if( (sampleAvgAudioEnergy >  mCurrentAvgEnergyOneSec[3]) && (mCurrentAvgEnergyOneSec[3] > 0) ) {
             if (DEBUG) Log.d(TAG, "Mid-high frequency band beat detected");
-            AnimationManager.playMusic("mid_high", this);
+            AnimationManager.playMusic("mid_high");
         }
 
         // Second Byte: Only imaginary part of the last frequency (include in highs)
@@ -249,7 +249,7 @@ public class MusicVisualizerService extends Service {
         // Check for a beat in the high frequency band
         if( (sampleAvgAudioEnergy >  mCurrentAvgEnergyOneSec[4]) && (mCurrentAvgEnergyOneSec[4] > 0) ) {
             if (DEBUG) Log.d(TAG, "High frequency band beat detected");
-            AnimationManager.playMusic("high", this);
+            AnimationManager.playMusic("high");
         }
 
         long currentTime = System.currentTimeMillis();

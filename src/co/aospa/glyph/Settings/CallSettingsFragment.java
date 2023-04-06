@@ -58,7 +58,7 @@ public class CallSettingsFragment extends PreferenceFragment implements OnPrefer
 
         mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_CALL_SUB_ENABLE);
         mSwitchBar.addOnSwitchChangeListener(this);
-        mSwitchBar.setChecked(SettingsManager.isGlyphCallEnabled(getActivity()));
+        mSwitchBar.setChecked(SettingsManager.isGlyphCallEnabled());
 
         mListPreference = (ListPreference) findPreference(Constants.GLYPH_CALL_SUB_ANIMATIONS);
         mListPreference.setOnPreferenceChangeListener(this);
@@ -69,8 +69,8 @@ public class CallSettingsFragment extends PreferenceFragment implements OnPrefer
     @Override
     public void onViewCreated (View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphCallEnabled(getActivity()),
-                SettingsManager.getGlyphCallAnimation(getActivity()));
+        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphCallEnabled(),
+                SettingsManager.getGlyphCallAnimation());
     }
 
     @Override
@@ -78,21 +78,21 @@ public class CallSettingsFragment extends PreferenceFragment implements OnPrefer
         final String preferenceKey = preference.getKey();
 
         if (preferenceKey.equals(Constants.GLYPH_CALL_SUB_ANIMATIONS)) {
-            mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphCallEnabled(getActivity()),
+            mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphCallEnabled(),
                 newValue.toString());
         }
 
-        //mHandler.post(() -> ServiceUtils.checkGlyphService(getActivity()));
+        //mHandler.post(() -> ServiceUtils.checkGlyphService());
 
         return true;
     }
 
     @Override
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
-        SettingsManager.setGlyphCallEnabled(getActivity(), isChecked);
-        ServiceUtils.checkGlyphService(getActivity());
+        SettingsManager.setGlyphCallEnabled(isChecked);
+        ServiceUtils.checkGlyphService();
         mGlyphAnimationPreference.updateAnimation(isChecked,
-                SettingsManager.getGlyphCallAnimation(getActivity()));
+                SettingsManager.getGlyphCallAnimation());
     }
 
 }

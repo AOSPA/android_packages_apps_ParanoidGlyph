@@ -34,6 +34,8 @@ public final class AnimationManager {
     private static final String TAG = "GlyphAnimationManager";
     private static final boolean DEBUG = true;
 
+    private static Context context = Constants.CONTEXT;
+
     private static Future<?> submit(Runnable runnable) {
         ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
         return mExecutorService.submit(runnable);
@@ -68,11 +70,11 @@ public final class AnimationManager {
         return true;
     }
 
-    public static void playCsv(String name, Context context) {
-        playCsv(name, false, context);
+    public static void playCsv(String name) {
+        playCsv(name, false);
     }
 
-    public static void playCsv(String name, boolean wait, Context context) {
+    public static void playCsv(String name, boolean wait) {
         submit(() -> {
 
             if (!check(name, wait))
@@ -85,11 +87,15 @@ public final class AnimationManager {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
                 while (true) {
+                    if (DEBUG) Log.d(TAG, "1");
                     String line = reader.readLine(); if (line == null) break;
+                    if (DEBUG) Log.d(TAG, "2");
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    if (DEBUG) Log.d(TAG, "3");
                     String[] split = line.split(",");
+                    if (DEBUG) Log.d(TAG, "4");
                     for (int i = 0; i< slugs.length; i++){
-                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS, context);
+                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS);
                     }
                     Thread.sleep(10);
                 }
@@ -99,14 +105,14 @@ public final class AnimationManager {
 
             if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             for (int i = 0; i< slugs.length; i++){
-                FileUtils.writeLineFromSlug(slugs[i], 0, context);
+                FileUtils.writeLineFromSlug(slugs[i], 0);
             }
 
             StatusManager.setAnimationActive(false);
         });
     }
 
-    public static void playCharging(int batteryLevel, boolean wait, Context context) {
+    public static void playCharging(int batteryLevel, boolean wait) {
         submit(() -> {
             
             if (!check("charging", wait))
@@ -138,13 +144,13 @@ public final class AnimationManager {
             try {
                 for (int i : batteryArray) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS, context);
+                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS);
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
                 for (int i=batteryArray.length-1; i>=0; i--) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    FileUtils.writeSingleLed(batteryArray[i], 0, context);
+                    FileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
                 }
                 Thread.sleep(730);
@@ -152,7 +158,7 @@ public final class AnimationManager {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: charging");
                 if (!StatusManager.isAllLedActive()) {
                     for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
-                        FileUtils.writeSingleLed(i, 0, context);
+                        FileUtils.writeSingleLed(i, 0);
                     }
                 }
             }
@@ -163,7 +169,7 @@ public final class AnimationManager {
         });
     }
 
-    public static void playCall(String name, Context context) {
+    public static void playCall(String name) {
         submit(() -> {
 
             StatusManager.setCallLedEnabled(true);
@@ -199,7 +205,7 @@ public final class AnimationManager {
 
             if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             for (int i = 0; i< slugs.length; i++){
-                FileUtils.writeLineFromSlug(slugs[i], 0, context);
+                FileUtils.writeLineFromSlug(slugs[i], 0);
             }
 
             StatusManager.setCallLedActive(false);
@@ -211,7 +217,7 @@ public final class AnimationManager {
         StatusManager.setCallLedEnabled(false);
     }
 
-    public static void playMusic(String name, Context context) {
+    public static void playMusic(String name) {
         submit(() -> {
 
             //if (!check("music_"+name, true))
@@ -243,13 +249,13 @@ public final class AnimationManager {
             }
 
             try {
-                FileUtils.writeLineFromSlug(path, Constants.BRIGHTNESS, context);
+                FileUtils.writeLineFromSlug(path, Constants.BRIGHTNESS);
                 Thread.sleep(90);
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
             } finally {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-                FileUtils.writeLineFromSlug(path, 0, context);
+                FileUtils.writeLineFromSlug(path, 0);
             }
 
             //StatusManager.setAnimationActive(false);

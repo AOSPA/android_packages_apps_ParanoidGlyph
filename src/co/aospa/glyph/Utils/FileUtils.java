@@ -36,6 +36,8 @@ public final class FileUtils {
     private static final String TAG = "GlyphFileUtils";
     private static final boolean DEBUG = true;
 
+    private static Context context = Constants.CONTEXT;
+
     public static String readLine(String fileName) {
         String line = null;
         BufferedReader reader = null;
@@ -96,37 +98,37 @@ public final class FileUtils {
         writeLine(fileName, Float.toString(value));
     }
 
-    public static void writeLineFromSlug(String slug, String value, Context context) {
+    public static void writeLineFromSlug(String slug, String value) {
         String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_paths);
         String[] paths = context.getResources().getStringArray(R.array.glyph_settings_paths_absolute);
         writeLine(paths[Arrays.asList(slugs).indexOf(slug)], value);
     }
 
-    public static void writeLineFromSlug(String slug, int value, Context context) {
-        writeLineFromSlug(slug, Integer.toString(value), context);
+    public static void writeLineFromSlug(String slug, int value) {
+        writeLineFromSlug(slug, Integer.toString(value));
     }
 
-    public static void writeLineFromSlug(String slug, float value, Context context) {
-        writeLineFromSlug(slug, Float.toString(value), context);
+    public static void writeLineFromSlug(String slug, float value) {
+        writeLineFromSlug(slug, Float.toString(value));
     }
 
-    public static void writeSingleLed(String led, String value, Context context) {
+    public static void writeSingleLed(String led, String value) {
         writeLine(context.getString(R.string.glyph_settings_paths_single_absolute), led + " " + value);
     }
 
-    public static void writeSingleLed(int led, String value, Context context) {
-        writeSingleLed(Integer.toString(led), value, context);
+    public static void writeSingleLed(int led, String value) {
+        writeSingleLed(Integer.toString(led), value);
     }
 
-    public static void writeSingleLed(String led, int value, Context context) {
-        writeSingleLed(led, Integer.toString(value), context);
+    public static void writeSingleLed(String led, int value) {
+        writeSingleLed(led, Integer.toString(value));
     }
 
-    public static void writeSingleLed(String led, float value, Context context) {
-        writeSingleLed(led, Integer.toString(Math.round(value)), context);
+    public static void writeSingleLed(String led, float value) {
+        writeSingleLed(led, Integer.toString(Math.round(value)));
     }
 
-    public static void writeSingleLed(int led, float value, Context context) {
-        writeSingleLed(Integer.toString(led), Integer.toString(Math.round(value)), context);
+    public static void writeSingleLed(int led, float value) {
+        writeSingleLed(Integer.toString(led), Integer.toString(Math.round(value)));
     }
 }

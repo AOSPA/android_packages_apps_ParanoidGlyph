@@ -56,6 +56,6 @@ public class GlyphTileService extends TileService {
 
     private void setEnabled(boolean enabled) {
         StatusManager.setAllLedsActive(enabled);
-        FileUtils.writeLineFromSlug("all", enabled ? 4095 : 0, getApplicationContext());
+        FileUtils.writeLineFromSlug("all", enabled ? 4095 : 0);
     }
 }

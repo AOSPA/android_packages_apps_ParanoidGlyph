@@ -72,20 +72,28 @@
         </service>
 
         <service
-            android:name=".Services.GlyphTileService"
+            android:name=".Tiles.GlyphTileService"
             android:exported="true"
-            android:label="@string/glyph_settings_enable"
+            android:label="@string/glyph_accessibility_quick_settings"
             android:icon="@drawable/ic_glyphs_logo"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
-
-        <activity
-            android:name=".Services.GlyphTileServiceActivity"
+        <service
+            android:name=".Tiles.TorchTileService"
             android:exported="true"
-            android:label="@string/glyph_settings_enable"
+            android:label="@string/glyph_accessibility_quick_settings_torch"
+            android:icon="@drawable/ic_glyphs_logo"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <activity
+            android:name=".Tiles.TileActivity"
+            android:exported="true"
             android:theme="@style/Theme.SubSettingsBase">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />

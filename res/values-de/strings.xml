@@ -53,7 +53,10 @@
     <string name="glyph_settings_music_visualizer_toggle_summary">DISCO LICHTER!\nDiese Option deaktiviert alle anderen Funktionen solange aktiv</string>
 
     <!-- QS tile -->
-    <string name="glyph_accessibility_quick_settings_off">Glyph aus</string>
-    <string name="glyph_accessibility_quick_settings_on">Glyph an</string>
+    <string name="glyph_accessibility_quick_settings">Glyph</string>
+    <string name="glyph_accessibility_quick_settings_torch">Glyph Taschenlampe</string>
+
+    <string name="glyph_accessibility_quick_settings_off">Aus</string>
+    <string name="glyph_accessibility_quick_settings_on">An</string>
 
 </resources>

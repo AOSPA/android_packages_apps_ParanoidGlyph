@@ -16,14 +16,14 @@
  * limitations under the License.
  */
 
-package co.aospa.glyph.Services;
+package co.aospa.glyph.Tiles;
 
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 import co.aospa.glyph.R;
-import co.aospa.glyph.Manager.StatusManager;
-import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Manager.SettingsManager;
+import co.aospa.glyph.Utils.ServiceUtils;
 
 /** Quick settings tile: Glyph **/
 public class GlyphTileService extends TileService {
@@ -51,11 +51,11 @@ public class GlyphTileService extends TileService {
     }
 
     private boolean getEnabled() {
-        return StatusManager.isAllLedActive();
+        return SettingsManager.isGlyphEnabled();
     }
 
     private void setEnabled(boolean enabled) {
-        StatusManager.setAllLedsActive(enabled);
-        FileUtils.writeLineFromSlug("all", enabled ? 4095 : 0);
+        SettingsManager.enableGlyph(enabled);
+        ServiceUtils.checkGlyphService();
     }
 }

@@ -56,7 +56,10 @@
     <string name="glyph_settings_music_visualizer_toggle_summary">DISCO LIGHTS!\nthis will disable all other glyph functions while enabled</string>
 
     <!-- QS tile -->
-    <string name="glyph_accessibility_quick_settings_off">Glyph Off</string>
-    <string name="glyph_accessibility_quick_settings_on">Glyph On</string>
+    <string name="glyph_accessibility_quick_settings">Glyph interface</string>
+    <string name="glyph_accessibility_quick_settings_torch">Glyph torch</string>
+
+    <string name="glyph_accessibility_quick_settings_off">Off</string>
+    <string name="glyph_accessibility_quick_settings_on">On</string>
 
 </resources>

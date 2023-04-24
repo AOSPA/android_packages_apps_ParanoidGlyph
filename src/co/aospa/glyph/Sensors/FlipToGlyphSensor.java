@@ -22,6 +22,8 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import java.time.Duration;
@@ -38,6 +40,8 @@ public class FlipToGlyphSensor implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mSensorAccelerometer;
+    private PowerManager mPowerManager;
+    private WakeLock mWakeLock;
     private Context mContext;
 
     private Duration mTimeThreshold = Duration.ofMillis(1_000L);;
@@ -60,6 +64,8 @@ public class FlipToGlyphSensor implements SensorEventListener {
         mOnFlip = Objects.requireNonNull(onFlip);
         mSensorManager = mContext.getSystemService(SensorManager.class);
         mSensorAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, false);
+        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
     }
 
     @Override
@@ -105,6 +111,7 @@ public class FlipToGlyphSensor implements SensorEventListener {
 
     private void onFlip(boolean flipped) {
         if (DEBUG) Log.d(TAG, "Flipped: " + flipped);
+        mWakeLock.acquire(2500);
         mOnFlip.accept(flipped);
         isFlipped = flipped;
     }

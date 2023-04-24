@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import co.aospa.glyph.Manager.AnimationManager;
@@ -38,6 +40,8 @@ public class FlipToGlyphService extends Service {
 
     private AudioManager mAudioManager;
     private FlipToGlyphSensor mFlipToGlyphSensor;
+    private PowerManager mPowerManager;
+    private WakeLock mWakeLock;
 
     @Override
     public void onCreate() {
@@ -46,6 +50,9 @@ public class FlipToGlyphService extends Service {
         mFlipToGlyphSensor = new FlipToGlyphSensor(this, this::onFlip);
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
     }
 
     @Override
@@ -71,6 +78,7 @@ public class FlipToGlyphService extends Service {
         if (flipped == isFlipped) return;
         if (DEBUG) Log.d(TAG, "Flipped: " + flipped);
         if (flipped) {
+            mWakeLock.acquire(2500);
             AnimationManager.playCsv("flip");
             ringerMode = mAudioManager.getRingerModeInternal();
             mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);

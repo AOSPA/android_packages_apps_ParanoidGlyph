@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
@@ -38,9 +40,14 @@ public class NotificationService extends NotificationListenerService {
     private static final String TAG = "GlyphNotification";
     private static final boolean DEBUG = true;
 
+    private PowerManager mPowerManager;
+    private WakeLock mWakeLock;
+
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         super.onCreate();
     }
 
@@ -80,6 +87,7 @@ public class NotificationService extends NotificationListenerService {
                         && !ArrayUtils.contains(Constants.APPSTOIGNORE, packageName)
                         && !ArrayUtils.contains(Constants.NOTIFSTOIGNORE, packageName + ":" + packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
+            mWakeLock.acquire(2500);
             AnimationManager.playCsv(SettingsManager.getGlyphNotifsAnimation());
         }
     }

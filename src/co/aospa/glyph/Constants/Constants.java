@@ -55,7 +55,8 @@ public final class Constants {
                                                     };
     public static final String[] NOTIFSTOIGNORE = {
                                                         "com.google.android.dialer:phone_incoming_call",
-                                                        "com.google.android.dialer:phone_ongoing_call"
+                                                        "com.google.android.dialer:phone_ongoing_call",
+                                                        "com.android.systemui:BAT"
                                                     };
 
     public static void setBrightness(int b) {

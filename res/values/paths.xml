@@ -37,4 +37,7 @@
     </string-array>
     <string name="glyph_settings_paths_single_absolute" translatable="false">/sys/class/leds/aw210xx_led/single_led_br</string>
 
+    <string name="glyph_settings_paths_powershare_active_absolute" translatable="false">/sys/class/qcom-battery/wls_reverse_status</string>
+    <string name="glyph_settings_paths_powershare_enabled_absolute" translatable="false">/sys/class/qcom-battery/wireless_boost_en</string>
+
 </resources>

@@ -52,6 +52,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     private PrimarySwitchPreference mNotifsPreference;
     private PrimarySwitchPreference mCallPreference;
     private SwitchPreference mChargingLevelPreference;
+    private SwitchPreference mChargingPowersharePreference;
     private SwitchPreference mMusicVisualizerPreference;
 
     private ContentResolver mContentResolver;
@@ -101,6 +102,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mChargingLevelPreference.setEnabled(glyphEnabled);
         mChargingLevelPreference.setOnPreferenceChangeListener(this);
 
+        mChargingPowersharePreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_POWERSHARE_ENABLE);
+        mChargingPowersharePreference.setEnabled(glyphEnabled);
+        mChargingPowersharePreference.setOnPreferenceChangeListener(this);
+
         mMusicVisualizerPreference = (SwitchPreference) findPreference(Constants.GLYPH_MUSIC_VISUALIZER_ENABLE);
         mMusicVisualizerPreference.setEnabled(glyphEnabled);
         mMusicVisualizerPreference.setOnPreferenceChangeListener(this);
@@ -112,6 +117,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mCallPreference.setEnabled(false);
             mCallPreference.setSwitchEnabled(false);
             mChargingLevelPreference.setEnabled(false);
+            mChargingPowersharePreference.setEnabled(false);
         }
 
         mHandler.post(() -> ServiceUtils.checkGlyphService());
@@ -138,6 +144,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mCallPreference.setEnabled(isChecked);
             mCallPreference.setSwitchEnabled(isChecked);
             mChargingLevelPreference.setEnabled(isChecked);
+            mChargingPowersharePreference.setEnabled(isChecked);
         }
 
         mHandler.post(() -> ServiceUtils.checkGlyphService());
@@ -158,6 +165,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mCallPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mCallPreference.setSwitchEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mChargingLevelPreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
+        mChargingPowersharePreference.setEnabled(isChecked && !mMusicVisualizerPreference.isChecked());
         mMusicVisualizerPreference.setEnabled(isChecked);
 
         mHandler.post(() -> ServiceUtils.checkGlyphService());

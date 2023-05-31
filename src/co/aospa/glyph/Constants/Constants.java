@@ -34,6 +34,7 @@ public final class Constants {
     public static final String GLYPH_BRIGHTNESS = "glyph_settings_brightness";
     public static final String GLYPH_CHARGING_CATEGORY = "glyph_settings_charging";
     public static final String GLYPH_CHARGING_LEVEL_ENABLE = "glyph_settings_charging_level";
+    public static final String GLYPH_CHARGING_POWERSHARE_ENABLE = "glyph_settings_charging_powershare";
     public static final String GLYPH_CALL_CATEGORY = "glyph_settings_call";
     public static final String GLYPH_CALL_ENABLE = "glyph_settings_call_toggle";
     public static final String GLYPH_CALL_SUB_PREVIEW = "glyph_settings_call_sub_preview";

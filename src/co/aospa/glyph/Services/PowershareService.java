@@ -1,0 +1,160 @@
+/*
+ * Copyright (C) 2023 Paranoid Android
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package co.aospa.glyph.Services;
+
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.FileObserver;
+import android.os.IBinder;
+import android.util.Log;
+
+import co.aospa.glyph.Manager.AnimationManager;
+import co.aospa.glyph.Utils.FileUtils;
+
+public class PowershareService extends Service {
+
+    private static final String TAG = "GlyphPowershareService";
+    private static final boolean DEBUG = true;
+
+    private static final String POWERSHARE_ACTIVE = "/sys/class/qcom-battery/wls_reverse_status";
+    private static final String POWERSHARE_ENABLED = "/sys/class/qcom-battery/wireless_boost_en";
+
+    private PowershareActiveObserver mPowershareActiveObserver;
+
+    @Override
+    public void onCreate() {
+        if (DEBUG) Log.d(TAG, "Creating service");
+        mPowershareActiveObserver = new PowershareActiveObserver();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (DEBUG) Log.d(TAG, "Starting service");
+        mFileObserver.startWatching();
+        mPowershareActiveObserver.startWatching();
+        return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (DEBUG) Log.d(TAG, "Destroying service");
+        mFileObserver.stopWatching();
+        mPowershareActiveObserver.stopWatching();
+        super.onDestroy();
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+
+    private void onPowershareEnabled() {
+        if (DEBUG) Log.e(TAG, "onPowershareEnabled");
+        mPowershareActiveObserver.continueWatching();
+    }
+
+    private void onPowershareDisabled() {
+        if (DEBUG) Log.e(TAG, "onPowershareDisabled");
+        mPowershareActiveObserver.pauseWatching();
+    }
+
+    private final FileObserver mFileObserver = new FileObserver(POWERSHARE_ENABLED, FileObserver.MODIFY) {
+        @Override
+        public void onEvent(int event, String file) {
+            if (DEBUG) Log.e(TAG, "EVENT: " + event + " , FILE: " + file);
+            this.checkIfPowerShareIsEnabled();
+        }
+
+        @Override
+        public void startWatching() {
+            this.checkIfPowerShareIsEnabled();
+            super.startWatching();
+        }
+
+        private void checkIfPowerShareIsEnabled() {
+            if (DEBUG) Log.e(TAG, "checkIfPowerShareIsEnabled");
+            if (FileUtils.readLineInt(POWERSHARE_ENABLED) == 1) {
+                onPowershareEnabled();
+            } else {
+                onPowershareDisabled();
+            }
+        }
+    };
+
+    private class PowershareActiveObserver extends Thread {
+
+        private boolean lastState = false;
+        private boolean pause = true;
+        private boolean ended = false;
+
+        private Object mPowershareActiveObserverLock = new Object();
+
+        public void startWatching() {
+            if (super.isAlive()) return;
+            super.start();
+        }
+
+        public void continueWatching() {
+            if (!pause) return;
+            pause = false;
+            synchronized (mPowershareActiveObserverLock) {
+                mPowershareActiveObserverLock.notify();
+            }
+        }
+
+        public void pauseWatching() {
+            if (pause) return;
+            lastState = false;
+            pause = true;
+        }
+
+        public void stopWatching() {
+            if (pause) this.continueWatching();
+            ended = true;
+        }
+
+        private void updatePowershareState() {
+            if (DEBUG) Log.d(TAG, "updatePowershareState: " + FileUtils.readLineInt(POWERSHARE_ACTIVE));
+            if (FileUtils.readLineInt(POWERSHARE_ACTIVE) == 1) {
+                if (lastState) return;
+                lastState = true;
+                AnimationManager.playCsv("powershare", true);
+            } else {
+                lastState = false;
+            }
+        }
+
+        @Override
+        public void run() {
+            while (!ended) {
+                synchronized (mPowershareActiveObserverLock) {
+                    if (pause) {
+                        try {
+                            if (DEBUG) Log.d(TAG, "mPowershareActiveObserverLock.wait()");
+                            mPowershareActiveObserverLock.wait();
+                        } catch (InterruptedException e) { }
+                    }
+                }
+                updatePowershareState();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) { }
+            }
+        }
+    }
+}

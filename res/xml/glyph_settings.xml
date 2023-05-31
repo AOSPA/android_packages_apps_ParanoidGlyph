@@ -74,6 +74,12 @@
             android:title="@string/glyph_settings_charging_level_title"
             android:summary="@string/glyph_settings_charging_level_summary" />
 
+        <SwitchPreference
+            android:key="glyph_settings_charging_powershare"
+            android:defaultValue="true"
+            android:title="@string/glyph_settings_charging_powershare_title"
+            android:summary="@string/glyph_settings_charging_powershare_summary" />
+
     <PreferenceCategory
         android:key="glyph_settings_misc"
         android:title="@string/glyph_settings_misc_title" />

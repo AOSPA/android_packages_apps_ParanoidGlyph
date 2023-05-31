@@ -34,6 +34,8 @@
     <string name="glyph_settings_charging_title">Ladeanzeige</string>
     <string name="glyph_settings_charging_level_title">Akkustand</string>
     <string name="glyph_settings_charging_level_summary">Anzeige des Akkustands beim Einstecken</string>
+    <string name="glyph_settings_charging_powershare_title">Umgekehrtes kabelloses Laden</string>
+    <string name="glyph_settings_charging_powershare_summary">Zeigt eine Animation an, wenn umgekehrtes kabelloses Laden erkannt wird</string>
 
     <string name="glyph_settings_call_title">Anruf</string>
     <string name="glyph_settings_call_toggle_title">Animation bei Anruf</string>

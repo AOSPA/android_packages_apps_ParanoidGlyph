@@ -37,6 +37,8 @@
     <string name="glyph_settings_charging_title">Charging animation</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>
     <string name="glyph_settings_charging_level_summary">Show battery level when plugging in</string>
+    <string name="glyph_settings_charging_powershare_title">Reverse wireless charging</string>
+    <string name="glyph_settings_charging_powershare_summary">Show an animation when reverse wireless charging is detected</string>
 
     <string name="glyph_settings_call_title">Calls</string>
     <string name="glyph_settings_call_toggle_title">Call animation</string>

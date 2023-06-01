@@ -25,13 +25,14 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
 import co.aospa.glyph.Utils.FileUtils;
 
 public class PowershareService extends Service {
 
     private static final String TAG = "GlyphPowershareService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private static final String POWERSHARE_ACTIVE = "/sys/class/qcom-battery/wls_reverse_status";
     private static final String POWERSHARE_ENABLED = "/sys/class/qcom-battery/wireless_boost_en";

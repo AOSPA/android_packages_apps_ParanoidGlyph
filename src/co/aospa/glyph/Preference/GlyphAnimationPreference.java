@@ -34,12 +34,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import co.aospa.glyph.R;
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 
 public class GlyphAnimationPreference extends Preference {
 
     private final String TAG = "GlyphAnimationPreference";
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = Constants.DEBUG;
 
     private Activity mActivity;
 

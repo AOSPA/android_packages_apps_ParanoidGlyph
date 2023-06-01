@@ -25,11 +25,12 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Settings.SettingsActivity;
 
 public class TileActivity extends Activity {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
     private static final String TAG = "TileActivity";
 
     @Override

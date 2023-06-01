@@ -28,7 +28,7 @@ import co.aospa.glyph.Utils.ServiceUtils;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
     private static final String TAG = "ParanoidGlyph";
 
     @Override

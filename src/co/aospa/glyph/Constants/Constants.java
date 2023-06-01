@@ -21,7 +21,7 @@ import android.content.Context;
 public final class Constants {
 
     private static final String TAG = "GlyphConstants";
-    private static final boolean DEBUG = true;
+    public static final boolean DEBUG = true;
 
     public static Context CONTEXT;
 

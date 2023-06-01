@@ -32,7 +32,7 @@ import co.aospa.glyph.Utils.FileUtils;
 public final class AnimationManager {
 
     private static final String TAG = "GlyphAnimationManager";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private static Context context = Constants.CONTEXT;
 

@@ -18,10 +18,12 @@ package co.aospa.glyph.Manager;
 
 import android.util.Log;
 
+import co.aospa.glyph.Constants.Constants;
+
 public final class StatusManager {
 
     private static final String TAG = "GlyphStatusManager";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private static boolean allLedActive = false;
     private static boolean animationActive = false;

@@ -24,13 +24,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import co.aospa.glyph.Constants.Constants;
+
 import java.time.Duration;
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public class FlipToGlyphSensor implements SensorEventListener {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
     private static final String TAG = "FlipToGlyphSensor";
 
     private boolean isFlipped = false;

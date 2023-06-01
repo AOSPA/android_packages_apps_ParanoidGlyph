@@ -30,12 +30,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
 
 public class MusicVisualizerService extends Service {
 
     private static final String TAG = "GlyphMusicVisualizerService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private Visualizer mVisualizer;
     private int bufferSize;

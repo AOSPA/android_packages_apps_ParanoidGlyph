@@ -28,13 +28,14 @@ import android.util.Log;
 
 import java.util.concurrent.Executors;
 
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
 import co.aospa.glyph.Manager.SettingsManager;
 
 public class CallReceiverService extends Service {
 
     private static final String TAG = "GlyphCallReceiverService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private AudioManager mAudioManager;
 

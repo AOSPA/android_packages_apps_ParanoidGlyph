@@ -38,7 +38,7 @@ import co.aospa.glyph.Manager.SettingsManager;
 public class NotificationService extends NotificationListenerService {
 
     private static final String TAG = "GlyphNotification";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private PowerManager mPowerManager;
     private WakeLock mWakeLock;

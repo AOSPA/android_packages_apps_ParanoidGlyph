@@ -34,7 +34,7 @@ import co.aospa.glyph.Constants.Constants;
 public final class FileUtils {
 
     private static final String TAG = "GlyphFileUtils";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private static Context context = Constants.CONTEXT;
 

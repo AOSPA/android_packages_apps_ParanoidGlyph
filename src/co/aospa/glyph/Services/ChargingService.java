@@ -31,12 +31,13 @@ import android.os.BatteryManager;
 import android.os.IBinder;
 import android.util.Log;
 
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.AnimationManager;
 
 public class ChargingService extends Service {
 
     private static final String TAG = "GlyphChargingService";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = Constants.DEBUG;
 
     private BatteryManager mBatteryManager;
     private SensorManager mSensorManager;

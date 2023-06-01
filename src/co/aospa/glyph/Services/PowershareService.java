@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.FileObserver;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import co.aospa.glyph.Manager.AnimationManager;
@@ -35,11 +37,15 @@ public class PowershareService extends Service {
     private static final String POWERSHARE_ENABLED = "/sys/class/qcom-battery/wireless_boost_en";
 
     private PowershareActiveObserver mPowershareActiveObserver;
+    private PowerManager mPowerManager;
+    private WakeLock mWakeLock;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
         mPowershareActiveObserver = new PowershareActiveObserver();
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
     }
 
     @Override
@@ -137,6 +143,7 @@ public class PowershareService extends Service {
             if (FileUtils.readLineInt(POWERSHARE_ACTIVE) == 1) {
                 if (lastState) return;
                 lastState = true;
+                mWakeLock.acquire(2500);
                 AnimationManager.playCsv("powershare", true);
             } else {
                 lastState = false;

@@ -16,14 +16,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Paths -->
-    <string-array name="glyph_settings_paths" translatable="false">
-    </string-array>
-    <string-array name="glyph_settings_paths_absolute" translatable="false">
-    </string-array>
-    <string name="glyph_settings_paths_single_absolute" translatable="false"></string>
-
-    <string name="glyph_settings_paths_powershare_active_absolute" translatable="false"></string>
-    <string name="glyph_settings_paths_powershare_enabled_absolute" translatable="false"></string>
+    <!-- Brighntess -->
+    <integer name="glyph_settings_brightness_max" translatable="false">4095</integer>
+    <integer-array name="glyph_settings_brightness_levels" translatable="false">
+        <item>102</item>
+        <item>682</item>
+        <item>1365</item>
+        <item>@integer/glyph_settings_brightness_max</item>
+    </integer-array>
 
 </resources>

@@ -22,9 +22,13 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
+import com.android.internal.util.ArrayUtils;
+
 import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Utils.MigrationUtils;
+import co.aospa.glyph.Utils.ResourceUtils;
 
 public final class SettingsManager {
 
@@ -49,20 +53,9 @@ public final class SettingsManager {
     }
 
     public static int getGlyphBrightness() {
-        int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
-        int[] levels = context.getResources().getIntArray(R.array.glyph_settings_animations_brightness_levels);
-        int brightness = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(Constants.GLYPH_BRIGHTNESS, d);
-        switch (brightness) {
-            case 1:
-                return levels[0];
-            case 2:
-                return levels[1];
-            case 3:
-                return levels[2];
-            default:
-                return levels[3];
-        }
+        int[] levels = Constants.getBrightnessLevels();
+        int brightnessSetting = getGlyphBrightnessSetting();
+        return levels[brightnessSetting - 1];
     }
 
     public static int getGlyphBrightnessSetting() {
@@ -92,9 +85,16 @@ public final class SettingsManager {
     }
 
     public static String getGlyphCallAnimation() {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String animation = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_CALL_SUB_ANIMATIONS,
-                    context.getString(R.string.glyph_settings_call_animations_default));
+                    ResourceUtils.getString("glyph_settings_call_animations_default"));
+
+        if (!ArrayUtils.contains(ResourceUtils.getCallAnimations(), animation)) {
+            animation = MigrationUtils.getNewCallPattern(animation);
+        }
+
+        return animation;
+
     }
 
     public static boolean isGlyphMusicVisualizerEnabled() {
@@ -113,9 +113,15 @@ public final class SettingsManager {
     }
 
     public static String getGlyphNotifsAnimation() {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String animation = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS,
-                    context.getString(R.string.glyph_settings_notifs_animations_default));
+                    ResourceUtils.getString("glyph_settings_notifs_animations_default"));
+
+        if (!ArrayUtils.contains(ResourceUtils.getNotificationAnimations(), animation)) {
+            animation = MigrationUtils.getNewNotificationPattern(animation);
+        }
+
+        return animation;
     }
 
     public static boolean isGlyphNotifsAppEnabled(String app) {

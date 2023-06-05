@@ -17,12 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Brighntess -->
-    <integer name="glyph_settings_brightness_max" translatable="false">4095</integer>
+    <integer name="glyph_settings_brightness_max" translatable="false"></integer>
     <integer-array name="glyph_settings_brightness_levels" translatable="false">
-        <item>102</item>
-        <item>682</item>
-        <item>1365</item>
-        <item>@integer/glyph_settings_brightness_max</item>
     </integer-array>
 
 </resources>

@@ -12,18 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-android_app {
-    name: "ParanoidGlyph",
+java_defaults {
+    name: "glyph_app_defaults",
+
     certificate: "platform",
-    srcs: ["src/**/*.java"],
     platform_apis: true,
     privileged: true,
     system_ext_specific: true,
+
+    resource_dirs: [],
+}
+
+android_library {
+    name: "ParanoidGlyph-core",
+    platform_apis: true,
+
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.kt"
+    ],
+
     static_libs: [
         "androidx.core_core",
         "androidx.preference_preference",
         "SettingsLib",
     ],
+}
+
+android_app {
+    name: "ParanoidGlyphPhone1",
+
+    defaults: ["glyph_app_defaults"],
+
+    asset_dirs: ["phone1/assets"],
+    resource_dirs: ["phone1/res"],
+
+    static_libs: [
+        "ParanoidGlyph-core",
+    ],
+
     required: [
         "privapp_whitelist_co.aospa.glyph.xml",
         "whitelist_co.aospa.glyph.xml",

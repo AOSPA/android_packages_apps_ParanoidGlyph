@@ -83,7 +83,7 @@ public final class AnimationManager {
             String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    ResourceUtils.openRawResource("anim_"+name)))) {
+                    ResourceUtils.getAnimation(name)))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
@@ -161,7 +161,7 @@ public final class AnimationManager {
 
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        ResourceUtils.openRawResource("anim_"+name)))) {
+                        ResourceUtils.getCallAnimation(name)))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();

@@ -49,20 +49,9 @@ public final class SettingsManager {
     }
 
     public static int getGlyphBrightness() {
-        int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
-        int[] levels = ResourceUtils.getIntArray("glyph_settings_animations_brightness_levels");
-        int brightness = PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(Constants.GLYPH_BRIGHTNESS, d);
-        switch (brightness) {
-            case 1:
-                return levels[0];
-            case 2:
-                return levels[1];
-            case 3:
-                return levels[2];
-            default:
-                return levels[3];
-        }
+        int[] levels = Constants.getBrightnessLevels();
+        int brightnessSetting = getGlyphBrightnessSetting();
+        return levels[brightnessSetting - 1];
     }
 
     public static int getGlyphBrightnessSetting() {

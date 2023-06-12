@@ -81,7 +81,7 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mBrightnessPreference = (SeekBarPreference) findPreference(Constants.GLYPH_BRIGHTNESS);
         mBrightnessPreference.setEnabled(glyphEnabled);
         mBrightnessPreference.setMin(1);
-        mBrightnessPreference.setMax(4);
+        mBrightnessPreference.setMax(Constants.getBrightnessLevels().length);
         mBrightnessPreference.setValue(SettingsManager.getGlyphBrightnessSetting());
         mBrightnessPreference.setUpdatesContinuously(true);
         mBrightnessPreference.setOnPreferenceChangeListener(this);

@@ -92,7 +92,7 @@ public final class AnimationManager {
                     String[] split = line.split(",");
                     if (DEBUG) Log.d(TAG, "4");
                     for (int i = 0; i< slugs.length; i++){
-                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS);
+                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
                     }
                     Thread.sleep(10);
                 }
@@ -141,7 +141,7 @@ public final class AnimationManager {
             try {
                 for (int i : batteryArray) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    FileUtils.writeSingleLed(i, Constants.BRIGHTNESS);
+                    FileUtils.writeSingleLed(i, Constants.getBrightness());
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
@@ -186,7 +186,7 @@ public final class AnimationManager {
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         String[] split = line.split(",");
                         for (int i = 0; i< slugs.length; i++){
-                            FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / 4095 * Constants.BRIGHTNESS);
+                            FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
                         }
                         Thread.sleep(10);
                     }
@@ -246,7 +246,7 @@ public final class AnimationManager {
             }
 
             try {
-                FileUtils.writeLineFromSlug(path, Constants.BRIGHTNESS);
+                FileUtils.writeLineFromSlug(path, Constants.getBrightness());
                 Thread.sleep(90);
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);

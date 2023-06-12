@@ -35,7 +35,6 @@ import java.io.InputStreamReader;
 
 import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
-import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Utils.ResourceUtils;
 
 public class GlyphAnimationPreference extends Preference {
@@ -93,10 +92,6 @@ public class GlyphAnimationPreference extends Preference {
         }
     }
 
-    private <T extends View> T findViewById(int id) {
-        return mRootView.findViewById(id);
-    }
-
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
         holder.itemView.setOnClickListener(mClickListener);
@@ -132,7 +127,8 @@ public class GlyphAnimationPreference extends Preference {
         animationSlugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
         animationImgs = new ImageView[animationSlugs.length];
         for (int i = 0; i< animationSlugs.length; i++){
-            animationImgs[i] = (ImageView) findViewById(getIdentifier("preview_device_"+animationSlugs[i], "id"));
+            animationImgs[i] = (ImageView) mRootView.findViewById(
+                ResourceUtils.getIdentifier("preview_device_"+animationSlugs[i], "id"));
         }
         animationThread.start();
     }
@@ -168,12 +164,9 @@ public class GlyphAnimationPreference extends Preference {
                     while (true) {
                         String line = reader.readLine(); if (line == null) break;
                         String[] split = line.split(",");
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0; i< animationSlugs.length; i++){
-                                    setGlyphsDrawable(animationImgs[i], animationSlugs[i], Integer.parseInt(split[i]));
-                                }
+                        mActivity.runOnUiThread(() -> {
+                            for (int i = 0; i < animationSlugs.length; i++) {
+                                setGlyphsDrawable(animationImgs[i], animationSlugs[i], Integer.parseInt(split[i]));
                             }
                         });
                         Thread.sleep(20);
@@ -184,12 +177,9 @@ public class GlyphAnimationPreference extends Preference {
                 } finally {
                     if (animationPaused) {
                         if (DEBUG) Log.d(TAG, "Pause displaying animation | name: " + animationName);
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (int i = 0; i< animationSlugs.length; i++){
-                                    setGlyphsDrawable(animationImgs[i], animationSlugs[i], 0);
-                                }
+                        mActivity.runOnUiThread(() -> {
+                            for (int i = 0; i < animationSlugs.length; i++) {
+                                setGlyphsDrawable(animationImgs[i], animationSlugs[i], 0);
                             }
                         });
                     }

@@ -19,16 +19,10 @@ package co.aospa.glyph.Services;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioFormat;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.audiofx.Visualizer;
 import android.os.IBinder;
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import co.aospa.glyph.Manager.AnimationManager;
 

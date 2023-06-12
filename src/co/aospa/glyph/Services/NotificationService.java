@@ -40,12 +40,14 @@ public class NotificationService extends NotificationListenerService {
     private static final String TAG = "GlyphNotification";
     private static final boolean DEBUG = true;
 
+    private NotificationManager mNotificationManager;
     private PowerManager mPowerManager;
     private WakeLock mWakeLock;
 
     @Override
     public void onCreate() {
         if (DEBUG) Log.d(TAG, "Creating service");
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         super.onCreate();
@@ -73,20 +75,24 @@ public class NotificationService extends NotificationListenerService {
         String packageName = sbn.getPackageName();
         String packageChannelID = sbn.getNotification().getChannelId();
         int packageImportance = -1;
+        boolean packageCanBypassDnd = false;
+        int interruptionFilter = mNotificationManager.getCurrentInterruptionFilter();
         try {
             Context packageContext = createPackageContext(packageName, 0);
             NotificationManager packageNotificationManager = (NotificationManager) packageContext.getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel packageChannel = packageNotificationManager.getNotificationChannel(packageChannelID);
             if (packageChannel != null) {
                 packageImportance = packageChannel.getImportance();
+                packageCanBypassDnd = packageChannel.canBypassDnd();
             }
         } catch (PackageManager.NameNotFoundException e) {}
-        if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance);
+        if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance + " | can bypass dnd: " + packageCanBypassDnd);
         if (SettingsManager.isGlyphNotifsAppEnabled(packageName)
                         && !sbn.isOngoing()
                         && !ArrayUtils.contains(Constants.APPSTOIGNORE, packageName)
                         && !ArrayUtils.contains(Constants.NOTIFSTOIGNORE, packageName + ":" + packageChannelID)
-                        && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)) {
+                        && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)
+                        && (interruptionFilter <= NotificationManager.INTERRUPTION_FILTER_ALL || packageCanBypassDnd)) {
             mWakeLock.acquire(2500);
             AnimationManager.playCsv(SettingsManager.getGlyphNotifsAnimation());
         }

@@ -34,6 +34,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import co.aospa.glyph.R;
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Utils.ResourceUtils;
 
@@ -203,7 +204,7 @@ public class GlyphAnimationPreference extends Preference {
                 return;
             }
             imageView.setImageResource(imgOn);
-            imageView.getDrawable().setAlpha(brightness*255/4095);
+            imageView.getDrawable().setAlpha(brightness*255/Constants.getMaxBrightness());
         }
     };
 }

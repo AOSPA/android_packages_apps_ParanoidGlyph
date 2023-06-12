@@ -49,9 +49,7 @@ public final class FileUtils {
                 if (reader != null) {
                     reader.close();
                 }
-            } catch (IOException e) {
-                // Ignored, not much we can do anyway
-            }
+            } catch (IOException e) { }
         }
         return line;
     }

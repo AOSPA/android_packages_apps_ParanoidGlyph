@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 
 import co.aospa.glyph.R;
 import co.aospa.glyph.Manager.SettingsManager;
+import co.aospa.glyph.Utils.ResourceUtils;
 
 public class GlyphAnimationPreference extends Preference {
 
@@ -127,10 +128,10 @@ public class GlyphAnimationPreference extends Preference {
     }
 
     private void startAnimation() {
-        animationSlugs = mActivity.getResources().getStringArray(R.array.glyph_settings_animations_slugs);
+        animationSlugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
         animationImgs = new ImageView[animationSlugs.length];
         for (int i = 0; i< animationSlugs.length; i++){
-            animationImgs[i] = (ImageView) findViewById(mActivity.getResources().getIdentifier("img_"+animationSlugs[i], "id", mActivity.getPackageName()));
+            animationImgs[i] = (ImageView) findViewById(getIdentifier("img_"+animationSlugs[i], "id"));
         }
         animationThread.start();
     }
@@ -162,7 +163,7 @@ public class GlyphAnimationPreference extends Preference {
                 while (animationPaused) {}
                 if (DEBUG) Log.d(TAG, "Displaying animation | name: " + animationName);
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        mActivity.getResources().openRawResource(mActivity.getResources().getIdentifier("anim_"+animationName, "raw", mActivity.getPackageName()))))) {
+                        ResourceUtils.openRawResource("anim_"+animationName)))) {
                     while (true) {
                         String line = reader.readLine(); if (line == null) break;
                         String[] split = line.split(",");
@@ -195,8 +196,8 @@ public class GlyphAnimationPreference extends Preference {
             }
         }
         private void setGlyphsDrawable(ImageView imageView, String slug, int brightness) {
-            int imgOn = mActivity.getResources().getIdentifier("ic_"+slug+"_on", "drawable", mActivity.getPackageName());
-            int imgOff = mActivity.getResources().getIdentifier("ic_"+slug+"_off", "drawable", mActivity.getPackageName());;
+            int imgOn = ResourceUtils.getIdentifier("ic_"+slug+"_on", "drawable");
+            int imgOff = ResourceUtils.getIdentifier("ic_"+slug+"_off", "drawable");
             if (brightness <= 0) {
                 imageView.setImageResource(imgOff);
                 return;

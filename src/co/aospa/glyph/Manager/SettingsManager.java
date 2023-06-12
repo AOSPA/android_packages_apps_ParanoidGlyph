@@ -22,9 +22,9 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Utils.ResourceUtils;
 
 public final class SettingsManager {
 
@@ -50,7 +50,7 @@ public final class SettingsManager {
 
     public static int getGlyphBrightness() {
         int d = 3; if (FileUtils.readLine("/mnt/vendor/persist/color") == "white") d = 2;
-        int[] levels = context.getResources().getIntArray(R.array.glyph_settings_animations_brightness_levels);
+        int[] levels = ResourceUtils.getIntArray("glyph_settings_animations_brightness_levels");
         int brightness = PreferenceManager.getDefaultSharedPreferences(context)
                 .getInt(Constants.GLYPH_BRIGHTNESS, d);
         switch (brightness) {
@@ -94,7 +94,7 @@ public final class SettingsManager {
     public static String getGlyphCallAnimation() {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_CALL_SUB_ANIMATIONS,
-                    context.getString(R.string.glyph_settings_call_animations_default));
+                    ResourceUtils.getString("glyph_settings_call_animations_default"));
     }
 
     public static boolean isGlyphMusicVisualizerEnabled() {
@@ -115,7 +115,7 @@ public final class SettingsManager {
     public static String getGlyphNotifsAnimation() {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS,
-                    context.getString(R.string.glyph_settings_notifs_animations_default));
+                    ResourceUtils.getString("glyph_settings_notifs_animations_default"));
     }
 
     public static boolean isGlyphNotifsAppEnabled(String app) {

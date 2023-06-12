@@ -16,7 +16,6 @@
 
 package co.aospa.glyph.Utils;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -28,15 +27,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 
 public final class FileUtils {
 
     private static final String TAG = "GlyphFileUtils";
     private static final boolean DEBUG = true;
-
-    private static Context context = Constants.CONTEXT;
 
     public static String readLine(String fileName) {
         String line = null;
@@ -99,8 +95,8 @@ public final class FileUtils {
     }
 
     public static void writeLineFromSlug(String slug, String value) {
-        String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_paths);
-        String[] paths = context.getResources().getStringArray(R.array.glyph_settings_paths_absolute);
+        String[] slugs = ResourceUtils.getStringArray("glyph_settings_paths");
+        String[] paths = ResourceUtils.getStringArray("glyph_settings_paths_absolute");
         writeLine(paths[Arrays.asList(slugs).indexOf(slug)], value);
     }
 
@@ -113,7 +109,7 @@ public final class FileUtils {
     }
 
     public static void writeSingleLed(String led, String value) {
-        writeLine(context.getString(R.string.glyph_settings_paths_single_absolute), led + " " + value);
+        writeLine(ResourceUtils.getString("glyph_settings_paths_single_absolute"), led + " " + value);
     }
 
     public static void writeSingleLed(int led, String value) {

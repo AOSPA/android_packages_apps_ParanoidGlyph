@@ -22,7 +22,6 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
 import co.aospa.glyph.Utils.ResourceUtils;
@@ -84,7 +83,7 @@ public final class SettingsManager {
     public static String getGlyphCallAnimation() {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_CALL_SUB_ANIMATIONS,
-                    ResourceUtils.getString("glyph_settings_call_animations_default"));
+                        ResourceUtils.getString("glyph_settings_call_animations_default"));
     }
 
     public static boolean isGlyphMusicVisualizerEnabled() {
@@ -105,7 +104,7 @@ public final class SettingsManager {
     public static String getGlyphNotifsAnimation() {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS,
-                    ResourceUtils.getString("glyph_settings_notifs_animations_default"));
+                        ResourceUtils.getString("glyph_settings_notifs_animations_default"));
     }
 
     public static boolean isGlyphNotifsAppEnabled(String app) {

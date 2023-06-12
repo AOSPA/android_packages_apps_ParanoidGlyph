@@ -89,8 +89,8 @@ public class NotificationService extends NotificationListenerService {
         if (DEBUG) Log.d(TAG, "onNotificationPosted: package:" + packageName + " | channel id: " + packageChannelID + " | importance: " + packageImportance + " | can bypass dnd: " + packageCanBypassDnd);
         if (SettingsManager.isGlyphNotifsAppEnabled(packageName)
                         && !sbn.isOngoing()
-                        && !ArrayUtils.contains(Constants.APPSTOIGNORE, packageName)
-                        && !ArrayUtils.contains(Constants.NOTIFSTOIGNORE, packageName + ":" + packageChannelID)
+                        && !ArrayUtils.contains(Constants.APPS_TO_IGNORE, packageName)
+                        && !ArrayUtils.contains(Constants.NOTIFS_TO_IGNORE, packageName + ":" + packageChannelID)
                         && (packageImportance >= NotificationManager.IMPORTANCE_DEFAULT || packageImportance == -1)
                         && (interruptionFilter <= NotificationManager.INTERRUPTION_FILTER_ALL || packageCanBypassDnd)) {
             mWakeLock.acquire(2500);

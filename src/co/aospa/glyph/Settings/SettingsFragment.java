@@ -128,11 +128,11 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         final String preferenceKey = preference.getKey();
 
         if (preferenceKey.equals(Constants.GLYPH_CALL_ENABLE)) {
-            SettingsManager.setGlyphCallEnabled(!mCallPreference.isChecked() ? true : false);
+            SettingsManager.setGlyphCallEnabled(!mCallPreference.isChecked());
         }
 
         if (preferenceKey.equals(Constants.GLYPH_NOTIFS_ENABLE)) {
-            SettingsManager.setGlyphNotifsEnabled(!mNotifsPreference.isChecked() ? true : false);
+            SettingsManager.setGlyphNotifsEnabled(!mNotifsPreference.isChecked());
         }
 
         if (preferenceKey.equals(Constants.GLYPH_MUSIC_VISUALIZER_ENABLE)) {

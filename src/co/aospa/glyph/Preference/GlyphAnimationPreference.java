@@ -160,7 +160,7 @@ public class GlyphAnimationPreference extends Preference {
                 while (animationPaused) {}
                 if (DEBUG) Log.d(TAG, "Displaying animation | name: " + animationName);
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        ResourceUtils.openRawResource("anim_"+animationName)))) {
+                        ResourceUtils.getAnimation(animationName)))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String[] split = line.split(",");

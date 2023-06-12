@@ -42,7 +42,6 @@ import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Preference.GlyphAnimationPreference;
-import co.aospa.glyph.Utils.MigrationUtils;
 import co.aospa.glyph.Utils.ResourceUtils;
 import co.aospa.glyph.Utils.ServiceUtils;
 
@@ -80,9 +79,6 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
         mListPreference.setOnPreferenceChangeListener(this);
         mListPreference.setEntries(ResourceUtils.getNotificationAnimations());
         mListPreference.setEntryValues(ResourceUtils.getNotificationAnimations());
-        if (!ArrayUtils.contains(ResourceUtils.getNotificationAnimations(), mListPreference.getValue())) {
-            mListPreference.setValue(MigrationUtils.getNewNotificationPattern(mListPreference.getValue()));
-        }
 
         mGlyphAnimationPreference = (GlyphAnimationPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_PREVIEW);
 

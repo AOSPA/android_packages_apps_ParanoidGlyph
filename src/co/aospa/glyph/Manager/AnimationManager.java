@@ -16,7 +16,6 @@
 
 package co.aospa.glyph.Manager;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -25,16 +24,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Utils.ResourceUtils;
 
 public final class AnimationManager {
 
     private static final String TAG = "GlyphAnimationManager";
     private static final boolean DEBUG = true;
-
-    private static Context context = Constants.CONTEXT;
 
     private static Future<?> submit(Runnable runnable) {
         ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
@@ -82,10 +79,10 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
-            String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_animations_slugs);
+            String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
+                    ResourceUtils.openRawResource("anim_"+name)))) {
                 while (true) {
                     if (DEBUG) Log.d(TAG, "1");
                     String line = reader.readLine(); if (line == null) break;
@@ -179,11 +176,11 @@ public final class AnimationManager {
 
             StatusManager.setCallLedActive(true);
 
-            String[] slugs = context.getResources().getStringArray(R.array.glyph_settings_animations_slugs);
+            String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        context.getResources().openRawResource(context.getResources().getIdentifier("anim_"+name, "raw", context.getPackageName()))))) {
+                        ResourceUtils.openRawResource("anim_"+name)))) {
                     while (true) {
                         String line = reader.readLine(); if (line == null) break;
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();

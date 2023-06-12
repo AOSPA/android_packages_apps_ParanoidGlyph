@@ -132,7 +132,7 @@ public class GlyphAnimationPreference extends Preference {
         animationSlugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
         animationImgs = new ImageView[animationSlugs.length];
         for (int i = 0; i< animationSlugs.length; i++){
-            animationImgs[i] = (ImageView) findViewById(getIdentifier("img_"+animationSlugs[i], "id"));
+            animationImgs[i] = (ImageView) findViewById(getIdentifier("preview_device_"+animationSlugs[i], "id"));
         }
         animationThread.start();
     }
@@ -197,8 +197,8 @@ public class GlyphAnimationPreference extends Preference {
             }
         }
         private void setGlyphsDrawable(ImageView imageView, String slug, int brightness) {
-            int imgOn = ResourceUtils.getIdentifier("ic_"+slug+"_on", "drawable");
-            int imgOff = ResourceUtils.getIdentifier("ic_"+slug+"_off", "drawable");
+            int imgOn = ResourceUtils.getIdentifier(slug+"_on", "drawable");
+            int imgOff = ResourceUtils.getIdentifier(slug+"_off", "drawable");
             if (brightness <= 0) {
                 imageView.setImageResource(imgOff);
                 return;

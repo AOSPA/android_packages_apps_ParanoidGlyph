@@ -18,6 +18,8 @@ package co.aospa.glyph.Constants;
 
 import android.content.Context;
 
+import co.aospa.glyph.Utils.ResourceUtils;
+
 public final class Constants {
 
     private static final String TAG = "GlyphConstants";
@@ -25,9 +27,9 @@ public final class Constants {
 
     public static Context CONTEXT;
 
-    public static int BRIGHTNESS = 4095;
-    public static int BRIGHTNESS_MIN = 0;
-    public static int BRIGHTNESS_MAX = 4095;
+    private static int BRIGHTNESS = -1;
+    private static int BRIGHTNESSMAX = -1;
+    private static int[] BRIGHTNESSLEVELS = null;
 
     public static final String GLYPH_ENABLE = "glyph_enable";
     public static final String GLYPH_FLIP_ENABLE = "glyph_settings_flip_toggle";
@@ -60,8 +62,33 @@ public final class Constants {
                                                         "com.android.systemui:BAT"
                                                     };
 
-    public static void setBrightness(int b) {
+    public static boolean setBrightness(int b) {
+        if (b > ResourceUtils.getInteger("glyph_settings_brightness_max"))
+            return false;
+
         BRIGHTNESS = b;
+        return true;
+    }
+
+    public static int getBrightness() {
+        if (BRIGHTNESS == -1)
+            BRIGHTNESS = ResourceUtils.getInteger("glyph_settings_brightness_max");
+
+        return BRIGHTNESS;
+    }
+
+    public static int getMaxBrightness() {
+        if (BRIGHTNESSMAX == -1)
+            BRIGHTNESSMAX = ResourceUtils.getInteger("glyph_settings_brightness_max");
+
+        return BRIGHTNESSMAX;
+    }
+
+    public static int[] getBrightnessLevels() {
+        if (BRIGHTNESSLEVELS == null)
+            BRIGHTNESSLEVELS = ResourceUtils.getIntArray("glyph_settings_brightness_levels");
+
+        return BRIGHTNESSLEVELS;
     }
 
 }

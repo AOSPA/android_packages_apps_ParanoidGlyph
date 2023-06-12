@@ -16,14 +16,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Brighntess -->
-    <integer-array name="glyph_settings_animations_brightness_levels" translatable="false">
-        <item>102</item>
-        <item>682</item>
-        <item>1365</item>
-        <item>4095</item>
-    </integer-array>
-
     <!-- Slugs -->
     <string-array name="glyph_settings_animations_slugs" translatable="false">
         <item>camera</item>

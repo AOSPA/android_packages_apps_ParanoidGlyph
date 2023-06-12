@@ -22,6 +22,7 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 import co.aospa.glyph.R;
+import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.StatusManager;
 import co.aospa.glyph.Utils.FileUtils;
 
@@ -56,6 +57,6 @@ public class TorchTileService extends TileService {
 
     private void setEnabled(boolean enabled) {
         StatusManager.setAllLedsActive(enabled);
-        FileUtils.writeLineFromSlug("all", enabled ? 4095 : 0);
+        FileUtils.writeLineFromSlug("all", enabled ? Constants.getMaxBrightness() : 0);
     }
 }

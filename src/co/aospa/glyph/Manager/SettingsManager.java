@@ -22,8 +22,11 @@ import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
+import com.android.internal.util.ArrayUtils;
+
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Utils.FileUtils;
+import co.aospa.glyph.Utils.MigrationUtils;
 import co.aospa.glyph.Utils.ResourceUtils;
 
 public final class SettingsManager {
@@ -81,9 +84,15 @@ public final class SettingsManager {
     }
 
     public static String getGlyphCallAnimation() {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String animation = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_CALL_SUB_ANIMATIONS,
                         ResourceUtils.getString("glyph_settings_call_animations_default"));
+
+        if (!ArrayUtils.contains(ResourceUtils.getCallAnimations(), animation)) {
+            animation = MigrationUtils.getNewCallPattern(animation);
+        }
+
+        return animation;
     }
 
     public static boolean isGlyphMusicVisualizerEnabled() {
@@ -102,9 +111,15 @@ public final class SettingsManager {
     }
 
     public static String getGlyphNotifsAnimation() {
-        return PreferenceManager.getDefaultSharedPreferences(context)
+        String animation = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS,
                         ResourceUtils.getString("glyph_settings_notifs_animations_default"));
+
+        if (!ArrayUtils.contains(ResourceUtils.getNotificationAnimations(), animation)) {
+            animation = MigrationUtils.getNewNotificationPattern(animation);
+        }
+
+        return animation;
     }
 
     public static boolean isGlyphNotifsAppEnabled(String app) {

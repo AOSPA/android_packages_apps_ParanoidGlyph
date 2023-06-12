@@ -16,7 +16,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Slugs -->
+    <!-- Animation Slugs -->
     <string-array name="glyph_settings_animations_slugs" translatable="false">
         <item>camera</item>
         <item>slant</item>
@@ -39,105 +39,9 @@
     </integer-array>
 
     <!-- Call Animations -->
-    <string name="glyph_settings_call_animations_default" translatable="false">beetle_custom</string>
-    <string-array name="glyph_settings_call_animations_names" translatable="false">
-        <item>Abra</item>
-        <item>Beetle</item>
-        <item>Beetle (Custom)</item>
-        <item>Bug</item>
-        <item>Burrow</item>
-        <item>Coded</item>
-        <item>Flutter</item>
-        <item>Forever</item>
-        <item>Karha</item>
-        <item>Latenzy</item>
-        <item>Molitor</item>
-        <item>Pepelu</item>
-        <item>Pet</item>
-        <item>Plot</item>
-        <item>Pneumatic</item>
-        <item>Radiate</item>
-        <item>Scribble</item>
-        <item>Snaps</item>
-        <item>Squirrels</item>
-        <item>Tennis</item>
-        <item>Woo Yeh</item>
-        <item>Wow!</item>
-    </string-array>
-    <string-array name="glyph_settings_call_animations_values" translatable="false">
-        <item>abra</item>
-        <item>beetle</item>
-        <item>beetle_custom</item>
-        <item>bug</item>
-        <item>burrow</item>
-        <item>coded</item>
-        <item>flutter</item>
-        <item>forever</item>
-        <item>karha</item>
-        <item>latency</item>
-        <item>molitor</item>
-        <item>pepelu</item>
-        <item>pet</item>
-        <item>plot</item>
-        <item>pneumatic</item>
-        <item>radiate</item>
-        <item>scribble</item>
-        <item>snaps</item>
-        <item>squirrels</item>
-        <item>tennis</item>
-        <item>woo_yeh</item>
-        <item>wow</item>
-    </string-array>
+    <string name="glyph_settings_call_animations_default" translatable="false">Beetle (Custom)</string>
 
     <!-- Notification Animations -->
-    <string name="glyph_settings_notifs_animations_default" translatable="false">break_custom</string>
-    <string-array name="glyph_settings_notifs_animations_names" translatable="false">
-        <item>Break</item>
-        <item>Break (Custom)</item>
-        <item>Bulb One</item>
-        <item>Bulb Two</item>
-        <item>Cough</item>
-        <item>Flash Slant</item>
-        <item>Fox</item>
-        <item>Gamma</item>
-        <item>Gargle</item>
-        <item>Guiro</item>
-        <item>Isolator</item>
-        <item>Nope</item>
-        <item>Oi!</item>
-        <item>Pep</item>
-        <item>Simmer</item>
-        <item>Skim</item>
-        <item>Squiggle</item>
-        <item>Volley</item>
-        <item>Why</item>
-        <item>Woo</item>
-        <item>Yeh</item>
-        <item>Zip</item>
-    </string-array>
-    <string-array name="glyph_settings_notifs_animations_values" translatable="false">
-        <item>break</item>
-        <item>break_custom</item>
-        <item>bulb_one</item>
-        <item>bulb_two</item>
-        <item>cough</item>
-        <item>flashslant</item>
-        <item>fox</item>
-        <item>gamma</item>
-        <item>gargle</item>
-        <item>guiro</item>
-        <item>isolator</item>
-        <item>nope</item>
-        <item>oi</item>
-        <item>pep</item>
-        <item>simmer</item>
-        <item>Skim</item>
-        <item>squiggle</item>
-        <item>volley</item>
-        <item>why</item>
-        <item>woo</item>
-        <item>yeh</item>
-        <item>zip</item>
-    </string-array>
+    <string name="glyph_settings_notifs_animations_default" translatable="false">Break (Custom)</string>
 
 </resources>

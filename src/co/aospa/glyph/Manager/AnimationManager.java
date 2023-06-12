@@ -20,6 +20,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -117,28 +118,14 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
-            int[] batteryArray = new int[]{};
-            if (batteryLevel == 100 ) {
-                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15, 8};
-            } else if (batteryLevel >= 88) {
-                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14, 15};
-            } else if (batteryLevel >= 75) {
-                batteryArray = new int[]{16, 13, 11, 9, 12, 10, 14};
-            } else if (batteryLevel >= 62) {
-                batteryArray = new int[]{16, 13, 11, 9, 12, 10};
-            } else if (batteryLevel >= 49) {
-                batteryArray = new int[]{16, 13, 11, 9, 12};
-            } else if (batteryLevel >= 36) {
-                batteryArray = new int[]{16, 13, 11, 9};
-            } else if (batteryLevel >= 24) {
-                batteryArray = new int[]{16, 13, 11};
-            } else if (batteryLevel >= 12) {
-                batteryArray = new int[]{16, 13};
-            } else {
-                return;
-            }
+            int batteryBase = ResourceUtils.getInteger("glyph_settings_battery_dot");
+            int[] batteryArrayAll = ResourceUtils.getIntArray("glyph_settings_battery_levels");
+            int amount = (int) (Math.floor((batteryLevel / 100.0) * (batteryArrayAll.length -1)) + 1);
+            int[] batteryArray = Arrays.copyOfRange(batteryArrayAll, 0, amount);
 
             try {
+                if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                FileUtils.writeSingleLed(batteryBase, Constants.getBrightness());
                 for (int i : batteryArray) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                     FileUtils.writeSingleLed(i, Constants.getBrightness());
@@ -150,13 +137,15 @@ public final class AnimationManager {
                     FileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
                 }
+                FileUtils.writeSingleLed(batteryBase, 0);
                 Thread.sleep(730);
             } catch (InterruptedException e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: charging");
                 if (!StatusManager.isAllLedActive()) {
-                    for (int i : new int[]{8, 15, 14, 10, 12, 9, 11, 13, 16}) {
+                    for (int i : batteryArrayAll) {
                         FileUtils.writeSingleLed(i, 0);
                     }
+                    FileUtils.writeSingleLed(batteryBase, 0);
                 }
             }
 

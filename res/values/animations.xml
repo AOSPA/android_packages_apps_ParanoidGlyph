@@ -25,6 +25,19 @@
         <item>dot</item>
     </string-array>
 
+    <!-- Battery Animation -->
+    <integer name="glyph_settings_battery_dot" translatable="false">16</integer>
+    <integer-array name="glyph_settings_battery_levels" translatable="false">
+        <item>13</item>
+        <item>11</item>
+        <item>9</item>
+        <item>12</item>
+        <item>10</item>
+        <item>14</item>
+        <item>15</item>
+        <item>8</item>
+    </integer-array>
+
     <!-- Call Animations -->
     <string name="glyph_settings_call_animations_default" translatable="false">beetle_custom</string>
     <string-array name="glyph_settings_call_animations_names" translatable="false">

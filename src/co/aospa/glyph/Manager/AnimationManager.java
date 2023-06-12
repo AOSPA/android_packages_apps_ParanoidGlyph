@@ -35,8 +35,8 @@ public final class AnimationManager {
     private static final boolean DEBUG = true;
 
     private static Future<?> submit(Runnable runnable) {
-        ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
-        return mExecutorService.submit(runnable);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        return executorService.submit(runnable);
     }
 
     private static boolean check(String name, boolean wait) {
@@ -48,7 +48,7 @@ public final class AnimationManager {
         }
 
         if (StatusManager.isCallLedActive()) {
-            if (DEBUG) Log.d(TAG, "Call animation ist currently active, exiting animation | name: " + name);
+            if (DEBUG) Log.d(TAG, "Call animation is currently active, exiting animation | name: " + name);
             return false;
         }
 
@@ -56,8 +56,8 @@ public final class AnimationManager {
             if (wait) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
                 long start = System.currentTimeMillis();
-                while (StatusManager.isAnimationActive()){
-                    if (System.currentTimeMillis() - start >= 2500 ) return false;
+                while (StatusManager.isAnimationActive()) {
+                    if (System.currentTimeMillis() - start >= 2500) return false;
                 }
             } else {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, exiting | name: " + name);
@@ -74,7 +74,6 @@ public final class AnimationManager {
 
     public static void playCsv(String name, boolean wait) {
         submit(() -> {
-
             if (!check(name, wait))
                 return;
 
@@ -84,35 +83,29 @@ public final class AnimationManager {
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     ResourceUtils.openRawResource("anim_"+name)))) {
-                while (true) {
-                    if (DEBUG) Log.d(TAG, "1");
-                    String line = reader.readLine(); if (line == null) break;
-                    if (DEBUG) Log.d(TAG, "2");
+                String line;
+                while ((line = reader.readLine()) != null) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    if (DEBUG) Log.d(TAG, "3");
                     String[] split = line.split(",");
-                    if (DEBUG) Log.d(TAG, "4");
-                    for (int i = 0; i< slugs.length; i++){
+                    for (int i = 0; i < slugs.length; i++) {
                         FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
                     }
                     Thread.sleep(10);
                 }
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
+            } finally {
+                for (String slug : slugs) {
+                    FileUtils.writeLineFromSlug(slug, 0);
+                }
+                StatusManager.setAnimationActive(false);
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             }
-
-            if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-            for (int i = 0; i< slugs.length; i++){
-                FileUtils.writeLineFromSlug(slugs[i], 0);
-            }
-
-            StatusManager.setAnimationActive(false);
         });
     }
 
     public static void playCharging(int batteryLevel, boolean wait) {
         submit(() -> {
-            
             if (!check("charging", wait))
                 return;
 
@@ -120,7 +113,7 @@ public final class AnimationManager {
 
             int batteryBase = ResourceUtils.getInteger("glyph_settings_battery_dot");
             int[] batteryArrayAll = ResourceUtils.getIntArray("glyph_settings_battery_levels");
-            int amount = (int) (Math.floor((batteryLevel / 100.0) * (batteryArrayAll.length -1)) + 1);
+            int amount = (int) (Math.floor((batteryLevel / 100.0) * (batteryArrayAll.length - 1)) + 1);
             int[] batteryArray = Arrays.copyOfRange(batteryArrayAll, 0, amount);
 
             try {
@@ -132,7 +125,7 @@ public final class AnimationManager {
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
-                for (int i=batteryArray.length-1; i>=0; i--) {
+                for (int i = batteryArray.length - 1; i >= 0; i--) {
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                     FileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
@@ -147,17 +140,15 @@ public final class AnimationManager {
                     }
                     FileUtils.writeSingleLed(batteryBase, 0);
                 }
+            } finally {
+                StatusManager.setAnimationActive(false);
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
             }
-
-            if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
-
-            StatusManager.setAnimationActive(false);
         });
     }
 
     public static void playCall(String name) {
         submit(() -> {
-
             StatusManager.setCallLedEnabled(true);
 
             if (!check("call: " + name, true))
@@ -170,11 +161,11 @@ public final class AnimationManager {
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                         ResourceUtils.openRawResource("anim_"+name)))) {
-                    while (true) {
-                        String line = reader.readLine(); if (line == null) break;
+                    String line;
+                    while ((line = reader.readLine()) != null) {
                         if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
                         String[] split = line.split(",");
-                        for (int i = 0; i< slugs.length; i++){
+                        for (int i = 0; i < slugs.length; i++) {
                             FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
                         }
                         Thread.sleep(10);
@@ -188,13 +179,11 @@ public final class AnimationManager {
                     }
                 }
             }
-
-            if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-            for (int i = 0; i< slugs.length; i++){
-                FileUtils.writeLineFromSlug(slugs[i], 0);
+            for (String slug : slugs) {
+                FileUtils.writeLineFromSlug(slug, 0);
             }
-
             StatusManager.setCallLedActive(false);
+            if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
         });
     }
 
@@ -205,15 +194,9 @@ public final class AnimationManager {
 
     public static void playMusic(String name) {
         submit(() -> {
-
-            //if (!check("music_"+name, true))
-                //return;
-
-            //StatusManager.setAnimationActive(true);
-
             String path = null;
 
-            switch(name) {
+            switch (name) {
                 case "low":
                     path = "dot";
                     break;
@@ -230,7 +213,7 @@ public final class AnimationManager {
                     path = "slant";
                     break;
                 default:
-                    if (DEBUG) Log.d(TAG, "Name doesnt match any zone, returning | name: " + name);
+                    if (DEBUG) Log.d(TAG, "Name doesn't match any zone, returning | name: " + name);
                     return;
             }
 
@@ -240,12 +223,9 @@ public final class AnimationManager {
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
             } finally {
-                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
                 FileUtils.writeLineFromSlug(path, 0);
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             }
-
-            //StatusManager.setAnimationActive(false);
-
         });
     }
 

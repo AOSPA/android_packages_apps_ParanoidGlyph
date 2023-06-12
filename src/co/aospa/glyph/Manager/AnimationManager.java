@@ -86,13 +86,9 @@ public final class AnimationManager {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     ResourceUtils.openRawResource("anim_"+name)))) {
                 while (true) {
-                    if (DEBUG) Log.d(TAG, "1");
                     String line = reader.readLine(); if (line == null) break;
-                    if (DEBUG) Log.d(TAG, "2");
                     if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
-                    if (DEBUG) Log.d(TAG, "3");
                     String[] split = line.split(",");
-                    if (DEBUG) Log.d(TAG, "4");
                     for (int i = 0; i< slugs.length; i++){
                         FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
                     }

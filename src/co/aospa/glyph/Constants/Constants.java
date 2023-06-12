@@ -49,18 +49,18 @@ public final class Constants {
     public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
     public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
 
-    public static final String[] APPSTOIGNORE = {
-                                                        "android",
-                                                        "com.android.traceur",
-                                                        //"com.google.android.dialer",
-                                                        "com.google.android.setupwizard",
-                                                        "dev.kdrag0n.dyntheme.privileged.sys"
-                                                    };
-    public static final String[] NOTIFSTOIGNORE = {
-                                                        "com.google.android.dialer:phone_incoming_call",
-                                                        "com.google.android.dialer:phone_ongoing_call",
-                                                        "com.android.systemui:BAT"
-                                                    };
+    public static final String[] APPS_TO_IGNORE = {
+        "android",
+        "com.android.traceur",
+        //"com.google.android.dialer",
+        "com.google.android.setupwizard",
+        "dev.kdrag0n.dyntheme.privileged.sys"
+    };
+    public static final String[] NOTIFS_TO_IGNORE = {
+        "com.google.android.dialer:phone_incoming_call",
+        "com.google.android.dialer:phone_ongoing_call",
+        "com.android.systemui:BAT"
+    };
 
     public static boolean setBrightness(int b) {
         if (b > ResourceUtils.getInteger("glyph_settings_brightness_max"))

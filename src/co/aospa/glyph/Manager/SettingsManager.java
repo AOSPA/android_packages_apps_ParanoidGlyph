@@ -93,6 +93,11 @@ public final class SettingsManager {
                 .getBoolean(Constants.GLYPH_MUSIC_VISUALIZER_ENABLE, false) && isGlyphEnabled();
     }
 
+    public static boolean isGlyphVolumeLevelEnabled() {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(Constants.GLYPH_VOLUME_LEVEL_ENABLE, false) && isGlyphEnabled();
+    }
+
     public static boolean isGlyphNotifsEnabled() {
         return Settings.Secure.getInt(context.getContentResolver(),
                 Constants.GLYPH_NOTIFS_ENABLE, 1) != 0 && isGlyphEnabled();

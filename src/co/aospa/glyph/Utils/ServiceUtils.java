@@ -31,6 +31,7 @@ import co.aospa.glyph.Services.FlipToGlyphService;
 import co.aospa.glyph.Services.MusicVisualizerService;
 import co.aospa.glyph.Services.NotificationService;
 import co.aospa.glyph.Services.PowershareService;
+import co.aospa.glyph.Services.VolumeLevelService;
 
 public final class ServiceUtils {
 
@@ -111,6 +112,18 @@ public final class ServiceUtils {
                 UserHandle.CURRENT);
     }
 
+    public static void startVolumeLevelService() {
+        if (DEBUG) Log.d(TAG, "Starting Volume Level service");
+        context.startServiceAsUser(new Intent(context, VolumeLevelService.class),
+                UserHandle.CURRENT);
+    }
+
+    protected static void stopVolumeLevelService() {
+        if (DEBUG) Log.d(TAG, "Stopping Volume Listener service");
+        context.stopServiceAsUser(new Intent(context, VolumeLevelService.class),
+                UserHandle.CURRENT);
+    }
+
     public static void checkGlyphService() {
         if (SettingsManager.isGlyphEnabled()) {
             Constants.setBrightness(SettingsManager.getGlyphBrightness());
@@ -144,6 +157,11 @@ public final class ServiceUtils {
             } else {
                 stopMusicVisualizerService();
             }
+            if (SettingsManager.isGlyphVolumeLevelEnabled()) {
+                startVolumeLevelService();
+            } else {
+                stopVolumeLevelService();
+            }
         } else {
             stopChargingService();
             stopPowershareService();
@@ -151,6 +169,7 @@ public final class ServiceUtils {
             stopNotificationService();
             stopFlipToGlyphService();
             stopMusicVisualizerService();
+            stopVolumeLevelService();
         }
     }
 }

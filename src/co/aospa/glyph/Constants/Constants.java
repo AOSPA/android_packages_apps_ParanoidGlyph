@@ -48,6 +48,7 @@ public final class Constants {
     public static final String GLYPH_NOTIFS_SUB_ANIMATIONS = "glyph_settings_notifs_sub_animations";
     public static final String GLYPH_NOTIFS_SUB_CATEGORY = "glyph_settings_notifs_sub";
     public static final String GLYPH_NOTIFS_SUB_ENABLE = "glyph_settings_notifs_sub_toggle";
+    public static final String GLYPH_VOLUME_LEVEL_ENABLE = "glyph_settings_volume_level_toggle";
 
     public static final String[] APPS_TO_IGNORE = {
         "android",

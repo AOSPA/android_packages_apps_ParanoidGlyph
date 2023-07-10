@@ -44,4 +44,16 @@
     <!-- Notification Animations -->
     <string name="glyph_settings_notifs_animations_default" translatable="false">Break (Custom)</string>
 
+    <!-- Volume Animation -->
+    <integer-array name="glyph_settings_volume_levels" translatable="false">
+        <item>8</item>
+        <item>15</item>
+        <item>14</item>
+        <item>10</item>
+        <item>12</item>
+        <item>9</item>
+        <item>11</item>
+        <item>13</item>
+    </integer-array>
+
 </resources>

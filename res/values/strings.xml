@@ -34,7 +34,7 @@
 
     <string name="glyph_settings_brightness">Brightness</string>
 
-    <string name="glyph_settings_charging_title">Charging animation</string>
+    <string name="glyph_settings_charging_title">Charging</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>
     <string name="glyph_settings_charging_level_summary">Show battery level when plugging in</string>
     <string name="glyph_settings_charging_powershare_title">Reverse wireless charging</string>

@@ -53,6 +53,10 @@
     <string name="glyph_settings_notifs_sub_toggle_title">Enable notification animation</string>
     <string name="glyph_settings_notifs_sub_animations_title">Pattern</string>
 
+    <string name="glyph_settings_volume_title">Volume</string>
+    <string name="glyph_settings_volume_level_toggle_title">Volume indicator</string>
+    <string name="glyph_settings_volume_level_toggle_summary">Show volume level when adjusting</string>
+
     <string name="glyph_settings_misc_title">Miscellaneous</string>
     <string name="glyph_settings_music_visualizer_toggle_title">Music Visualizer</string>
     <string name="glyph_settings_music_visualizer_toggle_summary">DISCO LIGHTS!\nthis will disable all other glyph functions while enabled</string>

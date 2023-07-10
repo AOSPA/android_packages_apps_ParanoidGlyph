@@ -74,6 +74,16 @@ public final class AnimationManager {
         return true;
     }
 
+    private static boolean checkInterruption(String name) {
+        if (StatusManager.isAllLedActive()
+                || (name != "call" && StatusManager.isCallLedEnabled())
+                || (name == "call" && !StatusManager.isCallLedEnabled())
+                || (name == "volume" && StatusManager.isVolumeLedUpdate())) {
+            return true;
+        }
+        return false;
+    }
+
     public static void playCsv(String name) {
         playCsv(name, false);
     }
@@ -91,7 +101,7 @@ public final class AnimationManager {
                     ResourceUtils.getAnimation(name)))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    if (checkInterruption("csv")) throw new InterruptedException();
                     String[] split = line.split(",");
                     for (int i = 0; i < slugs.length; i++) {
                         FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
@@ -123,16 +133,16 @@ public final class AnimationManager {
             int[] batteryArray = Arrays.copyOfRange(batteryArrayAll, 0, amount);
 
             try {
-                if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                if (checkInterruption("charging")) throw new InterruptedException();
                 FileUtils.writeSingleLed(batteryBase, Constants.getBrightness());
                 for (int i : batteryArray) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    if (checkInterruption("charging")) throw new InterruptedException();
                     FileUtils.writeSingleLed(i, Constants.getBrightness());
                     Thread.sleep(10);
                 }
                 Thread.sleep(1000);
                 for (int i = batteryArray.length - 1; i >= 0; i--) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                    if (checkInterruption("charging")) throw new InterruptedException();
                     FileUtils.writeSingleLed(batteryArray[i], 0);
                     Thread.sleep(10);
                 }
@@ -165,9 +175,9 @@ public final class AnimationManager {
             int amount = (int) (Math.floor((volumeLevel / 100.0) * (volumeArray.length - 1)) + 1);
 
             try {
-                if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                if (checkInterruption("volume")) throw new InterruptedException();
                 for (int i = 0; i < volumeArray.length; i++) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    if (checkInterruption("volume")) throw new InterruptedException();
                     if ( i <= amount - 1 && volumeLevel > 0) {
                         FileUtils.writeSingleLed(volumeArray[i], Constants.getBrightness());
                     } else {
@@ -177,16 +187,16 @@ public final class AnimationManager {
                 }
                 long start = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start <= 1800) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    if (checkInterruption("volume")) throw new InterruptedException();
                 }
                 for (int i = volumeArray.length - 1; i >= 0; i--) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    if (checkInterruption("volume")) throw new InterruptedException();
                     FileUtils.writeSingleLed(volumeArray[i], 0);
                     Thread.sleep(10);
                 }
                 long start2 = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start2 <= 800) {
-                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    if (checkInterruption("volume")) throw new InterruptedException();
                 }
             } catch (InterruptedException e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: volume");
@@ -222,7 +232,7 @@ public final class AnimationManager {
                         ResourceUtils.getCallAnimation(name)))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        if (!StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive()) throw new InterruptedException();
+                        if (checkInterruption("call")) throw new InterruptedException();
                         String[] split = line.split(",");
                         for (int i = 0; i < slugs.length; i++) {
                             FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());

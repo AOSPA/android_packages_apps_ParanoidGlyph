@@ -80,6 +80,16 @@
             android:summary="@string/glyph_settings_charging_powershare_summary" />
 
     <PreferenceCategory
+        android:key="glyph_settings_volume"
+        android:title="@string/glyph_settings_volume_title" />
+
+        <SwitchPreference
+            android:key="glyph_settings_volume_level_toggle"
+            android:defaultValue="true"
+            android:title="@string/glyph_settings_volume_level_toggle_title"
+            android:summary="@string/glyph_settings_volume_level_toggle_summary" />
+
+    <PreferenceCategory
         android:key="glyph_settings_misc"
         android:title="@string/glyph_settings_misc_title" />
 

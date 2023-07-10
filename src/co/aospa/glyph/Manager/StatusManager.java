@@ -24,6 +24,8 @@ public final class StatusManager {
     private static boolean allLedActive = false;
     private static boolean animationActive = false;
     private static boolean callLedActive = false;
+    private static boolean volumeLedActive = false;
+    private static boolean volumeLedUpdate = false;
 
     private static boolean callLedEnabled = false;
 
@@ -49,6 +51,22 @@ public final class StatusManager {
 
     public static void setCallLedActive(boolean status) {
         callLedActive = status;
+    }
+
+    public static boolean isVolumeLedActive() {
+        return volumeLedActive;
+    }
+
+    public static void setVolumeLedActive(boolean status) {
+        volumeLedActive = status;
+    }
+
+    public static boolean isVolumeLedUpdate() {
+        return volumeLedUpdate;
+    }
+
+    public static void setVolumeLedUpdate(boolean status) {
+        volumeLedUpdate = status;
     }
 
     public static boolean isCallLedEnabled() {

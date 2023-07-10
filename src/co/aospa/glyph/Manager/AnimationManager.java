@@ -52,10 +52,16 @@ public final class AnimationManager {
             return false;
         }
 
-        if (StatusManager.isAnimationActive()) {
-            if (wait) {
+        if (StatusManager.isAnimationActive() ) {
+            long start = System.currentTimeMillis();
+            if (name == "volume" && StatusManager.isVolumeLedActive()) {
+                if (DEBUG) Log.d(TAG, "There is already a volume animation playing, update");
+                StatusManager.setVolumeLedUpdate(true);
+                while (StatusManager.isVolumeLedUpdate()) {
+                    if (System.currentTimeMillis() - start >= 2500) return false;
+                }
+            } else if (wait) {
                 if (DEBUG) Log.d(TAG, "There is already an animation playing, wait | name: " + name);
-                long start = System.currentTimeMillis();
                 while (StatusManager.isAnimationActive()) {
                     if (System.currentTimeMillis() - start >= 2500) return false;
                 }
@@ -143,6 +149,59 @@ public final class AnimationManager {
             } finally {
                 StatusManager.setAnimationActive(false);
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: charging");
+            }
+        });
+    }
+
+    public static void playVolume(int volumeLevel, boolean wait) {
+        submit(() -> {
+            if (!check("volume", wait))
+                return;
+
+            StatusManager.setVolumeLedActive(true);
+            StatusManager.setAnimationActive(true);
+
+            int[] volumeArray = ResourceUtils.getIntArray("glyph_settings_volume_levels");
+            int amount = (int) (Math.floor((volumeLevel / 100.0) * (volumeArray.length - 1)) + 1);
+
+            try {
+                if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                for (int i = 0; i < volumeArray.length; i++) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    if ( i <= amount - 1 && volumeLevel > 0) {
+                        FileUtils.writeSingleLed(volumeArray[i], Constants.getBrightness());
+                    } else {
+                        FileUtils.writeSingleLed(volumeArray[i], 0);
+                    }
+                    Thread.sleep(10);
+                }
+                long start = System.currentTimeMillis();
+                while (System.currentTimeMillis() - start <= 1800) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                }
+                for (int i = volumeArray.length - 1; i >= 0; i--) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                    FileUtils.writeSingleLed(volumeArray[i], 0);
+                    Thread.sleep(10);
+                }
+                long start2 = System.currentTimeMillis();
+                while (System.currentTimeMillis() - start2 <= 800) {
+                    if (StatusManager.isCallLedEnabled() || StatusManager.isAllLedActive() || StatusManager.isVolumeLedUpdate()) throw new InterruptedException();
+                }
+            } catch (InterruptedException e) {
+                if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: volume");
+                if (!StatusManager.isAllLedActive() && !StatusManager.isVolumeLedUpdate()) {
+                    for (int i : volumeArray) {
+                        FileUtils.writeSingleLed(i, 0);
+                    }
+                }
+            } finally {
+                if (!StatusManager.isVolumeLedUpdate()) {
+                    StatusManager.setAnimationActive(false);
+                    StatusManager.setVolumeLedActive(false);
+                }
+                StatusManager.setVolumeLedUpdate(false);
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: volume");
             }
         });
     }

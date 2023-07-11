@@ -138,13 +138,13 @@ public final class AnimationManager {
                 for (int i : batteryArray) {
                     if (checkInterruption("charging")) throw new InterruptedException();
                     FileUtils.writeSingleLed(i, Constants.getBrightness());
-                    Thread.sleep(10);
+                    Thread.sleep(15);
                 }
                 Thread.sleep(1000);
                 for (int i = batteryArray.length - 1; i >= 0; i--) {
                     if (checkInterruption("charging")) throw new InterruptedException();
                     FileUtils.writeSingleLed(batteryArray[i], 0);
-                    Thread.sleep(10);
+                    Thread.sleep(15);
                 }
                 FileUtils.writeSingleLed(batteryBase, 0);
                 Thread.sleep(730);
@@ -183,7 +183,7 @@ public final class AnimationManager {
                     } else {
                         FileUtils.writeSingleLed(volumeArray[i], 0);
                     }
-                    Thread.sleep(10);
+                    Thread.sleep(15);
                 }
                 long start = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start <= 1800) {
@@ -192,7 +192,7 @@ public final class AnimationManager {
                 for (int i = volumeArray.length - 1; i >= 0; i--) {
                     if (checkInterruption("volume")) throw new InterruptedException();
                     FileUtils.writeSingleLed(volumeArray[i], 0);
-                    Thread.sleep(10);
+                    Thread.sleep(15);
                 }
                 long start2 = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start2 <= 800) {

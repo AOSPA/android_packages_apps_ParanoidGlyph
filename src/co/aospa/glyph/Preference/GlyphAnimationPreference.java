@@ -165,11 +165,44 @@ public class GlyphAnimationPreference extends Preference {
                     while ((line = reader.readLine()) != null) {
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
-                        mActivity.runOnUiThread(() -> {
-                            for (int i = 0; i < animationSlugs.length; i++) {
-                                setGlyphsDrawable(animationImgs[i], Integer.parseInt(split[i]));
-                            }
-                        });
+                        if (animationSlugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                            mActivity.runOnUiThread(() -> {
+                                for (int i = 0; i < animationSlugs.length; i++) {
+                                    setGlyphsDrawable(animationImgs[i], Integer.parseInt(split[i]));
+                                }
+                            });
+                        } else if (animationSlugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
+                            mActivity.runOnUiThread(() -> {
+                                    setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
+                                    setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[0]));
+                                    setGlyphsDrawable(animationImgs[2], Integer.parseInt(split[1]));
+                                    setGlyphsDrawable(animationImgs[3], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[4], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[5], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[6], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[7], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[8], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[3]));
+                                    setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[4]));
+                            });
+                        } else if (animationSlugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
+                            mActivity.runOnUiThread(() -> {
+                                    setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
+                                    setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[1]));
+                                    setGlyphsDrawable(animationImgs[2], Integer.parseInt(split[2]));
+                                    setGlyphsDrawable(animationImgs[3], Integer.parseInt(split[3]));
+                                    setGlyphsDrawable(animationImgs[4], Integer.parseInt(split[19]));
+                                    setGlyphsDrawable(animationImgs[5], Integer.parseInt(split[20]));
+                                    setGlyphsDrawable(animationImgs[6], Integer.parseInt(split[21]));
+                                    setGlyphsDrawable(animationImgs[7], Integer.parseInt(split[22]));
+                                    setGlyphsDrawable(animationImgs[8], Integer.parseInt(split[23]));
+                                    setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[25]));
+                                    setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[24]));
+                            });
+                        } else {
+                            if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + animationName + " | line: " + line);
+                            updateAnimation(false);
+                        }
                         Thread.sleep(20);
                     }
                     Thread.sleep(animationTimeBetween);

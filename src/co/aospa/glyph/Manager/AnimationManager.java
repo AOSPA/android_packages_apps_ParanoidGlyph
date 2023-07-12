@@ -102,6 +102,7 @@ public final class AnimationManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (checkInterruption("csv")) throw new InterruptedException();
+                    line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] split = line.split(",");
                     for (int i = 0; i < slugs.length; i++) {
                         FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
@@ -233,6 +234,7 @@ public final class AnimationManager {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (checkInterruption("call")) throw new InterruptedException();
+                        line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
                         for (int i = 0; i < slugs.length; i++) {
                             FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());

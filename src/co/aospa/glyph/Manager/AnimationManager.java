@@ -104,8 +104,37 @@ public final class AnimationManager {
                     if (checkInterruption("csv")) throw new InterruptedException();
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] split = line.split(",");
-                    for (int i = 0; i < slugs.length; i++) {
-                        FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                    if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                        for (int i = 0; i < slugs.length; i++) {
+                            FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        }
+                    } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
+                        FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[11], Float.parseFloat(split[4]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                    } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
+                        FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[19]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[20]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[21]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[22]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[23]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[25]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        FileUtils.writeLineFromSlug(slugs[11], Float.parseFloat(split[24]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                    } else {
+                        if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
+                        throw new InterruptedException();
                     }
                     Thread.sleep(10);
                 }
@@ -236,8 +265,37 @@ public final class AnimationManager {
                         if (checkInterruption("call")) throw new InterruptedException();
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
-                        for (int i = 0; i < slugs.length; i++) {
-                            FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                            for (int i = 0; i < slugs.length; i++) {
+                                FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            }
+                        } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
+                            FileUtils.writeLineFromSlug(slugs[0], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[4]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
+                            FileUtils.writeLineFromSlug(slugs[0], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[19]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[20]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[21]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[22]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[23]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[25]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[24]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        } else {
+                            if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
+                            throw new InterruptedException();
                         }
                         Thread.sleep(10);
                     }

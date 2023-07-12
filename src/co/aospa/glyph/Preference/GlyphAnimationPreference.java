@@ -166,7 +166,7 @@ public class GlyphAnimationPreference extends Preference {
                         String[] split = line.split(",");
                         mActivity.runOnUiThread(() -> {
                             for (int i = 0; i < animationSlugs.length; i++) {
-                                setGlyphsDrawable(animationImgs[i], animationSlugs[i], Integer.parseInt(split[i]));
+                                setGlyphsDrawable(animationImgs[i], Integer.parseInt(split[i]));
                             }
                         });
                         Thread.sleep(20);
@@ -179,7 +179,7 @@ public class GlyphAnimationPreference extends Preference {
                         if (DEBUG) Log.d(TAG, "Pause displaying animation | name: " + animationName);
                         mActivity.runOnUiThread(() -> {
                             for (int i = 0; i < animationSlugs.length; i++) {
-                                setGlyphsDrawable(animationImgs[i], animationSlugs[i], 0);
+                                setGlyphsDrawable(animationImgs[i], 0);
                             }
                         });
                     }
@@ -187,14 +187,12 @@ public class GlyphAnimationPreference extends Preference {
             }
         }
         
-        private void setGlyphsDrawable(ImageView imageView, String slug, int brightness) {
-            int imgOn = ResourceUtils.getIdentifier(slug+"_on", "drawable");
-            int imgOff = ResourceUtils.getIdentifier(slug+"_off", "drawable");
+        private void setGlyphsDrawable(ImageView imageView, int brightness) {
             if (brightness <= 0) {
-                imageView.setImageResource(imgOff);
+                imageView.setAlpha(0.3f);
             } else {
-                imageView.setImageResource(imgOn);
-                imageView.getDrawable().setAlpha(brightness * 255 / Constants.getMaxBrightness());
+                float brightnessFactor = (float) (0.4 + 0.6 * (brightness / (double) Constants.getMaxBrightness()));
+                imageView.setAlpha(brightnessFactor);
             }
         }
     };

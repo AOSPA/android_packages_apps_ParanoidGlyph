@@ -57,6 +57,19 @@ android_app {
     ],
 }
 
+android_app {
+    name: "ParanoidGlyphPhone2",
+
+    defaults: ["glyph_app_defaults"],
+
+    asset_dirs: ["phone2/assets"],
+    resource_dirs: ["phone2/res"],
+
+    static_libs: [
+        "ParanoidGlyph-core",
+    ],
+}
+
 prebuilt_etc {
     name: "privapp_whitelist_co.aospa.glyph.xml",
     src: "permissions/privapp_whitelist_co.aospa.glyph.xml",

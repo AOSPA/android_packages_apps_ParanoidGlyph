@@ -33,6 +33,17 @@
             android:layout="@layout/preference"
             android:summary="%s" />
 
+        <MultiSelectListPreference
+            android:key="glyph_settings_notifs_sub_essential"
+            android:title="@string/glyph_settings_notifs_sub_essential_title"
+            android:dialogTitle="@string/glyph_settings_notifs_sub_essential_title"
+            android:entries="@array/glyph_settings_empty_array_string"
+            android:entryValues="@array/glyph_settings_empty_array_string"
+            android:summary="@string/glyph_settings_notifs_sub_essential_summary"
+            android:defaultValue="@array/glyph_settings_empty_array_string"
+            android:positiveButtonText="@android:string/ok"
+            android:negativeButtonText="@android:string/cancel" />
+
         <PreferenceCategory
             android:key="glyph_settings_notifs_sub"
             android:title="@string/glyph_settings_notifs_sub_title" />

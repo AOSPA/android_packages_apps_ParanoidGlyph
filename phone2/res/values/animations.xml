@@ -49,6 +49,7 @@
 
     <!-- Notification Animations -->
     <string name="glyph_settings_notifs_animations_default" translatable="false">Break</string>
+    <string name="glyph_settings_notifs_essential_slug" translatable"false">slant1</string>
 
     <!-- Volume Animation -->
     <integer-array name="glyph_settings_volume_levels" translatable="false">

@@ -29,7 +29,6 @@ import co.aospa.glyph.Services.CallReceiverService;
 import co.aospa.glyph.Services.ChargingService;
 import co.aospa.glyph.Services.FlipToGlyphService;
 import co.aospa.glyph.Services.MusicVisualizerService;
-import co.aospa.glyph.Services.NotificationService;
 import co.aospa.glyph.Services.PowershareService;
 import co.aospa.glyph.Services.VolumeLevelService;
 
@@ -88,18 +87,6 @@ public final class ServiceUtils {
                 UserHandle.CURRENT);
     }
 
-    private static void startNotificationService() {
-        if (DEBUG) Log.d(TAG, "Starting Glyph notifs service");
-        context.startServiceAsUser(new Intent(context, NotificationService.class),
-                UserHandle.CURRENT);
-    }
-
-    private static void stopNotificationService() {
-        if (DEBUG) Log.d(TAG, "Stopping Glyph notifs service");
-        context.stopServiceAsUser(new Intent(context, NotificationService.class),
-                UserHandle.CURRENT);
-    }
-
     private static void startPowershareService() {
         if (DEBUG) Log.d(TAG, "Starting Glyph powershare service");
         context.startServiceAsUser(new Intent(context, PowershareService.class),
@@ -142,11 +129,6 @@ public final class ServiceUtils {
             } else {
                 stopCallReceiverService();
             }
-            if (SettingsManager.isGlyphNotifsEnabled()) {
-                startNotificationService();
-            } else {
-                stopNotificationService();
-            }
             if (SettingsManager.isGlyphFlipEnabled()) {
                 startFlipToGlyphService();
             } else {
@@ -166,7 +148,6 @@ public final class ServiceUtils {
             stopChargingService();
             stopPowershareService();
             stopCallReceiverService();
-            stopNotificationService();
             stopFlipToGlyphService();
             stopMusicVisualizerService();
             stopVolumeLevelService();

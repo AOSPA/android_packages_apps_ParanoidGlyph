@@ -106,32 +106,32 @@ public final class AnimationManager {
                     String[] split = line.split(",");
                     if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
                         for (int i = 0; i < slugs.length; i++) {
-                            FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            updateLedZone(slugs[i], split[i]);
                         }
                     } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
-                        FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[11], Float.parseFloat(split[4]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        updateLedZone(slugs[1], split[0]);
+                        updateLedZone(slugs[2], split[0]);
+                        updateLedZone(slugs[3], split[1]);
+                        updateLedZone(slugs[4], split[2]);
+                        updateLedZone(slugs[5], split[2]);
+                        updateLedZone(slugs[6], split[2]);
+                        updateLedZone(slugs[7], split[2]);
+                        updateLedZone(slugs[8], split[2]);
+                        updateLedZone(slugs[9], split[2]);
+                        updateLedZone(slugs[10], split[3]);
+                        updateLedZone(slugs[11], split[4]);
                     } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
-                        FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[19]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[20]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[21]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[22]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[23]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[25]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                        FileUtils.writeLineFromSlug(slugs[11], Float.parseFloat(split[24]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                        updateLedZone(slugs[1], split[0]);
+                        updateLedZone(slugs[2], split[1]);
+                        updateLedZone(slugs[3], split[2]);
+                        updateLedZone(slugs[4], split[3]);
+                        updateLedZone(slugs[5], split[19]);
+                        updateLedZone(slugs[6], split[20]);
+                        updateLedZone(slugs[7], split[21]);
+                        updateLedZone(slugs[8], split[22]);
+                        updateLedZone(slugs[9], split[23]);
+                        updateLedZone(slugs[10], split[25]);
+                        updateLedZone(slugs[11], split[24]);
                     } else {
                         if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                         throw new InterruptedException();
@@ -142,7 +142,7 @@ public final class AnimationManager {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
             } finally {
                 for (String slug : slugs) {
-                    FileUtils.writeLineFromSlug(slug, 0);
+                    updateLedZone(slug, 0);
                 }
                 StatusManager.setAnimationActive(false);
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
@@ -267,32 +267,32 @@ public final class AnimationManager {
                         String[] split = line.split(",");
                         if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
                             for (int i = 0; i < slugs.length; i++) {
-                                FileUtils.writeLineFromSlug(slugs[i], Float.parseFloat(split[i]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                                updateLedZone(slugs[i], split[i]);
                             }
                         } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
-                            FileUtils.writeLineFromSlug(slugs[0], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[4]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            updateLedZone(slugs[0], split[0]);
+                            updateLedZone(slugs[1], split[0]);
+                            updateLedZone(slugs[2], split[1]);
+                            updateLedZone(slugs[3], split[2]);
+                            updateLedZone(slugs[4], split[2]);
+                            updateLedZone(slugs[5], split[2]);
+                            updateLedZone(slugs[6], split[2]);
+                            updateLedZone(slugs[7], split[2]);
+                            updateLedZone(slugs[8], split[2]);
+                            updateLedZone(slugs[9], split[3]);
+                            updateLedZone(slugs[10], split[4]);
                         } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
-                            FileUtils.writeLineFromSlug(slugs[0], Float.parseFloat(split[0]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[1], Float.parseFloat(split[1]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[2], Float.parseFloat(split[2]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[3], Float.parseFloat(split[3]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[4], Float.parseFloat(split[19]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[5], Float.parseFloat(split[20]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[6], Float.parseFloat(split[21]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[7], Float.parseFloat(split[22]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[8], Float.parseFloat(split[23]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[9], Float.parseFloat(split[25]) / Constants.getMaxBrightness() * Constants.getBrightness());
-                            FileUtils.writeLineFromSlug(slugs[10], Float.parseFloat(split[24]) / Constants.getMaxBrightness() * Constants.getBrightness());
+                            updateLedZone(slugs[0], split[0]);
+                            updateLedZone(slugs[1], split[1]);
+                            updateLedZone(slugs[2], split[2]);
+                            updateLedZone(slugs[3], split[3]);
+                            updateLedZone(slugs[4], split[19]);
+                            updateLedZone(slugs[5], split[20]);
+                            updateLedZone(slugs[6], split[21]);
+                            updateLedZone(slugs[7], split[22]);
+                            updateLedZone(slugs[8], split[23]);
+                            updateLedZone(slugs[9], split[25]);
+                            updateLedZone(slugs[10], split[24]);
                         } else {
                             if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                             throw new InterruptedException();
@@ -309,7 +309,7 @@ public final class AnimationManager {
                 }
             }
             for (String slug : slugs) {
-                FileUtils.writeLineFromSlug(slug, 0);
+                updateLedZone(slug, 0);
             }
             StatusManager.setCallLedActive(false);
             if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
@@ -319,6 +319,47 @@ public final class AnimationManager {
     public static void stopCall() {
         if (DEBUG) Log.d(TAG, "Disabling Call Animation");
         StatusManager.setCallLedEnabled(false);
+    }
+
+    public static void playEssential() {
+        if (DEBUG) Log.d(TAG, "Playing Essential Animation");
+        String slug = ResourceUtils.getString("glyph_settings_notifs_essential_slug");
+        if (!StatusManager.isEssentialLedActive()) {
+            submit(() -> {
+                if (!check("essential", true))
+                    return;
+                
+                StatusManager.setAnimationActive(true);
+
+                try {
+                    if (checkInterruption("charging")) throw new InterruptedException();
+                    int[] steps = {1, 2, 4, 7};
+                    for (int i : steps) {
+                        if (checkInterruption("essential")) throw new InterruptedException();
+                        updateLedZone(slug, Constants.getMaxBrightness() / 100 * i);
+                        Thread.sleep(25);
+                    }
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {}
+
+                StatusManager.setAnimationActive(false);
+                StatusManager.setEssentialLedActive(true);
+                if (DEBUG) Log.d(TAG, "Done playing animation | name: essential");
+            });
+        } else {
+            updateLedZone(slug, Constants.getMaxBrightness() / 100 * 7);
+            return;
+        }
+
+    }
+
+    public static void stopEssential() {
+        if (DEBUG) Log.d(TAG, "Disabling Essential Animation");
+        StatusManager.setEssentialLedActive(false);
+        if (!StatusManager.isAnimationActive() && !StatusManager.isAllLedActive()) {
+            String slug = ResourceUtils.getString("glyph_settings_notifs_essential_slug");
+            updateLedZone(slug, 0);
+        }
     }
 
     public static void playMusic(String name) {
@@ -347,15 +388,35 @@ public final class AnimationManager {
             }
 
             try {
-                FileUtils.writeLineFromSlug(path, Constants.getBrightness());
+                updateLedZone(path, Constants.getMaxBrightness());
                 Thread.sleep(90);
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
             } finally {
-                FileUtils.writeLineFromSlug(path, 0);
+                updateLedZone(path, 0);
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             }
         });
+    }
+
+    private static void updateLedZone(String slug, String brightness) {
+        updateLedZone(slug, Float.parseFloat(brightness));
+    }
+
+    private static void updateLedZone(String slug, int brightness) {
+        updateLedZone(slug, (float) brightness);
+    }
+
+    private static void updateLedZone(String slug, float brightness) {
+        //if (DEBUG) Log.d(TAG, "Updating slug | slug: " + slug + " | brightness: " + brightness);
+        float maxBrightness = (float) Constants.getMaxBrightness();
+        String essentialSlug = ResourceUtils.getString("glyph_settings_notifs_essential_slug");
+        if (StatusManager.isEssentialLedActive()
+                && slug.equals(essentialSlug)
+                && brightness < (maxBrightness / 100 * 7)) {
+            brightness = maxBrightness / 100 * 7;
+        }
+        FileUtils.writeLineFromSlug(slug, brightness / maxBrightness * Constants.getBrightness());
     }
 
 }

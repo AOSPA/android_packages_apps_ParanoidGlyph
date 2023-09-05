@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/device_bg"
+        android:width="107.2dp"
+        android:height="225.0dp"
+        android:drawable="@drawable/bg_device_background"
+        android:gravity="center" />
+    <item
+        android:id="@id/preview_device_camera"
+        android:width="26.51dp"
+        android:height="47.71dp"
+        android:drawable="@drawable/glyph_led_a"
+        android:gravity="left"
+        android:left="5.51dp"
+        android:top="5.89dp" />
+    <item
+        android:id="@id/preview_device_slant"
+        android:width="24.15dp"
+        android:height="27.68dp"
+        android:drawable="@drawable/glyph_led_b"
+        android:gravity="right"
+        android:right="12.78dp"
+        android:top="12.70dp" />
+    <item
+        android:id="@id/preview_device_center"
+        android:width="97.77dp"
+        android:height="121.34dp"
+        android:drawable="@drawable/glyph_led_c"
+        android:gravity="center_horizontal"
+        android:top="51.1dp" />
+    <item
+        android:id="@id/preview_device_bar"
+        android:width="4.71dp"
+        android:height="28.86dp"
+        android:bottom="14.18dp"
+        android:drawable="@drawable/glyph_led_d"
+        android:gravity="bottom|center_horizontal" />
+    <item
+        android:id="@id/preview_device_dot"
+        android:width="4.71dp"
+        android:height="4.71dp"
+        android:bottom="5.89dp"
+        android:drawable="@drawable/glyph_led_e"
+        android:gravity="bottom|center_horizontal" />
+</layer-list>

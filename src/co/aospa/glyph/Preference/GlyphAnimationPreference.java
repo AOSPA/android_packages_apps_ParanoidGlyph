@@ -19,22 +19,22 @@ package co.aospa.glyph.Preference;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.FrameLayout;
 
+import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
+import co.aospa.glyph.R;
 import co.aospa.glyph.Utils.ResourceUtils;
 
 public class GlyphAnimationPreference extends Preference {
@@ -48,38 +48,37 @@ public class GlyphAnimationPreference extends Preference {
     private boolean animationTerminated;
     private boolean animationPaused = true;
     private int animationTimeBetween = 0;
-    private String[] animationSlugs;
-    private ImageView[] animationImgs;
 
-    private View mRootView;
-    private final View.OnClickListener mClickListener = v -> performClick(v);
+    private Drawable[] mSlugDrawables;
+    private int[] mSlugIds;
 
     public GlyphAnimationPreference(Context context) {
-        super(context);
-        setActivity(context);
-        setLayout(R.layout.glyph_settings_preview);
-    }
-    public GlyphAnimationPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setActivity(context);
-        setLayout(R.layout.glyph_settings_preview);
-    }
-    public GlyphAnimationPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setActivity(context);
-        setLayout(R.layout.glyph_settings_preview);
-    }
-    public GlyphAnimationPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr);
-        setActivity(context);
-        setLayout(defStyleRes);
+        this(context, null);
     }
 
-    private void setLayout(int layoutResource) {
-        setLayoutResource(R.layout.glyph_settings_preview_frame);
-        mRootView = LayoutInflater.from(getContext())
-                .inflate(layoutResource, null, false);
-        setShouldDisableView(false);
+    public GlyphAnimationPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, TypedArrayUtils.getAttr(context, R.attr.preferenceStyle,
+                android.R.attr.preferenceStyle));
+    }
+
+    public GlyphAnimationPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public GlyphAnimationPreference(Context context, AttributeSet attrs, int defStyleAttr,
+            int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        setLayoutResource(R.layout.glyph_settings_preview);
+        setActivity(context);
+
+        try (TypedArray drawableIds = context.getResources().obtainTypedArray(R.array.slug_ids)) {
+            final int idCount = drawableIds.length();
+            mSlugDrawables = new Drawable[idCount];
+            mSlugIds = new int[idCount];
+            for (int i = 0; i < idCount; i++) {
+                mSlugIds[i] = drawableIds.getResourceId(i, 0);
+            }
+        }
     }
 
     private void setActivity(Context context) {
@@ -94,19 +93,13 @@ public class GlyphAnimationPreference extends Preference {
 
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
-        holder.itemView.setOnClickListener(mClickListener);
-
-        final boolean selectable = isSelectable();
-        holder.itemView.setFocusable(isSelectable());
-        holder.itemView.setClickable(isSelectable());
-
-        FrameLayout layout = (FrameLayout) holder.itemView;
-        layout.removeAllViews();
-        ViewGroup parent = (ViewGroup) mRootView.getParent();
-        if (parent != null) {
-            parent.removeView(mRootView);
+        super.onBindViewHolder(holder);
+        final LayerDrawable phonePreviewDrawable = (LayerDrawable) ((ImageView) holder.findViewById(
+                R.id.phone_preview)).getDrawable();
+        for (int i = 0; i < mSlugIds.length; i++) {
+            mSlugDrawables[i] = phonePreviewDrawable.findDrawableByLayerId(mSlugIds[i]);
+            mSlugDrawables[i].setAlpha((int) (0.3f * 255));
         }
-        layout.addView(mRootView);
     }
 
     @Override
@@ -124,12 +117,6 @@ public class GlyphAnimationPreference extends Preference {
     }
 
     private void startAnimation() {
-        animationSlugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
-        animationImgs = new ImageView[animationSlugs.length];
-        for (int i = 0; i < animationSlugs.length; i++) {
-            animationImgs[i] = (ImageView) mRootView.findViewById(
-                ResourceUtils.getIdentifier("preview_device_" + animationSlugs[i], "id"));
-        }
         animationThread.start();
     }
 
@@ -157,76 +144,90 @@ public class GlyphAnimationPreference extends Preference {
         @Override
         public void run() {
             while (!animationTerminated) {
-                while (animationPaused) {}
+                while (animationPaused) {
+                }
                 if (DEBUG) Log.d(TAG, "Displaying animation | name: " + animationName);
-                try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        ResourceUtils.getAnimation(animationName)))) {
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(ResourceUtils.getAnimation(animationName)))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
-                        if (animationSlugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                        if (mSlugIds.length == 5
+                                && split.length == 5) { // Phone (1) pattern on Phone (1)
                             mActivity.runOnUiThread(() -> {
-                                for (int i = 0; i < animationSlugs.length; i++) {
-                                    setGlyphsDrawable(animationImgs[i], Integer.parseInt(split[i]));
+                                for (int i = 0; i < mSlugIds.length; i++) {
+                                    setGlyphsDrawable(mSlugDrawables[i],
+                                            Integer.parseInt(split[i]));
                                 }
                             });
-                        } else if (animationSlugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
+                        } else if (mSlugIds.length == 11
+                                && split.length == 5) { // Phone (1) pattern on Phone (2)
                             mActivity.runOnUiThread(() -> {
-                                    setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
-                                    setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[0]));
-                                    setGlyphsDrawable(animationImgs[2], Integer.parseInt(split[1]));
-                                    setGlyphsDrawable(animationImgs[3], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[4], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[5], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[6], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[7], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[8], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[3]));
-                                    setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[4]));
+                                setGlyphsDrawable(mSlugDrawables[0], Integer.parseInt(split[0]));
+                                setGlyphsDrawable(mSlugDrawables[1], Integer.parseInt(split[0]));
+                                setGlyphsDrawable(mSlugDrawables[2], Integer.parseInt(split[1]));
+                                setGlyphsDrawable(mSlugDrawables[3], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[4], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[5], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[6], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[7], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[8], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[9], Integer.parseInt(split[3]));
+                                setGlyphsDrawable(mSlugDrawables[10], Integer.parseInt(split[4]));
                             });
-                        } else if (animationSlugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
+                        } else if (mSlugIds.length == 11
+                                && split.length == 33) { // Phone (2) pattern on Phone (2)
                             mActivity.runOnUiThread(() -> {
-                                    setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
-                                    setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[1]));
-                                    setGlyphsDrawable(animationImgs[2], Integer.parseInt(split[2]));
-                                    setGlyphsDrawable(animationImgs[3], Integer.parseInt(split[3]));
-                                    setGlyphsDrawable(animationImgs[4], Integer.parseInt(split[19]));
-                                    setGlyphsDrawable(animationImgs[5], Integer.parseInt(split[20]));
-                                    setGlyphsDrawable(animationImgs[6], Integer.parseInt(split[21]));
-                                    setGlyphsDrawable(animationImgs[7], Integer.parseInt(split[22]));
-                                    setGlyphsDrawable(animationImgs[8], Integer.parseInt(split[23]));
-                                    setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[25]));
-                                    setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[24]));
+                                setGlyphsDrawable(mSlugDrawables[0], Integer.parseInt(split[0]));
+                                setGlyphsDrawable(mSlugDrawables[1], Integer.parseInt(split[1]));
+                                setGlyphsDrawable(mSlugDrawables[2], Integer.parseInt(split[2]));
+                                setGlyphsDrawable(mSlugDrawables[3], Integer.parseInt(split[3]));
+                                setGlyphsDrawable(mSlugDrawables[4], Integer.parseInt(split[19]));
+                                setGlyphsDrawable(mSlugDrawables[5], Integer.parseInt(split[20]));
+                                setGlyphsDrawable(mSlugDrawables[6], Integer.parseInt(split[21]));
+                                setGlyphsDrawable(mSlugDrawables[7], Integer.parseInt(split[22]));
+                                setGlyphsDrawable(mSlugDrawables[8], Integer.parseInt(split[23]));
+                                setGlyphsDrawable(mSlugDrawables[9], Integer.parseInt(split[25]));
+                                setGlyphsDrawable(mSlugDrawables[10], Integer.parseInt(split[24]));
                             });
                         } else {
-                            if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + animationName + " | line: " + line);
+                            if (DEBUG) {
+                                Log.d(TAG, "Animation line length mismatch | name: " + animationName
+                                        + " | line: " + line);
+                            }
                             updateAnimation(false);
                         }
                         Thread.sleep(20);
                     }
                     Thread.sleep(animationTimeBetween);
                 } catch (Exception e) {
-                    if (DEBUG) Log.d(TAG, "Exception while displaying animation | name: " + animationName + " | exception: " + e);
+                    if (DEBUG) {
+                        Log.d(TAG, "Exception while displaying animation | name: " + animationName
+                                + " | exception: " + e);
+                    }
                 } finally {
                     if (animationPaused) {
-                        if (DEBUG) Log.d(TAG, "Pause displaying animation | name: " + animationName);
+                        if (DEBUG) {
+                            Log.d(TAG, "Pause displaying animation | name: " + animationName);
+                        }
                         mActivity.runOnUiThread(() -> {
-                            for (int i = 0; i < animationSlugs.length; i++) {
-                                setGlyphsDrawable(animationImgs[i], 0);
+                            for (int i = 0; i < mSlugIds.length; i++) {
+                                setGlyphsDrawable(mSlugDrawables[i], 0);
                             }
                         });
                     }
                 }
             }
         }
-        
-        private void setGlyphsDrawable(ImageView imageView, int brightness) {
+
+        private void setGlyphsDrawable(Drawable drawable, int brightness) {
             if (brightness <= 0) {
-                imageView.setAlpha(0.3f);
+                drawable.setAlpha((int) (0.3f * 255));
             } else {
-                float brightnessFactor = (float) (0.4 + 0.6 * (brightness / (double) Constants.getMaxBrightness()));
-                imageView.setAlpha(brightnessFactor);
+                int brightnessFactor = (int) (0.4f * 255 + 0.6f * 255 * (brightness
+                        / (double) Constants.getMaxBrightness()));
+                drawable.setAlpha(brightnessFactor);
             }
         }
     };

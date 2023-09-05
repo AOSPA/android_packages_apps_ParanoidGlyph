@@ -14,13 +14,12 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources>
 
-    <!-- Brighntess -->
-    <integer name="glyph_settings_brightness_max" translatable="false"></integer>
-    <integer-array name="glyph_settings_brightness_levels" translatable="false">
-    </integer-array>
+    <item name="preview_device_camera" type="id" />
+    <item name="preview_device_slant" type="id" />
+    <item name="preview_device_center" type="id" />
+    <item name="preview_device_bar" type="id" />
+    <item name="preview_device_dot" type="id" />
 
-    <integer-array name="slug_ids" translatable="false">
-    </integer-array>
 </resources>

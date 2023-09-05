@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:layout_marginHorizontal="16dp"
+    android:background="@drawable/bg_protection_background"
+    android:orientation="vertical"
+    android:paddingVertical="25dp">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="25dp"
-        android:paddingBottom="25dp"
-        android:background="@drawable/bg_protection_background">
+    <ImageView
+        android:id="@+id/phone_preview"
+        android:layout_width="@dimen/preview_device_width"
+        android:layout_height="@dimen/preview_device_height"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_protection_background"
+        android:src="@drawable/device_preview" />
 
-        <include layout="@layout/glyph_settings_preview_device" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>

@@ -25,4 +25,12 @@
         <item>@integer/glyph_settings_brightness_max</item>
     </integer-array>
 
+    <integer-array name="slug_ids" translatable="false">
+        <item>@id/preview_device_camera</item>
+        <item>@id/preview_device_slant</item>
+        <item>@id/preview_device_center</item>
+        <item>@id/preview_device_bar</item>
+        <item>@id/preview_device_dot</item>
+    </integer-array>
+
 </resources>

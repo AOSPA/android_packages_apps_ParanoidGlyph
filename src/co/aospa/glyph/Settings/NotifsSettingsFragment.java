@@ -19,7 +19,6 @@ package co.aospa.glyph.Settings;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Switch;
 
@@ -38,71 +37,76 @@ import com.android.settingslib.widget.OnMainSwitchChangeListener;
 import java.util.Collections;
 import java.util.List;
 
-import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
 import co.aospa.glyph.Preference.GlyphAnimationPreference;
+import co.aospa.glyph.R;
+import co.aospa.glyph.Utils.AnimationUtils;
 import co.aospa.glyph.Utils.ResourceUtils;
 import co.aospa.glyph.Utils.ServiceUtils;
+import co.aospa.glyph.animation.GlyphAnimation;
 
-public class NotifsSettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
+public class NotifsSettingsFragment extends PreferenceFragment implements
+        OnPreferenceChangeListener,
         OnMainSwitchChangeListener {
-
-    private PreferenceScreen mScreen;
-
-    private MainSwitchPreference mSwitchBar;
-    private PreferenceCategory mCategory;
-
-    private List<ApplicationInfo> mApps;
-    private PackageManager mPackageManager;
-
-    private ListPreference mListPreference;
 
     private GlyphAnimationPreference mGlyphAnimationPreference;
 
-    private Handler mHandler = new Handler();
+    private AnimationUtils mAnimationUtils = null;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.glyph_notifs_settings);
 
-        mScreen = this.getPreferenceScreen();
+        mAnimationUtils = new AnimationUtils(getContext());
+
         getActivity().setTitle(R.string.glyph_settings_notifs_toggle_title);
 
-        mSwitchBar = (MainSwitchPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_ENABLE);
-        mSwitchBar.addOnSwitchChangeListener(this);
-        mSwitchBar.setChecked(SettingsManager.isGlyphNotifsEnabled());
+        MainSwitchPreference switchBar = (MainSwitchPreference) findPreference(
+                Constants.GLYPH_NOTIFS_SUB_ENABLE);
+        switchBar.addOnSwitchChangeListener(this);
+        switchBar.setChecked(SettingsManager.isGlyphNotifsEnabled());
 
-        mCategory = (PreferenceCategory) findPreference(Constants.GLYPH_NOTIFS_SUB_CATEGORY);
+        PreferenceCategory category = (PreferenceCategory) findPreference(
+                Constants.GLYPH_NOTIFS_SUB_CATEGORY);
 
-        mListPreference = (ListPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS);
-        mListPreference.setOnPreferenceChangeListener(this);
-        mListPreference.setEntries(ResourceUtils.getNotificationAnimations());
-        mListPreference.setEntryValues(ResourceUtils.getNotificationAnimations());
+        ListPreference listPreference = (ListPreference) findPreference(
+                Constants.GLYPH_NOTIFS_SUB_ANIMATIONS);
+        listPreference.setOnPreferenceChangeListener(this);
+        listPreference.setEntries(ResourceUtils.getNotificationAnimations());
+        listPreference.setEntryValues(ResourceUtils.getNotificationAnimations());
 
-        mGlyphAnimationPreference = (GlyphAnimationPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_PREVIEW);
+        mGlyphAnimationPreference = (GlyphAnimationPreference) findPreference(
+                Constants.GLYPH_NOTIFS_SUB_PREVIEW);
 
-        mPackageManager = getActivity().getPackageManager();
-        mApps = mPackageManager.getInstalledApplications(PackageManager.GET_GIDS);
-        Collections.sort(mApps, new ApplicationInfo.DisplayNameComparator(mPackageManager));
-        for (ApplicationInfo app : mApps) {
-            if(mPackageManager.getLaunchIntentForPackage(app.packageName) != null  && !ArrayUtils.contains(Constants.APPS_TO_IGNORE, app.packageName)) { // apps with launcher intent
-                SwitchPreference mSwitchPreference = new SwitchPreference(mScreen.getContext());
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<ApplicationInfo> apps = packageManager.getInstalledApplications(
+                PackageManager.GET_GIDS);
+        Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(packageManager));
+        for (ApplicationInfo app : apps) {
+            if (packageManager.getLaunchIntentForPackage(app.packageName) != null
+                    && !ArrayUtils.contains(Constants.APPS_TO_IGNORE,
+                    app.packageName)) { // apps with launcher intent
+                SwitchPreference mSwitchPreference = new SwitchPreference(getContext());
                 mSwitchPreference.setKey(app.packageName);
-                mSwitchPreference.setTitle(" " + app.loadLabel(mPackageManager).toString()); // add this space since the layout looks off otherwise
-                mSwitchPreference.setIcon(app.loadIcon(mPackageManager));
+                mSwitchPreference.setTitle(" " + app.loadLabel(
+                        packageManager)); // add this space since the layout looks
+                // off otherwise
+                mSwitchPreference.setIcon(app.loadIcon(packageManager));
                 mSwitchPreference.setDefaultValue(true);
                 mSwitchPreference.setOnPreferenceChangeListener(this);
-                mCategory.addPreference(mSwitchPreference);
+                category.addPreference(mSwitchPreference);
             }
         }
     }
 
     @Override
-    public void onViewCreated (View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(),
-                SettingsManager.getGlyphNotifsAnimation(), 1500);
+        final GlyphAnimation animation = mAnimationUtils.getNotificationAnimation(
+                SettingsManager.getGlyphNotifsAnimation());
+        mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(), animation,
+                1500);
     }
 
     @Override
@@ -110,11 +114,11 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
         final String preferenceKey = preference.getKey();
 
         if (preferenceKey.equals(Constants.GLYPH_NOTIFS_SUB_ANIMATIONS)) {
+            final GlyphAnimation animation = mAnimationUtils.getNotificationAnimation(
+                    newValue.toString());
             mGlyphAnimationPreference.updateAnimation(SettingsManager.isGlyphNotifsEnabled(),
-                newValue.toString(), 1500);
+                    animation, 1500);
         }
-
-        //mHandler.post(() -> ServiceUtils.checkGlyphService());
 
         return true;
     }
@@ -123,8 +127,9 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
     public void onSwitchChanged(Switch switchView, boolean isChecked) {
         SettingsManager.setGlyphNotifsEnabled(isChecked);
         ServiceUtils.checkGlyphService();
-        mGlyphAnimationPreference.updateAnimation(isChecked,
-                SettingsManager.getGlyphNotifsAnimation(), 1500);
+        final GlyphAnimation animation = mAnimationUtils.getNotificationAnimation(
+                SettingsManager.getGlyphNotifsAnimation());
+        mGlyphAnimationPreference.updateAnimation(isChecked, animation, 1500);
     }
 
 }

@@ -21,6 +21,7 @@
     <integer-array name="glyph_settings_brightness_levels" translatable="false">
     </integer-array>
 
+    <integer name="slug_count" translatable="false">0</integer>
     <integer-array name="slug_ids" translatable="false">
     </integer-array>
 </resources>

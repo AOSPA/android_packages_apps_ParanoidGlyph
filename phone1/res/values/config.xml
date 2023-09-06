@@ -25,6 +25,7 @@
         <item>@integer/glyph_settings_brightness_max</item>
     </integer-array>
 
+    <integer name="slug_count" translatable="false">5</integer>
     <integer-array name="slug_ids" translatable="false">
         <item>@id/preview_device_camera</item>
         <item>@id/preview_device_slant</item>

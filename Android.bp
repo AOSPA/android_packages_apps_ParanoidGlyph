@@ -35,6 +35,7 @@ android_library {
     static_libs: [
         "androidx.core_core",
         "androidx.preference_preference",
+        "kotlinx-coroutines-android",
         "SettingsLib",
     ],
 }

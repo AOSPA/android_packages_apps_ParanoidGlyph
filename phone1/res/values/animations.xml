@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2023 Paranoid Android
+     Copyright (C) 2023-2024 Paranoid Android
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -44,6 +44,7 @@
     <!-- Notification Animations -->
     <string name="glyph_settings_notifs_animations_default" translatable="false">Break (Custom)</string>
     <string name="glyph_settings_notifs_essential_slug" translatable="false">slant</string>
+    <integer name="glyph_settings_notifs_essential_led" translatable="false"></integer>
 
     <!-- Volume Animation -->
     <integer-array name="glyph_settings_volume_levels" translatable="false">

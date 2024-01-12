@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2023 Paranoid Android
+ * Copyright (C) 2022-2024 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -104,34 +104,78 @@ public final class AnimationManager {
                     if (checkInterruption("csv")) throw new InterruptedException();
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] split = line.split(",");
-                    if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                    if (Constants.getDevice() == "phone1" && split.length == 5) { // Phone (1) pattern on Phone (1)
                         for (int i = 0; i < slugs.length; i++) {
                             updateLedZone(slugs[i], split[i]);
                         }
-                    } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
-                        updateLedZone(slugs[1], split[0]);
-                        updateLedZone(slugs[2], split[0]);
-                        updateLedZone(slugs[3], split[1]);
-                        updateLedZone(slugs[4], split[2]);
-                        updateLedZone(slugs[5], split[2]);
-                        updateLedZone(slugs[6], split[2]);
-                        updateLedZone(slugs[7], split[2]);
-                        updateLedZone(slugs[8], split[2]);
-                        updateLedZone(slugs[9], split[2]);
-                        updateLedZone(slugs[10], split[3]);
-                        updateLedZone(slugs[11], split[4]);
-                    } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
-                        updateLedZone(slugs[1], split[0]);
-                        updateLedZone(slugs[2], split[1]);
-                        updateLedZone(slugs[3], split[2]);
-                        updateLedZone(slugs[4], split[3]);
-                        updateLedZone(slugs[5], split[19]);
-                        updateLedZone(slugs[6], split[20]);
-                        updateLedZone(slugs[7], split[21]);
-                        updateLedZone(slugs[8], split[22]);
-                        updateLedZone(slugs[9], split[23]);
-                        updateLedZone(slugs[10], split[25]);
-                        updateLedZone(slugs[11], split[24]);
+                    } else if (Constants.getDevice() == "phone2" && split.length == 5) { // Phone (1) pattern on Phone (2)
+                        updateLedSingle(12, split[0]);
+                        updateLedSingle(0, split[0]);
+                        updateLedSingle(24, split[1]);
+                        updateLedSingle(2, split[2]);
+                        updateLedSingle(3, split[2]);
+                        updateLedSingle(4, split[2]);
+                        updateLedSingle(5, split[2]);
+                        updateLedSingle(6, split[2]);
+                        updateLedSingle(7, split[2]);
+                        updateLedSingle(8, split[2]);
+                        updateLedSingle(14, split[2]);
+                        updateLedSingle(15, split[2]);
+                        updateLedSingle(16, split[2]);
+                        updateLedSingle(17, split[2]);
+                        updateLedSingle(18, split[2]);
+                        updateLedSingle(19, split[2]);
+                        updateLedSingle(20, split[2]);
+                        updateLedSingle(26, split[2]);
+                        updateLedSingle(27, split[2]);
+                        updateLedSingle(28, split[2]);
+                        updateLedSingle(29, split[2]);
+                        updateLedSingle(30, split[2]);
+                        updateLedSingle(31, split[2]);
+                        updateLedSingle(23, split[2]);
+                        updateLedSingle(9, split[3]);
+                        updateLedSingle(21, split[4]);
+                        updateLedSingle(33, split[4]);
+                        updateLedSingle(10, split[4]);
+                        updateLedSingle(22, split[4]);
+                        updateLedSingle(34, split[4]);
+                        updateLedSingle(11, split[4]);
+                        updateLedSingle(23, split[4]);
+                        updateLedSingle(35, split[4]);
+                    } else if (Constants.getDevice() == "phone2" && split.length == 33) { // Phone (2) pattern on Phone (2)
+                        updateLedSingle(12, split[0]);
+                        updateLedSingle(0, split[1]);
+                        updateLedSingle(24, split[2]);
+                        updateLedSingle(2, split[3]);
+                        updateLedSingle(3, split[4]);
+                        updateLedSingle(4, split[5]);
+                        updateLedSingle(5, split[6]);
+                        updateLedSingle(6, split[7]);
+                        updateLedSingle(7, split[8]);
+                        updateLedSingle(8, split[9]);
+                        updateLedSingle(14, split[10]);
+                        updateLedSingle(15, split[11]);
+                        updateLedSingle(16, split[12]);
+                        updateLedSingle(17, split[13]);
+                        updateLedSingle(18, split[14]);
+                        updateLedSingle(19, split[15]);
+                        updateLedSingle(20, split[16]);
+                        updateLedSingle(26, split[17]);
+                        updateLedSingle(27, split[18]);
+                        updateLedSingle(28, split[19]);
+                        updateLedSingle(29, split[20]);
+                        updateLedSingle(30, split[21]);
+                        updateLedSingle(31, split[22]);
+                        updateLedSingle(23, split[23]);
+                        updateLedSingle(9, split[24]);
+                        updateLedSingle(21, split[25]);
+                        updateLedSingle(33, split[26]);
+                        updateLedSingle(10, split[27]);
+                        updateLedSingle(22, split[28]);
+                        updateLedSingle(34, split[29]);
+                        updateLedSingle(11, split[30]);
+                        updateLedSingle(23, split[31]);
+                        updateLedSingle(35, split[32]);
                     } else {
                         if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                         throw new InterruptedException();
@@ -141,8 +185,14 @@ public final class AnimationManager {
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
             } finally {
-                for (String slug : slugs) {
-                    updateLedZone(slug, 0);
+                if (Constants.getDevice() == "phone1") {
+                    for (String slug : slugs) {
+                        updateLedZone(slug, 0);
+                    }
+                } else if (Constants.getDevice() == "phone2") {
+                    for (int led=0; led <= 35; led++) {
+                        updateLedSingle(led, 0);
+                    }
                 }
                 StatusManager.setAnimationActive(false);
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
@@ -265,34 +315,78 @@ public final class AnimationManager {
                         if (checkInterruption("call")) throw new InterruptedException();
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
-                        if (slugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                        if (Constants.getDevice() == "phone1" && split.length == 5) { // Phone (1) pattern on Phone (1)
                             for (int i = 0; i < slugs.length; i++) {
                                 updateLedZone(slugs[i], split[i]);
                             }
-                        } else if (slugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
-                            updateLedZone(slugs[0], split[0]);
-                            updateLedZone(slugs[1], split[0]);
-                            updateLedZone(slugs[2], split[1]);
-                            updateLedZone(slugs[3], split[2]);
-                            updateLedZone(slugs[4], split[2]);
-                            updateLedZone(slugs[5], split[2]);
-                            updateLedZone(slugs[6], split[2]);
-                            updateLedZone(slugs[7], split[2]);
-                            updateLedZone(slugs[8], split[2]);
-                            updateLedZone(slugs[9], split[3]);
-                            updateLedZone(slugs[10], split[4]);
-                        } else if (slugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
-                            updateLedZone(slugs[0], split[0]);
-                            updateLedZone(slugs[1], split[1]);
-                            updateLedZone(slugs[2], split[2]);
-                            updateLedZone(slugs[3], split[3]);
-                            updateLedZone(slugs[4], split[19]);
-                            updateLedZone(slugs[5], split[20]);
-                            updateLedZone(slugs[6], split[21]);
-                            updateLedZone(slugs[7], split[22]);
-                            updateLedZone(slugs[8], split[23]);
-                            updateLedZone(slugs[9], split[25]);
-                            updateLedZone(slugs[10], split[24]);
+                        } else if (Constants.getDevice() == "phone2" && split.length == 5) { // Phone (1) pattern on Phone (2)
+                            updateLedSingle(12, split[0]);
+                            updateLedSingle(0, split[0]);
+                            updateLedSingle(24, split[1]);
+                            updateLedSingle(2, split[2]);
+                            updateLedSingle(3, split[2]);
+                            updateLedSingle(4, split[2]);
+                            updateLedSingle(5, split[2]);
+                            updateLedSingle(6, split[2]);
+                            updateLedSingle(7, split[2]);
+                            updateLedSingle(8, split[2]);
+                            updateLedSingle(14, split[2]);
+                            updateLedSingle(15, split[2]);
+                            updateLedSingle(16, split[2]);
+                            updateLedSingle(17, split[2]);
+                            updateLedSingle(18, split[2]);
+                            updateLedSingle(19, split[2]);
+                            updateLedSingle(20, split[2]);
+                            updateLedSingle(26, split[2]);
+                            updateLedSingle(27, split[2]);
+                            updateLedSingle(28, split[2]);
+                            updateLedSingle(29, split[2]);
+                            updateLedSingle(30, split[2]);
+                            updateLedSingle(31, split[2]);
+                            updateLedSingle(23, split[2]);
+                            updateLedSingle(9, split[3]);
+                            updateLedSingle(21, split[4]);
+                            updateLedSingle(33, split[4]);
+                            updateLedSingle(10, split[4]);
+                            updateLedSingle(22, split[4]);
+                            updateLedSingle(34, split[4]);
+                            updateLedSingle(11, split[4]);
+                            updateLedSingle(23, split[4]);
+                            updateLedSingle(35, split[4]);
+                        } else if (Constants.getDevice() == "phone2" && split.length == 33) { // Phone (2) pattern on Phone (2)
+                            updateLedSingle(12, split[0]);
+                            updateLedSingle(0, split[1]);
+                            updateLedSingle(24, split[2]);
+                            updateLedSingle(2, split[3]);
+                            updateLedSingle(3, split[4]);
+                            updateLedSingle(4, split[5]);
+                            updateLedSingle(5, split[6]);
+                            updateLedSingle(6, split[7]);
+                            updateLedSingle(7, split[8]);
+                            updateLedSingle(8, split[9]);
+                            updateLedSingle(14, split[10]);
+                            updateLedSingle(15, split[11]);
+                            updateLedSingle(16, split[12]);
+                            updateLedSingle(17, split[13]);
+                            updateLedSingle(18, split[14]);
+                            updateLedSingle(19, split[15]);
+                            updateLedSingle(20, split[16]);
+                            updateLedSingle(26, split[17]);
+                            updateLedSingle(27, split[18]);
+                            updateLedSingle(28, split[19]);
+                            updateLedSingle(29, split[20]);
+                            updateLedSingle(30, split[21]);
+                            updateLedSingle(31, split[22]);
+                            updateLedSingle(23, split[23]);
+                            updateLedSingle(9, split[24]);
+                            updateLedSingle(21, split[25]);
+                            updateLedSingle(33, split[26]);
+                            updateLedSingle(10, split[27]);
+                            updateLedSingle(22, split[28]);
+                            updateLedSingle(34, split[29]);
+                            updateLedSingle(11, split[30]);
+                            updateLedSingle(23, split[31]);
+                            updateLedSingle(35, split[32]);
                         } else {
                             if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                             throw new InterruptedException();
@@ -308,8 +402,14 @@ public final class AnimationManager {
                     }
                 }
             }
-            for (String slug : slugs) {
-                updateLedZone(slug, 0);
+            if (Constants.getDevice() == "phone1") {
+                for (String slug : slugs) {
+                    updateLedZone(slug, 0);
+                }
+            } else if (Constants.getDevice() == "phone2") {
+                for (int led=0; led <= 35; led++) {
+                    updateLedSingle(led, 0);
+                }
             }
             StatusManager.setCallLedActive(false);
             if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
@@ -324,6 +424,7 @@ public final class AnimationManager {
     public static void playEssential() {
         if (DEBUG) Log.d(TAG, "Playing Essential Animation");
         String slug = ResourceUtils.getString("glyph_settings_notifs_essential_slug");
+        int led = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
         if (!StatusManager.isEssentialLedActive()) {
             submit(() -> {
                 if (!check("essential", true))
@@ -336,7 +437,11 @@ public final class AnimationManager {
                     int[] steps = {1, 2, 4, 7};
                     for (int i : steps) {
                         if (checkInterruption("essential")) throw new InterruptedException();
-                        updateLedZone(slug, Constants.getMaxBrightness() / 100 * i);
+                        if (Constants.getDevice() == "phone1") {
+                            updateLedZone(slug, Constants.getMaxBrightness() / 100 * i);
+                        } else if (Constants.getDevice() == "phone2") {
+                            updateLedSingle(led, Constants.getMaxBrightness() / 100 * i);
+                        }
                         Thread.sleep(25);
                     }
                     Thread.sleep(250);
@@ -347,7 +452,11 @@ public final class AnimationManager {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: essential");
             });
         } else {
-            updateLedZone(slug, Constants.getMaxBrightness() / 100 * 7);
+            if (Constants.getDevice() == "phone1") {
+                updateLedZone(slug, Constants.getMaxBrightness() / 100 * 7);
+            } else if (Constants.getDevice() == "phone2") {
+                updateLedSingle(led, Constants.getMaxBrightness() / 100 * 7);
+            }
             return;
         }
 
@@ -358,7 +467,12 @@ public final class AnimationManager {
         StatusManager.setEssentialLedActive(false);
         if (!StatusManager.isAnimationActive() && !StatusManager.isAllLedActive()) {
             String slug = ResourceUtils.getString("glyph_settings_notifs_essential_slug");
-            updateLedZone(slug, 0);
+            int led = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
+            if (Constants.getDevice() == "phone1") {
+                updateLedZone(slug, 0);
+            } else if (Constants.getDevice() == "phone2") {
+                updateLedSingle(led, 0);
+            }
         }
     }
 
@@ -388,15 +502,43 @@ public final class AnimationManager {
             }
 
             try {
-                updateLedZone(path, Constants.getMaxBrightness());
+                if (Constants.getDevice() == "phone1") {
+                    updateLedZone(path, Constants.getMaxBrightness());
+                } else if (Constants.getDevice() == "phone2") {
+                    // Not implemented yet for phone2
+                }
                 Thread.sleep(90);
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
             } finally {
-                updateLedZone(path, 0);
+                if (Constants.getDevice() == "phone1") {
+                    updateLedZone(path, 0);
+                } else if (Constants.getDevice() == "phone2") {
+                    // Not implemented yet for phone2
+                }
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
             }
         });
+    }
+
+    private static void updateLedSingle(int led, String brightness) {
+        updateLedSingle(led, Float.parseFloat(brightness));
+    }
+
+    private static void updateLedSingle(int led, int brightness) {
+        updateLedSingle(led, (float) brightness);
+    }
+
+    private static void updateLedSingle(int led, float brightness) {
+        //if (DEBUG) Log.d(TAG, "Updating led | led: " + led + " | brightness: " + brightness);
+        float maxBrightness = (float) Constants.getMaxBrightness();
+        int essentialLed = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
+        if (StatusManager.isEssentialLedActive()
+                && led == essentialLed
+                && brightness < (maxBrightness / 100 * 7)) {
+            brightness = maxBrightness / 100 * 7;
+        }
+        FileUtils.writeSingleLed(led, brightness / maxBrightness * Constants.getBrightness());
     }
 
     private static void updateLedZone(String slug, String brightness) {

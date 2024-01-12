@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015 The CyanogenMod Project
  *               2017-2019 The LineageOS Project
- *               2020-2023 Paranoid Android
+ *               2020-2024 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,6 +124,11 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
             mChargingLevelPreference.setEnabled(false);
             mVolumeLevelPreference.setEnabled(false);
             mChargingPowersharePreference.setEnabled(false);
+        }
+
+        // Not implemented yet for phone2
+        if (Constants.getDevice().equals("phone2")) {
+            mMusicVisualizerPreference.setEnabled(false);
         }
 
         mHandler.post(() -> ServiceUtils.checkGlyphService());

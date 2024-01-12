@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Paranoid Android
+ * Copyright (C) 2023-2024 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -165,13 +165,13 @@ public class GlyphAnimationPreference extends Preference {
                     while ((line = reader.readLine()) != null) {
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] split = line.split(",");
-                        if (animationSlugs.length == 5 && split.length == 5) { // Phone (1) pattern on Phone (1)
+                        if (Constants.getDevice() == "phone1" && split.length == 5) { // Phone (1) pattern on Phone (1)
                             mActivity.runOnUiThread(() -> {
                                 for (int i = 0; i < animationSlugs.length; i++) {
                                     setGlyphsDrawable(animationImgs[i], Integer.parseInt(split[i]));
                                 }
                             });
-                        } else if (animationSlugs.length == 11 && split.length == 5) { // Phone (1) pattern on Phone (2)
+                        } else if (Constants.getDevice() == "phone2" && split.length == 5) { // Phone (1) pattern on Phone (2)
                             mActivity.runOnUiThread(() -> {
                                     setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
                                     setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[0]));
@@ -185,7 +185,7 @@ public class GlyphAnimationPreference extends Preference {
                                     setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[3]));
                                     setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[4]));
                             });
-                        } else if (animationSlugs.length == 11 && split.length == 33) { // Phone (2) pattern on Phone (2)
+                        } else if (Constants.getDevice() == "phone2" && split.length == 33) { // Phone (2) pattern on Phone (2)
                             mActivity.runOnUiThread(() -> {
                                     setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
                                     setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[1]));

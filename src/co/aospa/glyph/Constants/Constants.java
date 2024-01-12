@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2023 Paranoid Android
+ * Copyright (C) 2022-2024 Paranoid Android
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,8 @@ public final class Constants {
     private static final boolean DEBUG = true;
 
     public static Context CONTEXT;
+
+    private static String device = null;
 
     private static int brightness = -1;
     private static int brightnessMax = -1;
@@ -63,6 +65,13 @@ public final class Constants {
         "com.google.android.dialer:phone_ongoing_call",
         "com.android.systemui:BAT"
     };
+
+    public static String getDevice() {
+        if (device == null)
+            device = ResourceUtils.getString("glyph_settings_device");
+
+        return device;
+    }
 
     public static boolean setBrightness(int b) {
         if (b > ResourceUtils.getInteger("glyph_settings_brightness_max"))

@@ -69,9 +69,8 @@ public class ChargingService extends Service {
     @Override
     public void onDestroy() {
         if (DEBUG) Log.d(TAG, "Destroying service");
-
+        this.unregisterReceiver(mPowerMonitor);
         onPowerDisconnected();
-
         super.onDestroy();
     }
 

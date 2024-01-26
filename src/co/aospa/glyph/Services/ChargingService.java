@@ -29,6 +29,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.BatteryManager;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 import co.aospa.glyph.Manager.AnimationManager;
@@ -41,6 +42,8 @@ public class ChargingService extends Service {
     private BatteryManager mBatteryManager;
     private SensorManager mSensorManager;
 
+    private PowerManager mPowerManager;
+
     private Sensor mAccelerometerSensor;
     private static final float ACCELEROMETER_THRESHOLD = 10.0f;
     private static final float ZFACEDOWN_THRESHOLD = -5.0f;
@@ -51,6 +54,7 @@ public class ChargingService extends Service {
 
         mBatteryManager = (BatteryManager) getSystemService(Context.BATTERY_SERVICE);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
@@ -119,7 +123,7 @@ public class ChargingService extends Service {
 		    float z = event.values[2];
 		    float acceleration = (float) Math.sqrt(x * x + y * y + z * z);
 
-		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD) {
+		    if (acceleration > ACCELEROMETER_THRESHOLD && z <= ZFACEDOWN_THRESHOLD && !mPowerManager.isInteractive() ) {
 			    playChargingAnimation(false);
 		    }
 	    }

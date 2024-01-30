@@ -21,7 +21,7 @@
         <item>all</item>
     </string-array>
     <string-array name="glyph_settings_paths_absolute" translatable="false">
-        <item>/sys/class/leds/led_strips/all_brightness</item>
+        <item>/sys/class/leds/led_strips/all_white_brightness</item>
     </string-array>
     <string name="glyph_settings_paths_single_absolute" translatable="false">/sys/class/leds/led_strips/single_brightness</string>
 

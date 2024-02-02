@@ -58,10 +58,10 @@ public class TorchTileService extends TileService {
 
     private void setEnabled(boolean enabled) {
         StatusManager.setAllLedsActive(enabled);
-        FileUtils.writeLineFromSlug("all", enabled ? Constants.getMaxBrightness() : 0);
+        FileUtils.writeAllLed(enabled ? Constants.getMaxBrightness() : 0);
         if (StatusManager.isEssentialLedActive() && !enabled)
-            FileUtils.writeLineFromSlug(
-                ResourceUtils.getString("glyph_settings_notifs_essential_slug"),
+            FileUtils.writeSingleLed(
+                ResourceUtils.getInteger("glyph_settings_notifs_essential_led"),
                 Constants.getMaxBrightness( )/ 100 * 7);
     }
 }

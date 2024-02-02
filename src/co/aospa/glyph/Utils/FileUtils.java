@@ -92,18 +92,32 @@ public final class FileUtils {
         writeLine(fileName, Float.toString(value));
     }
 
-    public static void writeLineFromSlug(String slug, String value) {
-        String[] slugs = ResourceUtils.getStringArray("glyph_settings_paths");
-        String[] paths = ResourceUtils.getStringArray("glyph_settings_paths_absolute");
-        writeLine(paths[Arrays.asList(slugs).indexOf(slug)], value);
+    public static void writeAllLed(String value) {
+        writeLine(ResourceUtils.getString("glyph_settings_paths_all_absolute"), value);
     }
 
-    public static void writeLineFromSlug(String slug, int value) {
-        writeLineFromSlug(slug, Integer.toString(value));
+    public static void writeAllLed(int value) {
+        writeAllLed(Integer.toString(value));
     }
 
-    public static void writeLineFromSlug(String slug, float value) {
-        writeLineFromSlug(slug, Float.toString(value));
+    public static void writeAllLed(float value) {
+        writeAllLed(Integer.toString(Math.round(value)));
+    }
+
+    public static void writeFrameLed(String value) {
+        writeLine(ResourceUtils.getString("glyph_settings_paths_frame_absolute"), value);
+    }
+
+    public static void writeFrameLed(int[] value) {
+        writeFrameLed(Arrays.toString(value).replaceAll("\\[|\\]", "").replace(", ", " "));
+    }
+
+    public static void writeFrameLed(float[] value) {
+        int[] intValue = new int[value.length];
+        for (int i = 0; i < value.length; i++) {
+            intValue[i] = Math.round(value[i]);
+        }
+        writeFrameLed(intValue);
     }
 
     public static void writeSingleLed(String led, String value) {

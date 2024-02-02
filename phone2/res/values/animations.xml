@@ -49,7 +49,6 @@
 
     <!-- Notification Animations -->
     <string name="glyph_settings_notifs_animations_default" translatable="false">Break</string>
-    <string name="glyph_settings_notifs_essential_slug" translatable="false"></string>
     <integer name="glyph_settings_notifs_essential_led" translatable="false">24</integer>
 
     <!-- Volume Animation -->

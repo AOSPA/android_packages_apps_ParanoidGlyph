@@ -17,10 +17,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Paths -->
-    <string-array name="glyph_settings_paths" translatable="false">
-    </string-array>
-    <string-array name="glyph_settings_paths_absolute" translatable="false">
-    </string-array>
+    <string name="glyph_settings_paths_all_absolute" translatable="false"></string>
+    <string name="glyph_settings_paths_frame_absolute" translatable="false"></string>
     <string name="glyph_settings_paths_single_absolute" translatable="false"></string>
 
     <string name="glyph_settings_paths_powershare_active_absolute" translatable="false"></string>

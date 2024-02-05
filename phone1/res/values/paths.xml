@@ -19,6 +19,7 @@
     <!-- Paths -->
     <string name="glyph_settings_paths_all_absolute" translatable="false">/sys/class/leds/aw210xx_led/all_white_leds_br</string>
     <string name="glyph_settings_paths_frame_absolute" translatable="false">/sys/class/leds/aw210xx_led/frame_leds_effect</string>
+    <string name="glyph_settings_paths_mode_absolute" translatable="false"></string>
     <string name="glyph_settings_paths_single_absolute" translatable="false">/sys/class/leds/aw210xx_led/single_led_br</string>
 
     <string name="glyph_settings_paths_powershare_active_absolute" translatable="false">/sys/class/qcom-battery/wls_reverse_status</string>

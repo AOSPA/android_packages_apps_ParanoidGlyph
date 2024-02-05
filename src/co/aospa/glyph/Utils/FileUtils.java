@@ -65,18 +65,27 @@ public final class FileUtils {
     }
 
     public static void writeLine(String fileName, String value) {
-        BufferedWriter writer = null;
+        String modePath = ResourceUtils.getString("glyph_settings_paths_mode_absolute");
+        BufferedWriter writerMode = null;
+        BufferedWriter writerValue = null;
         try {
-            writer = new BufferedWriter(new FileWriter(fileName));
-            writer.write(value);
+            if (!modePath.isBlank()) {
+                writerMode = new BufferedWriter(new FileWriter(modePath));
+                writerMode.write("1");
+            }
+            writerValue = new BufferedWriter(new FileWriter(fileName));
+            writerValue.write(value);
         } catch (FileNotFoundException e) {
             Log.w(TAG, "No such file " + fileName + " for writing", e);
         } catch (IOException e) {
             Log.e(TAG, "Could not write to file " + fileName, e);
         } finally {
             try {
-                if (writer != null) {
-                    writer.close();
+                if (writerMode != null) {
+                    writerMode.close();
+                }
+                if (writerValue != null) {
+                    writerValue.close();
                 }
             } catch (IOException e) {
                 // Ignored, not much we can do anyway

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2024 Paranoid Android
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nothing.thirdparty"
+    android:versionCode="1"
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system">
+
+    <permission android:name="com.nothing.ketchum.permission.ENABLE"/>
+
+    <uses-sdk
+        android:minSdkVersion="34"
+        android:targetSdkVersion="34"/>
+
+    <application
+        android:label="@string/glyph_thirdparty_app_name"
+        android:persistent="true"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true">
+
+        <receiver
+            android:name=".BootCompletedReceiver"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".GlyphService"
+            android:exported="true"
+            android:permission="com.nothing.ketchum.permission.ENABLE">
+            <intent-filter>
+                <action android:name="com.nothing.thirdparty.bind_glyphservice"/>
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>

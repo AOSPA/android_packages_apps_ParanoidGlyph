@@ -1,0 +1,16 @@
+// Copyright (C) 2024 Paranoid Android
+//
+// SPDX-License-Identifier: Apache-2.0
+
+android_app {
+    name: "ParanoidGlyphThirdParty",
+
+    defaults: ["glyph_app_defaults"],
+
+    resource_dirs: ["res"],
+
+    srcs: [
+        "src/**/*.java",
+        "src/**/*.kt"
+    ],
+}

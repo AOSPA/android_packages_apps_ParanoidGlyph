@@ -52,6 +52,7 @@ android_app {
     ],
 
     required: [
+        "ParanoidGlyphThirdParty",
         "privapp_whitelist_co.aospa.glyph.xml",
         "whitelist_co.aospa.glyph.xml",
     ],
@@ -70,6 +71,7 @@ android_app {
     ],
 
     required: [
+        "ParanoidGlyphThirdParty",
         "privapp_whitelist_co.aospa.glyph.xml",
         "whitelist_co.aospa.glyph.xml",
     ],
@@ -88,3 +90,7 @@ prebuilt_etc {
     sub_dir: "sysconfig",
     system_ext_specific: true,
 }
+
+subdirs = [
+    "thirdparty",
+]

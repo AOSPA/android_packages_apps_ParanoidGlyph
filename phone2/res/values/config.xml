@@ -20,12 +20,12 @@
     <string name="glyph_settings_device" translatable="false">phone2</string>
 
     <!-- Brighntess -->
-    <integer name="glyph_settings_brightness_max" translatable="false">254</integer>
+    <integer name="glyph_settings_brightness_max" translatable="false">255</integer>
     <integer-array name="glyph_settings_brightness_levels" translatable="false">
-        <item>64</item>
-        <item>127</item>
-        <item>190</item>
-        <item>@integer/glyph_settings_brightness_max</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
     </integer-array>
 
 </resources>

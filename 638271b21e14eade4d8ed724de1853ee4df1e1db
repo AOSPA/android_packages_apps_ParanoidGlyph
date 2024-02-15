@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a2a6cc1_9ecfcae0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-02-15T14:45:02Z",
+      "side": 1,
+      "message": "lets fix this properly, limiting max brightness isnt a solution",
+      "revId": "638271b21e14eade4d8ed724de1853ee4df1e1db",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}

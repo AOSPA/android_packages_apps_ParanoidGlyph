@@ -30,6 +30,7 @@ import co.aospa.glyph.Services.ChargingService;
 import co.aospa.glyph.Services.FlipToGlyphService;
 import co.aospa.glyph.Services.MusicVisualizerService;
 import co.aospa.glyph.Services.PowershareService;
+import co.aospa.glyph.Services.ThirdPartyService;
 import co.aospa.glyph.Services.VolumeLevelService;
 
 public final class ServiceUtils {
@@ -96,6 +97,18 @@ public final class ServiceUtils {
     private static void stopPowershareService() {
         if (DEBUG) Log.d(TAG, "Stopping Glyph powershare service");
         context.stopServiceAsUser(new Intent(context, PowershareService.class),
+                UserHandle.CURRENT);
+    }
+
+    public static void startThirdPartyService() {
+        if (DEBUG) Log.d(TAG, "Starting Glyph thirdparty service");
+        context.startServiceAsUser(new Intent(context, ThirdPartyService.class),
+                UserHandle.CURRENT);
+    }
+
+    public static void stopThirdPartyService() {
+        if (DEBUG) Log.d(TAG, "Stopping Glyph thirdparty service");
+        context.stopServiceAsUser(new Intent(context, ThirdPartyService.class),
                 UserHandle.CURRENT);
     }
 

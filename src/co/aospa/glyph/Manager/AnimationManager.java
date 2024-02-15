@@ -47,6 +47,11 @@ public final class AnimationManager {
             return false;
         }
 
+        if (StatusManager.isThirdPartyActive()) {
+            if (DEBUG) Log.d(TAG, "ThirdParty animation is currently active, exiting animation | name: " + name);
+            return false;
+        }
+
         if (StatusManager.isCallLedActive()) {
             if (DEBUG) Log.d(TAG, "Call animation is currently active, exiting animation | name: " + name);
             return false;
@@ -76,6 +81,7 @@ public final class AnimationManager {
 
     private static boolean checkInterruption(String name) {
         if (StatusManager.isAllLedActive()
+                || (StatusManager.isThirdPartyActive())
                 || (name != "call" && StatusManager.isCallLedEnabled())
                 || (name == "call" && !StatusManager.isCallLedEnabled())
                 || (name == "volume" && StatusManager.isVolumeLedUpdate())) {
@@ -350,13 +356,13 @@ public final class AnimationManager {
         });
     }
 
-    private static void updateLedFrame(String[] pattern) {
+    public static void updateLedFrame(String[] pattern) {
         updateLedFrame(Arrays.stream(pattern)
                 .mapToInt(Integer::parseInt)
                 .toArray());
     }
 
-    private static void updateLedFrame(int[] pattern) {
+    public static void updateLedFrame(int[] pattern) {
         float[] floatPattern = new float[pattern.length];
         for (int i = 0; i < pattern.length; i++) {
             floatPattern[i] = (float) pattern[i];
@@ -364,7 +370,7 @@ public final class AnimationManager {
         updateLedFrame(floatPattern);
     }
 
-    private static void updateLedFrame(float[] pattern) {
+    public static void updateLedFrame(float[] pattern) {
         //if (DEBUG) Log.d(TAG, "Updating pattern: " + pattern);
         float maxBrightness = (float) Constants.getMaxBrightness();
         int essentialLed = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
@@ -385,15 +391,15 @@ public final class AnimationManager {
         FileUtils.writeFrameLed(pattern);
     }
 
-    private static void updateLedSingle(int led, String brightness) {
+    public static void updateLedSingle(int led, String brightness) {
         updateLedSingle(led, Float.parseFloat(brightness));
     }
 
-    private static void updateLedSingle(int led, int brightness) {
+    public static void updateLedSingle(int led, int brightness) {
         updateLedSingle(led, (float) brightness);
     }
 
-    private static void updateLedSingle(int led, float brightness) {
+    public static void updateLedSingle(int led, float brightness) {
         //if (DEBUG) Log.d(TAG, "Updating led | led: " + led + " | brightness: " + brightness);
         float maxBrightness = (float) Constants.getMaxBrightness();
         int essentialLed = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");

@@ -81,6 +81,15 @@
         </service>
 
         <service
+            android:name=".Services.ThirdPartyService"
+            android:exported="true"
+            android:permission="com.nothing.ketchum.permission.ENABLE">
+            <intent-filter>
+                <action android:name="co.aospa.glyph.bind_glyphservice"/>
+            </intent-filter>
+        </service>
+
+        <service
             android:name=".Tiles.GlyphTileService"
             android:exported="true"
             android:label="@string/glyph_accessibility_quick_settings"

@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package com.nothing.thirdparty;
+package co.aospa.glyph.Sdk;
 
 import android.os.Binder;
 import android.os.IBinder;
@@ -14,8 +14,7 @@ import android.os.RemoteException;
 
 public interface IGlyphService extends IInterface {
 
-    public static final String DESCRIPTOR = "com.nothing.thirdparty.IGlyphService";
-    public static final String DESCRIPTORPROXY = "co.aospa.glyph.Sdk.IGlyphService";
+    public static final String DESCRIPTOR = "co.aospa.glyph.Sdk.IGlyphService";
 
     void setFrameColors(int[] colors) throws RemoteException;
     void openSession() throws RemoteException;
@@ -135,7 +134,7 @@ public interface IGlyphService extends IInterface {
             }
 
             public String getInterfaceDescriptor() {
-                return IGlyphService.DESCRIPTORPROXY;
+                return IGlyphService.DESCRIPTOR;
             }
 
             @Override
@@ -143,7 +142,7 @@ public interface IGlyphService extends IInterface {
                 Parcel _data = Parcel.obtain(asBinder());
                 Parcel _reply = Parcel.obtain();
                 try {
-                    _data.writeInterfaceToken(IGlyphService.DESCRIPTORPROXY);
+                    _data.writeInterfaceToken(IGlyphService.DESCRIPTOR);
                     _data.writeIntArray(colors);
                     this.mRemote.transact(Stub.TRANSACTION_setFrameColors, _data, _reply, 0);
                     _reply.readException();
@@ -158,7 +157,7 @@ public interface IGlyphService extends IInterface {
                 Parcel _data = Parcel.obtain(asBinder());
                 Parcel _reply = Parcel.obtain();
                 try {
-                    _data.writeInterfaceToken(IGlyphService.DESCRIPTORPROXY);
+                    _data.writeInterfaceToken(IGlyphService.DESCRIPTOR);
                     this.mRemote.transact(Stub.TRANSACTION_openSession, _data, _reply, 0);
                     _reply.readException();
                 } finally {
@@ -172,7 +171,7 @@ public interface IGlyphService extends IInterface {
                 Parcel _data = Parcel.obtain(asBinder());
                 Parcel _reply = Parcel.obtain();
                 try {
-                    _data.writeInterfaceToken(IGlyphService.DESCRIPTORPROXY);
+                    _data.writeInterfaceToken(IGlyphService.DESCRIPTOR);
                     this.mRemote.transact(Stub.TRANSACTION_closeSession, _data, _reply, 0);
                     _reply.readException();
                 } finally {
@@ -186,7 +185,7 @@ public interface IGlyphService extends IInterface {
                 Parcel _data = Parcel.obtain(asBinder());
                 Parcel _reply = Parcel.obtain();
                 try {
-                    _data.writeInterfaceToken(IGlyphService.DESCRIPTORPROXY);
+                    _data.writeInterfaceToken(IGlyphService.DESCRIPTOR);
                     _data.writeString(key);
                     this.mRemote.transact(Stub.TRANSACTION_register, _data, _reply, 0);
                     _reply.readException();
@@ -202,7 +201,7 @@ public interface IGlyphService extends IInterface {
                 Parcel _data = Parcel.obtain(asBinder());
                 Parcel _reply = Parcel.obtain();
                 try {
-                    _data.writeInterfaceToken(IGlyphService.DESCRIPTORPROXY);
+                    _data.writeInterfaceToken(IGlyphService.DESCRIPTOR);
                     _data.writeString(key);
                     _data.writeString(device);
                     this.mRemote.transact(Stub.TRANSACTION_registerSDK, _data, _reply, 0);

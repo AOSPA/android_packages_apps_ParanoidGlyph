@@ -176,19 +176,30 @@ public final class AnimationManager {
             StatusManager.setVolumeLedActive(true);
             StatusManager.setAnimationActive(true);
 
-            int[] volumeArray = ResourceUtils.getIntArray("glyph_settings_volume_levels");
+            int[] volumeArray = new int[ResourceUtils.getInteger("glyph_settings_volume_levels_num")];
             int amount = (int) (Math.floor((volumeLevel / 100D) * (volumeArray.length - 1)) + 1);
+            int last = StatusManager.getVolumeLedLast();
 
             try {
-                if (checkInterruption("volume")) throw new InterruptedException();
                 for (int i = 0; i < volumeArray.length; i++) {
-                    if (checkInterruption("volume")) throw new InterruptedException();
-                    if ( i <= amount - 1 && volumeLevel > 0) {
-                        FileUtils.writeSingleLed(volumeArray[i], Constants.getBrightness());
-                    } else {
-                        FileUtils.writeSingleLed(volumeArray[i], 0);
+                    if (volumeLevel == 0) {
+                        if (checkInterruption("volume")) throw new InterruptedException();
+                        StatusManager.setVolumeLedLast(0);
+                        updateLedFrame(new int[volumeArray.length]);
+                        break;
+                    } else if ( i <= amount - 1 && volumeLevel > 0) {
+                        if (checkInterruption("volume")) throw new InterruptedException();
+                        StatusManager.setVolumeLedLast(i);
+                        volumeArray[i] = Constants.getBrightness();
+                        if (last == 0) {
+                            updateLedFrame(volumeArray);
+                            Thread.sleep(15);
+                        }
                     }
-                    Thread.sleep(15);
+                }
+                if (last != 0) {
+                    if (checkInterruption("volume")) throw new InterruptedException();
+                    updateLedFrame(volumeArray);
                 }
                 long start = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start <= 1800) {
@@ -196,22 +207,25 @@ public final class AnimationManager {
                 }
                 for (int i = volumeArray.length - 1; i >= 0; i--) {
                     if (checkInterruption("volume")) throw new InterruptedException();
-                    FileUtils.writeSingleLed(volumeArray[i], 0);
-                    Thread.sleep(15);
+                    if (volumeArray[i] != 0) {
+                        StatusManager.setVolumeLedLast(i);
+                        volumeArray[i] = 0;
+                        updateLedFrame(volumeArray);
+                        Thread.sleep(15);
+                    }
                 }
                 long start2 = System.currentTimeMillis();
-                while (System.currentTimeMillis() - start2 <= 800) {
+                while (System.currentTimeMillis() - start2 <= 730) {
                     if (checkInterruption("volume")) throw new InterruptedException();
                 }
             } catch (InterruptedException e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation, interrupted | name: volume");
                 if (!StatusManager.isAllLedActive() && !StatusManager.isVolumeLedUpdate()) {
-                    for (int i : volumeArray) {
-                        FileUtils.writeSingleLed(i, 0);
-                    }
+                    updateLedFrame(new int[volumeArray.length]);
                 }
             } finally {
                 if (!StatusManager.isVolumeLedUpdate()) {
+                    StatusManager.setVolumeLedLast(0);
                     StatusManager.setAnimationActive(false);
                     StatusManager.setVolumeLedActive(false);
                 }

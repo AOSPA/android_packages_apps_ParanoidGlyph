@@ -33,7 +33,6 @@
     <integer name="glyph_settings_notifs_essential_led" translatable="false"></integer>
 
     <!-- Volume Animation -->
-    <integer-array name="glyph_settings_volume_levels" translatable="false">
-    </integer-array>
+    <integer name="glyph_settings_volume_levels_num" translatable="false"></integer>
 
 </resources>

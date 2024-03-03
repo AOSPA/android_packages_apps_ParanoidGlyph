@@ -96,6 +96,7 @@ public final class AnimationManager {
             StatusManager.setAnimationActive(true);
 
             String device = Constants.getDevice();
+            long start = System.currentTimeMillis();
             String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -113,7 +114,8 @@ public final class AnimationManager {
                         if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                         throw new InterruptedException();
                     }
-                    Thread.sleep(10);
+                    long delay = 16666L - (System.currentTimeMillis() - start);
+                    Thread.sleep(delay/1000);
                 }
             } catch (Exception e) {
                 if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);
@@ -245,6 +247,7 @@ public final class AnimationManager {
             StatusManager.setCallLedActive(true);
 
             String device = Constants.getDevice();
+            long start = System.currentTimeMillis();
             String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             while (StatusManager.isCallLedEnabled()) {
@@ -263,7 +266,8 @@ public final class AnimationManager {
                             if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
                             throw new InterruptedException();
                         }
-                        Thread.sleep(10);
+                        long delay = 16666L - (System.currentTimeMillis() - start);
+                        Thread.sleep(delay/1000);
                     }
                 } catch (Exception e) {
                     if (DEBUG) Log.d(TAG, "Exception while playing animation | name: " + name + " | exception: " + e);

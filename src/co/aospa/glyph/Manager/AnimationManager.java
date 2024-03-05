@@ -98,7 +98,6 @@ public final class AnimationManager {
             StatusManager.setAnimationActive(true);
 
             long start = System.currentTimeMillis();
-            String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     ResourceUtils.getAnimation(name)))) {
@@ -246,7 +245,6 @@ public final class AnimationManager {
             StatusManager.setCallLedActive(true);
 
             long start = System.currentTimeMillis();
-            String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -296,7 +294,7 @@ public final class AnimationManager {
                 StatusManager.setAnimationActive(true);
 
                 try {
-                    if (checkInterruption("charging")) throw new InterruptedException();
+                    if (checkInterruption("essential")) throw new InterruptedException();
                     int[] steps = {1, 2, 4, 7};
                     for (int i : steps) {
                         if (checkInterruption("essential")) throw new InterruptedException();

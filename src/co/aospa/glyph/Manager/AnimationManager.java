@@ -177,7 +177,7 @@ public final class AnimationManager {
             StatusManager.setAnimationActive(true);
 
             int[] volumeArray = ResourceUtils.getIntArray("glyph_settings_volume_levels");
-            int amount = (int) (Math.floor((volumeLevel / 100.0) * (volumeArray.length - 1)) + 1);
+            int amount = (int) (Math.floor((volumeLevel / 100D) * (volumeArray.length - 1)) + 1);
 
             try {
                 if (checkInterruption("volume")) throw new InterruptedException();

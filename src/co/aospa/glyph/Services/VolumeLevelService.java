@@ -94,11 +94,11 @@ public class VolumeLevelService extends Service {
             int delta = previousVolume - currentVolume;
 
             if(delta > 0) {
-                if (DEBUG) Log.d(TAG, "Decreased: " + (100 / maxVolume * currentVolume));
-                AnimationManager.playVolume((100 / maxVolume * currentVolume), false);
+                if (DEBUG) Log.d(TAG, "Decreased: " + (int) (Math.floor(100D / maxVolume * currentVolume)));
+                AnimationManager.playVolume((int) (Math.floor(100D / maxVolume * currentVolume)), false);
             } else if(delta < 0) {
-                if (DEBUG) Log.d(TAG, "Increased: " + (100 / maxVolume * currentVolume));
-                AnimationManager.playVolume((100 / maxVolume * currentVolume), false);
+                if (DEBUG) Log.d(TAG, "Increased: " + (int) (Math.floor(100D / maxVolume * currentVolume)));
+                AnimationManager.playVolume((int) (Math.floor(100D / maxVolume * currentVolume)), false);
             }
             if (delta != 0) previousVolume=currentVolume;
         }

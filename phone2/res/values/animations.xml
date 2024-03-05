@@ -16,7 +16,7 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- Animation Slugs -->
+    <!-- Animations -->
     <string-array name="glyph_settings_animations_slugs" translatable="false">
         <item>camera1</item>
         <item>camera2</item>
@@ -30,8 +30,12 @@
         <item>bar1</item>
         <item>dot1</item>
     </string-array>
+    <integer-array name="glyph_settings_animations_supported_pattern_lengths" translatable="false">
+        <item>5</item>
+        <item>33</item>
+    </integer-array>
 
-    <!-- Battery Animation -->
+    <!-- Battery Animations -->
     <integer name="glyph_settings_battery_dot" translatable="false">9</integer>
     <integer-array name="glyph_settings_battery_levels" translatable="false">
         <item>21</item>
@@ -51,7 +55,7 @@
     <string name="glyph_settings_notifs_animations_default" translatable="false">Break</string>
     <integer name="glyph_settings_notifs_essential_led" translatable="false">24</integer>
 
-    <!-- Volume Animation -->
+    <!-- Volume Animations -->
     <integer name="glyph_settings_volume_levels_num" translatable="false">16</integer>
 
 </resources>

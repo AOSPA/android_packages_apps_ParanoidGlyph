@@ -41,6 +41,10 @@ public final class ResourceUtils {
         return context.getResources().getIdentifier(id, type, context.getPackageName());
     }
 
+    public static Boolean getBoolean(String id) {
+        return context.getResources().getBoolean(getIdentifier(id, "bool"));
+    }
+
     public static String getString(String id) {
         return context.getResources().getString(getIdentifier(id, "string"));
     }

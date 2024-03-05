@@ -23,9 +23,8 @@
     </integer-array>
 
     <!-- Battery Animations -->
-    <integer name="glyph_settings_battery_dot" translatable="false"></integer>
-    <integer-array name="glyph_settings_battery_levels" translatable="false">
-    </integer-array>
+    <bool name="glyph_settings_battery_dot" translatable="false">false</bool>
+    <integer name="glyph_settings_battery_levels_num" translatable="false"></integer>
 
     <!-- Call Animations -->
     <string name="glyph_settings_call_animations_default" translatable="false"></string>

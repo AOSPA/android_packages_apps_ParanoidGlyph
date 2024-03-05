@@ -32,6 +32,7 @@ public final class Constants {
     private static int brightness = -1;
     private static int brightnessMax = -1;
     private static int[] brightnessLevels = null;
+    private static int[] supportedAnimationPatternLenghts = null;
 
     public static final String GLYPH_ENABLE = "glyph_enable";
     public static final String GLYPH_FLIP_ENABLE = "glyph_settings_flip_toggle";
@@ -100,6 +101,13 @@ public final class Constants {
             brightnessLevels = ResourceUtils.getIntArray("glyph_settings_brightness_levels");
 
         return brightnessLevels;
+    }
+
+    public static int[] getSupportedAnimationPatternLenghts() {
+        if (supportedAnimationPatternLenghts == null)
+            supportedAnimationPatternLenghts = ResourceUtils.getIntArray("glyph_settings_animations_supported_pattern_lenghts");
+
+        return supportedAnimationPatternLenghts;
     }
 
 }

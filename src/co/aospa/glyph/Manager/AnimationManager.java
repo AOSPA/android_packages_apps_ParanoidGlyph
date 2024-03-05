@@ -18,6 +18,8 @@ package co.aospa.glyph.Manager;
 
 import android.util.Log;
 
+import com.android.internal.util.ArrayUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -95,7 +97,6 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
-            String device = Constants.getDevice();
             long start = System.currentTimeMillis();
             String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
@@ -106,9 +107,7 @@ public final class AnimationManager {
                     if (checkInterruption("csv")) throw new InterruptedException();
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] pattern = line.split(",");
-                    if ((device.equals("phone1") && pattern.length == 5) // Phone (1) pattern on Phone (1)
-                        || (device.equals("phone2") && pattern.length == 5) // Phone (1) pattern on Phone (2)
-                        || (device.equals("phone2") && pattern.length == 33)) { // Phone (2) pattern on Phone (2)
+                    if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLenghts(), pattern.length)) {
                         updateLedFrame(pattern);
                     } else {
                         if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);
@@ -246,7 +245,6 @@ public final class AnimationManager {
 
             StatusManager.setCallLedActive(true);
 
-            String device = Constants.getDevice();
             long start = System.currentTimeMillis();
             String[] slugs = ResourceUtils.getStringArray("glyph_settings_animations_slugs");
 
@@ -258,9 +256,7 @@ public final class AnimationManager {
                         if (checkInterruption("call")) throw new InterruptedException();
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] pattern = line.split(",");
-                        if ((device.equals("phone1") && pattern.length == 5) // Phone (1) pattern on Phone (1)
-                            || (device.equals("phone2") && pattern.length == 5) // Phone (1) pattern on Phone (2)
-                            || (device.equals("phone2") && pattern.length == 33)) { // Phone (2) pattern on Phone (2)
+                        if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLenghts(), pattern.length)) {
                             updateLedFrame(pattern);
                         } else {
                             if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + name + " | line: " + line);

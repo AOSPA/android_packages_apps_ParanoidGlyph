@@ -18,6 +18,24 @@
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06051a7b_9e1069a6",
+        "filename": "phone1/res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02f8c6f_8e906e9e",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41498461_8bebf9e9",
@@ -31,6 +49,24 @@
       "writtenOn": "2024-03-06T04:01:27Z",
       "side": 1,
       "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e0a2a1a_89e477a9",
+        "filename": "phone2/res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41498461_8bebf9e9",
       "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
@@ -52,6 +88,24 @@
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d867ffd2_6ed94f76",
+        "filename": "res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9e91fc7_12d5ed24",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a35436c4_e224ea73",
@@ -69,6 +123,24 @@
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef56d323_2cdc1633",
+        "filename": "src/co/aospa/glyph/Constants/Constants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a35436c4_e224ea73",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "638d7017_2cba4965",
@@ -82,6 +154,24 @@
       "writtenOn": "2024-03-06T04:01:27Z",
       "side": 1,
       "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce55b17d_471df876",
+        "filename": "src/co/aospa/glyph/Manager/AnimationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "638d7017_2cba4965",
       "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }

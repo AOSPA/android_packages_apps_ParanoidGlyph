@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f02f8c6f_8e906e9e",
+        "filename": "phone1/res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2024-03-06T04:01:27Z",
+      "side": 1,
+      "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41498461_8bebf9e9",
+        "filename": "phone2/res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2024-03-06T04:01:27Z",
+      "side": 1,
+      "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d9e91fc7_12d5ed24",
+        "filename": "res/values/animations.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2024-03-06T04:01:27Z",
+      "side": 1,
+      "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a35436c4_e224ea73",
+        "filename": "src/co/aospa/glyph/Constants/Constants.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2024-03-06T04:01:27Z",
+      "side": 1,
+      "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638d7017_2cba4965",
+        "filename": "src/co/aospa/glyph/Manager/AnimationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2024-03-06T04:01:27Z",
+      "side": 1,
+      "message": "lengths*",
+      "revId": "7a6bc82ab274f118687ac39235b2322ea869fbab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}

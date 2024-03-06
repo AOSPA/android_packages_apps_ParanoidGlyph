@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_device_background"
+    android:clipChildren="false"
+    android:layout_width="107.4dp"
+    android:layout_height="225.0dp"
+    android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_gravity="left"
+            android:id="@+id/preview_device_camera1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12.4799928dp"
+            android:layout_marginTop="10.343994dp"
+            android:src="@drawable/glyph_led_a1"/>
+        <ImageView
+            android:layout_gravity="right"
+            android:id="@+id/preview_device_camera2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37.9139832dp"
+            android:layout_marginRight="10.3739868dp"
+            android:src="@drawable/glyph_led_a2"/>
+        <ImageView
+            android:layout_gravity="left"
+            android:id="@+id/preview_device_camera3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.4259946dp"
+            android:layout_marginTop="68.868dp"
+            android:src="@drawable/glyph_led_a3" />
+</FrameLayout>

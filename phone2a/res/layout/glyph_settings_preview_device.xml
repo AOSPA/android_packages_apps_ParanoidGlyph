@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/bg_glyphs_led_pacman"
+    android:clipChildren="false"
+    android:layout_width="107.4dip"
+    android:layout_height="225.0dip"
+    android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_gravity="left"
+            android:id="@+id/preview_device_camera1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12.4799928dip"
+            android:layout_marginTop="10.343994dip"
+            android:src="@drawable/glyph_led_a1"/>
+        <ImageView
+            android:layout_gravity="right"
+            android:id="@+id/preview_device_camera2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37.9139832dip"
+            android:layout_marginRight="10.3739868dip"
+            android:src="@drawable/glyph_led_a2"/>
+        <ImageView
+            android:layout_gravity="left"
+            android:id="@+id/preview_device_camera3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.4259946dip"
+            android:layout_marginTop="68.868dip"
+            android:src="@drawable/glyph_led_a3" />
+</FrameLayout>

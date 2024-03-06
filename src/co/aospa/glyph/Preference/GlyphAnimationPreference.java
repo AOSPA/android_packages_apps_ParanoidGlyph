@@ -200,6 +200,12 @@ public class GlyphAnimationPreference extends Preference {
                                     setGlyphsDrawable(animationImgs[9], Integer.parseInt(split[25]));
                                     setGlyphsDrawable(animationImgs[10], Integer.parseInt(split[24]));
                             });
+                        } else if (Constants.getDevice().equals("phone2a") && split.length == 26) { // Phone (2a) pattern on Phone (2a)
+                            mActivity.runOnUiThread(() -> {
+                                    setGlyphsDrawable(animationImgs[0], Integer.parseInt(split[0]));
+                                    setGlyphsDrawable(animationImgs[1], Integer.parseInt(split[24]));
+                                    setGlyphsDrawable(animationImgs[2], Integer.parseInt(split[25]));
+                            });
                         } else {
                             if (DEBUG) Log.d(TAG, "Animation line length mismatch | name: " + animationName + " | line: " + line);
                             updateAnimation(false);

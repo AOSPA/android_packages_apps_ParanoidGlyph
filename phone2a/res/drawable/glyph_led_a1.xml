@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:height="29.4dip" android:width="25.8dip" android:viewportWidth="43.0" android:viewportHeight="49.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/glyph_settings_device_glyph_color" android:pathData="M3.552,46.042C7.597,28.167 27.555,8 39.349,3.417" android:strokeColor="@color/glyph_settings_device_glyph_color" android:strokeWidth="5.74132" android:strokeLineCap="round" />
+</vector>

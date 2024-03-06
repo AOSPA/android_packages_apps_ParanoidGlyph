@@ -305,7 +305,7 @@ public final class AnimationManager {
 
                 try {
                     if (checkInterruption("essential")) throw new InterruptedException();
-                    int[] steps = {1, 2, 4, 7};
+                    int[] steps = {12, 24, 36, 50};
                     for (int i : steps) {
                         if (checkInterruption("essential")) throw new InterruptedException();
                         updateLedSingle(led, Constants.getMaxBrightness() / 100 * i);
@@ -319,7 +319,7 @@ public final class AnimationManager {
                 if (DEBUG) Log.d(TAG, "Done playing animation | name: essential");
             });
         } else {
-            updateLedSingle(led, Constants.getMaxBrightness() / 100 * 7);
+            updateLedSingle(led, Constants.getMaxBrightness() / 100 * 50);
             return;
         }
 
@@ -392,12 +392,12 @@ public final class AnimationManager {
         int essentialLed = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
         if (StatusManager.isEssentialLedActive()) {
             if (pattern.length == 5) { // Phone (1) pattern
-                if (pattern[1] < (maxBrightness / 100 * 7)) {
-                    pattern[1] = maxBrightness / 100 * 7;
+                if (pattern[1] < (maxBrightness / 100 * 50)) {
+                    pattern[1] = maxBrightness / 100 * 50;
                 }
             } else if (pattern.length == 33) { // Phone (2) pattern
-                if (pattern[2] < (maxBrightness / 100 * 7)) {
-                    pattern[2] = maxBrightness / 100 * 7;
+                if (pattern[2] < (maxBrightness / 100 * 50)) {
+                    pattern[2] = maxBrightness / 100 * 50;
                 }
             }
         }
@@ -421,8 +421,8 @@ public final class AnimationManager {
         int essentialLed = ResourceUtils.getInteger("glyph_settings_notifs_essential_led");
         if (StatusManager.isEssentialLedActive()
                 && led == essentialLed
-                && brightness < (maxBrightness / 100 * 7)) {
-            brightness = maxBrightness / 100 * 7;
+                && brightness < (maxBrightness / 100 * 50)) {
+            brightness = maxBrightness / 100 * 50;
         }
         FileUtils.writeSingleLed(led, brightness / maxBrightness * Constants.getBrightness());
     }

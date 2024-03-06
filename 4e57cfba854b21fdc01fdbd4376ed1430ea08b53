@@ -16,6 +16,24 @@
       "message": "fix whitespace while you are at it",
       "revId": "4e57cfba854b21fdc01fdbd4376ed1430ea08b53",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b8de2c6_eb46c26c",
+        "filename": "src/co/aospa/glyph/Manager/AnimationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-03-06T10:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7fea59f_4845c38e",
+      "revId": "4e57cfba854b21fdc01fdbd4376ed1430ea08b53",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }

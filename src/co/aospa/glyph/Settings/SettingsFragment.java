@@ -40,6 +40,7 @@ import com.android.settingslib.widget.OnMainSwitchChangeListener;
 import co.aospa.glyph.R;
 import co.aospa.glyph.Constants.Constants;
 import co.aospa.glyph.Manager.SettingsManager;
+import co.aospa.glyph.Utils.ResourceUtils;
 import co.aospa.glyph.Utils.ServiceUtils;
 
 public class SettingsFragment extends PreferenceFragment implements OnPreferenceChangeListener,
@@ -60,6 +61,10 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
     private SettingObserver mSettingObserver;
 
     private Handler mHandler = new Handler();
+
+    private static final String POWERSHARE_ACTIVE = ResourceUtils.getString("glyph_settings_paths_powershare_active_absolute");
+    private static final String POWERSHARE_ENABLED = ResourceUtils.getString("glyph_settings_paths_powershare_enabled_absolute");
+    private static boolean glyphPowershareAvailable = !POWERSHARE_ACTIVE.isBlank() && !POWERSHARE_ENABLED.isBlank();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -104,7 +109,9 @@ public class SettingsFragment extends PreferenceFragment implements OnPreference
         mChargingLevelPreference.setOnPreferenceChangeListener(this);
 
         mChargingPowersharePreference = (SwitchPreference) findPreference(Constants.GLYPH_CHARGING_POWERSHARE_ENABLE);
+        mChargingPowersharePreference.setDefaultValue(glyphPowershareAvailable);
         mChargingPowersharePreference.setEnabled(glyphEnabled);
+        mChargingPowersharePreference.setVisible(glyphPowershareAvailable);
         mChargingPowersharePreference.setOnPreferenceChangeListener(this);
 
         mVolumeLevelPreference = (SwitchPreference) findPreference(Constants.GLYPH_VOLUME_LEVEL_ENABLE);

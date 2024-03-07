@@ -69,7 +69,6 @@
 
         <SwitchPreference
             android:key="glyph_settings_charging_level"
-            android:defaultValue="true"
             android:title="@string/glyph_settings_charging_level_title"
             android:summary="@string/glyph_settings_charging_level_summary" />
 

@@ -138,27 +138,27 @@ public final class AnimationManager {
 
             try {
                 for (int i = 0; i < batteryArray.length; i++) {
-                    if ( i <= amount - 1 && batteryLevel > 0) {
-                        if (checkInterruption("charging")) throw new InterruptedException();
-                        batteryArray[i] = Constants.getBrightness();
-                        if (batteryDot && i == 0) continue;
-		                updateLedFrame(batteryArray);
-                        Thread.sleep(15);
-                    }
+                    if (checkInterruption("charging")) throw new InterruptedException();
+                    batteryArray[i] = Constants.getBrightness();
+                    if (batteryDot && i == 0) continue;
+                    updateLedFrame(batteryArray);
+                    Thread.sleep(15);
+                }
+                for (int i = batteryArray.length - 1; i > amount - 1; i--) {
+                    if (checkInterruption("charging")) throw new InterruptedException();
+                    batteryArray[i] = 0;
+                    updateLedFrame(batteryArray);
+                    Thread.sleep(5);
                 }
                 long start = System.currentTimeMillis();
-                while (System.currentTimeMillis() - start <= 1000) {
+                while (System.currentTimeMillis() - start <= 2000) {
                     if (checkInterruption("charging")) throw new InterruptedException();
                 }
-                for (int i = batteryArray.length - 1; i >= 0; i--) {
-                    if ( i <= amount - 1 && batteryLevel > 0) {
-                        if (checkInterruption("charging")) throw new InterruptedException();
-                        if (batteryArray[i] != 0) {
-                            batteryArray[i] = 0;
-                            updateLedFrame(batteryArray);
-                            Thread.sleep(15);
-                        }
-                    }
+                for (int i = amount - 1; i >= 0; i--) {
+                    if (checkInterruption("charging")) throw new InterruptedException();
+                    batteryArray[i] = 0;
+                    updateLedFrame(batteryArray);
+                    Thread.sleep(11);
                 }
                 long start2 = System.currentTimeMillis();
                 while (System.currentTimeMillis() - start2 <= 730) {

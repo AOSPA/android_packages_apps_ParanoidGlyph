@@ -84,6 +84,9 @@ public class NotifsSettingsFragment extends PreferenceFragment implements OnPref
         mListPreference.setOnPreferenceChangeListener(this);
         mListPreference.setEntries(ResourceUtils.getNotificationAnimations());
         mListPreference.setEntryValues(ResourceUtils.getNotificationAnimations());
+        if (!ArrayUtils.contains(ResourceUtils.getNotificationAnimations(), mListPreference.getValue())) {
+            mListPreference.setValue(ResourceUtils.getString("glyph_settings_notifs_animations_default"));
+        }
 
         mGlyphAnimationPreference = (GlyphAnimationPreference) findPreference(Constants.GLYPH_NOTIFS_SUB_PREVIEW);
 

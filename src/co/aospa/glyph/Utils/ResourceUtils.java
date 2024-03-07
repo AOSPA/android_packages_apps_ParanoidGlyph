@@ -17,6 +17,8 @@
 package co.aospa.glyph.Utils;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.android.internal.util.ArrayUtils;
@@ -32,7 +34,10 @@ public final class ResourceUtils {
     private static final String TAG = "GlyphResourceUtils";
     private static final boolean DEBUG = true;
 
-    private static Context context = Constants.CONTEXT;
+    private static final Context context = Constants.CONTEXT;
+
+    private static final AssetManager assetManager = context.getAssets();
+    private static final Resources resources = context.getResources();
 
     private static String[] callAnimations = null;
     private static String[] notificationAnimations = null;
@@ -64,7 +69,7 @@ public final class ResourceUtils {
     public static String[] getCallAnimations() {
         if (callAnimations == null) {
             try {
-                String[] assets = context.getAssets().list("call");
+                String[] assets = assetManager.list("call");
                 for (int i=0; i < assets.length; i++) {
                     assets[i] = assets[i].replaceAll(".csv", "");
                 }
@@ -77,7 +82,7 @@ public final class ResourceUtils {
     public static String[] getNotificationAnimations() {
         if (notificationAnimations == null) {
             try {
-                String[] assets = context.getAssets().list("notification");
+                String[] assets = assetManager.list("notification");
                 for (int i=0; i < assets.length; i++) {
                     assets[i] = assets[i].replaceAll(".csv", "");
                 }
@@ -88,11 +93,21 @@ public final class ResourceUtils {
     }
 
     public static InputStream getCallAnimation(String name) throws IOException {
-        return context.getAssets().open("call/" + name + ".csv");
+        if (callAnimations == null) getCallAnimations();
+
+        if (ArrayUtils.contains(callAnimations, name))
+            return assetManager.open("call/" + name + ".csv");
+
+        return assetManager.open("call/" + ResourceUtils.getString("glyph_settings_call_animations_default") + ".csv");
     }
 
     public static InputStream getNotificationAnimation(String name) throws IOException {
-        return context.getAssets().open("notification/" + name + ".csv");
+        if (notificationAnimations == null) getNotificationAnimations();
+
+        if (ArrayUtils.contains(notificationAnimations, name))
+            return assetManager.open("notification/" + name + ".csv");
+
+        return assetManager.open("call/" + ResourceUtils.getString("glyph_settings_notifs_animations_default") + ".csv");
     }
 
     public static InputStream getAnimation(String name) throws IOException {
@@ -107,7 +122,7 @@ public final class ResourceUtils {
             return getNotificationAnimation(name);
         }
 
-        return context.getAssets().open(name + ".csv");
+        return assetManager.open(name + ".csv");
     }
 
 }

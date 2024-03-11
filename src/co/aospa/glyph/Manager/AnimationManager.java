@@ -104,6 +104,7 @@ public final class AnimationManager {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (checkInterruption("csv")) throw new InterruptedException();
+                    line = line.replace(" ", "");
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] pattern = line.split(",");
                     if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLengths(), pattern.length)) {
@@ -260,6 +261,7 @@ public final class AnimationManager {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (checkInterruption("call")) throw new InterruptedException();
+                        line = line.replace(" ", "");
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] pattern = line.split(",");
                         if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLengths(), pattern.length)) {

@@ -97,13 +97,12 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
-            long start = System.currentTimeMillis();
-
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     ResourceUtils.getAnimation(name)))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (checkInterruption("csv")) throw new InterruptedException();
+                    long start = System.currentTimeMillis();
                     line = line.replace(" ", "");
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] pattern = line.split(",");
@@ -253,14 +252,13 @@ public final class AnimationManager {
 
             StatusManager.setCallLedActive(true);
 
-            long start = System.currentTimeMillis();
-
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                         ResourceUtils.getCallAnimation(name)))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
                         if (checkInterruption("call")) throw new InterruptedException();
+                        long start = System.currentTimeMillis();
                         line = line.replace(" ", "");
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] pattern = line.split(",");

@@ -97,8 +97,6 @@ public final class AnimationManager {
 
             StatusManager.setAnimationActive(true);
 
-            long start = System.currentTimeMillis();
-
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                     ResourceUtils.getAnimation(name)))) {
                 String line;
@@ -107,6 +105,7 @@ public final class AnimationManager {
                     line = line.replace(" ", "");
                     line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                     String[] pattern = line.split(",");
+		    long start = System.currentTimeMillis();
                     if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLengths(), pattern.length)) {
                         updateLedFrame(pattern);
                     } else {
@@ -242,8 +241,6 @@ public final class AnimationManager {
 
             StatusManager.setCallLedActive(true);
 
-            long start = System.currentTimeMillis();
-
             while (StatusManager.isCallLedEnabled()) {
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(
                         ResourceUtils.getCallAnimation(name)))) {
@@ -253,6 +250,7 @@ public final class AnimationManager {
                         line = line.replace(" ", "");
                         line = line.endsWith(",") ? line.substring(0, line.length() - 1) : line;
                         String[] pattern = line.split(",");
+			long start = System.currentTimeMillis();
                         if (ArrayUtils.contains(Constants.getSupportedAnimationPatternLengths(), pattern.length)) {
                             updateLedFrame(pattern);
                         } else {

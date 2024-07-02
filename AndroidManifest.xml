@@ -100,6 +100,16 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service
+            android:name=".Tiles.MusicVisualizerTileService"
+            android:exported="true"
+            android:label="@string/glyph_accessibility_quick_settings_music_visualizer"
+            android:icon="@drawable/ic_music_visualizer"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".Tiles.TileActivity"
             android:exported="true"

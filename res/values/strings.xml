@@ -66,6 +66,7 @@
     <!-- QS tile -->
     <string name="glyph_accessibility_quick_settings">Glyph</string>
     <string name="glyph_accessibility_quick_settings_torch">Glyph torch</string>
+    <string name="glyph_accessibility_quick_settings_music_visualizer">Glyph Music Visualizer</string>
 
     <string name="glyph_accessibility_quick_settings_off">Off</string>
     <string name="glyph_accessibility_quick_settings_on">On</string>

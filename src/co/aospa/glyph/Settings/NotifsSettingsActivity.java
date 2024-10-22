@@ -20,7 +20,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
-import com.android.settingslib.widget.R;
 
 public class NotifsSettingsActivity extends CollapsingToolbarBaseActivity {
 
@@ -31,7 +30,7 @@ public class NotifsSettingsActivity extends CollapsingToolbarBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getFragmentManager().findFragmentById(com.android.settingslib.collapsingtoolbar.R.id.content_frame);
         if (fragment == null) {
             mNotifsSettingsFragment = new NotifsSettingsFragment();
             getFragmentManager().beginTransaction()

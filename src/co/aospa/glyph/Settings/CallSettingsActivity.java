@@ -20,7 +20,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import com.android.settingslib.collapsingtoolbar.CollapsingToolbarBaseActivity;
-import com.android.settingslib.widget.R;
 
 public class CallSettingsActivity extends CollapsingToolbarBaseActivity {
 
@@ -35,7 +34,8 @@ public class CallSettingsActivity extends CollapsingToolbarBaseActivity {
         if (fragment == null) {
             mCallSettingsFragment = new CallSettingsFragment();
             getFragmentManager().beginTransaction()
-                .add(R.id.content_frame, mCallSettingsFragment, TAG_GLYPH)
+                .add(com.android.settingslib.collapsingtoolbar.R.id.content_frame,
+                    mCallSettingsFragment, TAG_GLYPH)
                 .commit();
         } else {
             mCallSettingsFragment = (CallSettingsFragment) fragment;

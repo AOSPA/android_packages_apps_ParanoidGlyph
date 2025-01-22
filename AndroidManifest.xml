@@ -94,7 +94,7 @@
             android:name=".Tiles.TorchTileService"
             android:exported="true"
             android:label="@string/glyph_accessibility_quick_settings_torch"
-            android:icon="@drawable/ic_glyphs_logo"
+            android:icon="@drawable/qs_glyphs_torch_icon"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

@@ -101,6 +101,14 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+        <service
+            android:name=".services.ThirdPartyService"
+            android:exported="true"
+            android:permission="android.permission.BIND_SERVICE">
+            <intent-filter>
+                <action android:name="co.aospa.glyph.services.ThirdPartyService" />
+            </intent-filter>
+        </service>
         <activity
             android:name=".tiles.TileActivity"
             android:exported="true"

@@ -20,6 +20,23 @@ class ThirdPartyService : Service() {
             AnimationManager.updateLedFrame(iArray)
         }
 
+        override fun setGlyphTorch(active: Boolean) {
+            Log.d("ThirdPartyService", "setGlyphTorch: $active")
+            val brightness = SettingsManager.getGlyphBrightness()
+            StatusManager.setAllLedsActive(active)
+            FileUtils.writeAllLed(if (active) brightness else 0)
+            if (StatusManager.isEssentialLedActive() && !active) {
+                FileUtils.writeSingleLed(
+                    ResourceUtils.getInteger("glyph_settings_notifs_essential_led"),
+                    (brightness / 100 * 7).toFloat(),
+                )
+            }
+            sendBroadcast(
+                Intent(TorchTileService.ACTION_TORCH_STATE_CHANGED).setPackage(packageName)
+            )
+        }
+
+
         override fun openSession() {
             Log.d("IGlyphServiceImpl", "openSession")
         }

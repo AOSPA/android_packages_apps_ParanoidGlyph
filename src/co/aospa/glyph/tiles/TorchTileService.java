@@ -18,6 +18,10 @@
 
 package co.aospa.glyph.tiles;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
@@ -31,6 +35,16 @@ import co.aospa.glyph.utils.ResourceUtils;
 /** Quick settings tile: Glyph **/
 public class TorchTileService extends TileService {
 
+    public static final String ACTION_TORCH_STATE_CHANGED =
+            "co.aospa.glyph.action.TORCH_STATE_CHANGED";
+
+    private final BroadcastReceiver mStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateState();
+        }
+    };
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,7 +56,15 @@ public class TorchTileService extends TileService {
     @Override
     public void onStartListening() {
         super.onStartListening();
+        registerReceiver(mStateReceiver, new IntentFilter(ACTION_TORCH_STATE_CHANGED),
+                RECEIVER_NOT_EXPORTED);
         updateState();
+    }
+
+    @Override
+    public void onStopListening() {
+        unregisterReceiver(mStateReceiver);
+        super.onStopListening();
     }
 
     private void updateState() {

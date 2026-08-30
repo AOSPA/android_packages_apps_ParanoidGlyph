@@ -37,6 +37,7 @@ android_library {
         "androidx.preference_preference",
         "com.google.android.material_material",
         "SettingsLib",
+        "SettingsLibSliderPreference",
         "IGlyphService-java",
     ],
 }

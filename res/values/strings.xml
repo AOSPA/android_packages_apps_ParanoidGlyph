@@ -33,6 +33,9 @@
     <string name="glyph_settings_flip_toggle_summary">Mute and show Glyphs if phone is faced down</string>
 
     <string name="glyph_settings_brightness">Brightness</string>
+    <string name="glyph_settings_brightness_summary">Adjust Glyph brightness level</string>
+    <string name="glyph_settings_brightness_decrease_desc">Decrease brightness</string>
+    <string name="glyph_settings_brightness_increase_desc">Increase brightness</string>
 
     <string name="glyph_settings_charging_title">Charging</string>
     <string name="glyph_settings_charging_level_title">Battery level</string>

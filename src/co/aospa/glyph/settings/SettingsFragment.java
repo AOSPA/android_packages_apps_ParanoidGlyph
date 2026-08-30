@@ -27,12 +27,12 @@ import android.provider.Settings;
 
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
-import androidx.preference.SeekBarPreference;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settingslib.PrimarySwitchPreference;
 import com.android.settingslib.widget.MainSwitchPreference;
 import com.android.settingslib.widget.SettingsBasePreferenceFragment;
+import com.android.settingslib.widget.SliderPreference;
 
 import java.util.Arrays;
 
@@ -75,11 +75,19 @@ public class SettingsFragment extends SettingsBasePreferenceFragment implements 
         mFlipPreference = (SwitchPreferenceCompat) findPreference(Constants.GLYPH_FLIP_ENABLE);
         mFlipPreference.setOnPreferenceChangeListener(this);
 
-        SeekBarPreference brightnessPreference = findPreference(Constants.GLYPH_BRIGHTNESS);
+        SliderPreference brightnessPreference = findPreference(Constants.GLYPH_BRIGHTNESS);
         brightnessPreference.setMin(1);
         brightnessPreference.setMax(Constants.getBrightnessLevels().length);
         brightnessPreference.setValue(SettingsManager.getGlyphBrightnessSetting());
         brightnessPreference.setUpdatesContinuously(true);
+        brightnessPreference.setSliderIncrement(1);
+        brightnessPreference.setTickVisible(true);
+        brightnessPreference.setIconStart(R.drawable.ic_remove_24dp);
+        brightnessPreference.setIconStartContentDescription(
+                R.string.glyph_settings_brightness_decrease_desc);
+        brightnessPreference.setIconEnd(R.drawable.ic_add_24dp);
+        brightnessPreference.setIconEndContentDescription(
+                R.string.glyph_settings_brightness_increase_desc);
         brightnessPreference.setOnPreferenceChangeListener(this);
 
         mNotifsPreference = (PrimarySwitchPreference) findPreference(Constants.GLYPH_NOTIFS_ENABLE);

@@ -158,14 +158,16 @@ public class SettingsFragment extends SettingsBasePreferenceFragment implements 
     }
 
     private void updateEnabledState() {
-        boolean enabled = SettingsManager.isGlyphEnabled()
-                && !SettingsManager.isGlyphMusicVisualizerEnabled();
+        boolean glyphEnabled = SettingsManager.isGlyphEnabled();
+        boolean enabled = glyphEnabled && !SettingsManager.isGlyphMusicVisualizerEnabled();
         for (PrimarySwitchPreference preference : new PrimarySwitchPreference[] {
                 mFlipPreference, mNotifsPreference, mCallPreference, mChargingLevelPreference,
                 mChargingPowersharePreference, mVolumeLevelPreference}) {
             preference.setEnabled(enabled);
             preference.setSwitchEnabled(enabled);
         }
+        mMusicVisualizerPreference.setEnabled(glyphEnabled);
+        mMusicVisualizerPreference.setSwitchEnabled(glyphEnabled);
     }
 
     @Override

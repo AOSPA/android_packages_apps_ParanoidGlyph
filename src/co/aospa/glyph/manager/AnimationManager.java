@@ -334,44 +334,6 @@ public final class AnimationManager {
         }
     }
 
-    public static void playMusic(String name) {
-        submit(() -> {
-            float maxBrightness = (float) Constants.getMaxBrightness();
-            float[] pattern = new float[5];
-
-            switch (name) {
-                case "low":
-                    pattern[4] = maxBrightness;
-                    break;
-                case "mid_low":
-                    pattern[3] = maxBrightness;
-                    break;
-                case "mid":
-                    pattern[2] = maxBrightness;
-                    break;
-                case "mid_high":
-                    pattern[0] = maxBrightness;
-                    break;
-                case "high":
-                    pattern[1] = maxBrightness;
-                    break;
-                default:
-                    if (DEBUG) Log.d(TAG, "Name doesn't match any zone, returning | name: " + name);
-                    return;
-            }
-
-            try {
-                updateLedFrame(pattern);
-                Thread.sleep(90);
-            } catch (Exception e) {
-                if (DEBUG) Log.d(TAG, "Exception while playing animation | name: music: " + name + " | exception: " + e);
-            } finally {
-                updateLedFrame(new float[5]);
-                if (DEBUG) Log.d(TAG, "Done playing animation | name: " + name);
-            }
-        });
-    }
-
     private static void updateLedFrame(String[] pattern) {
         updateLedFrame(Arrays.stream(pattern)
                 .mapToInt(Integer::parseInt)

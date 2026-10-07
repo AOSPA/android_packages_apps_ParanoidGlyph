@@ -16,6 +16,24 @@
       "message": "why not this??",
       "revId": "335e69afa633d0e9a3e25e371bbe81d2a6c4e12b",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf2a583_427bd5ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2026-10-07T02:32:13Z",
+      "side": 1,
+      "message": "setGlyphTorch was missing from their sdk so it was dropped, made this patch pointless",
+      "parentUuid": "85e0e967_7469163d",
+      "revId": "335e69afa633d0e9a3e25e371bbe81d2a6c4e12b",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
